@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function get_jar() {
     mvn clean install package
 }
