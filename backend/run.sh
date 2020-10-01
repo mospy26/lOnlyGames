@@ -1,5 +1,5 @@
 function get_jar() {
-    mvn clean install package
+    mvn clean package -Dmaven.test.skip=true
 }
 
 function run() {
@@ -11,13 +11,14 @@ function stop() {
 }
 
 function restart() {
-    stop
-    run
+    get_jar
+    docker-compose stop lonlygames-rest
+    docker-compose up --no-deps -d --build lonlygames-rest
 }
 
 function start() {
     get_jar
-    restart
+    run
 }
 
 

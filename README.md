@@ -12,7 +12,7 @@ Make sure you're in the directory of front end and run: `npm start`
 2. Download the repository, and `cd backend`
 3. Run `./run.sh run` and wait until the program finishes.
 4. Wait for a few seconds.
-5. Visit `localhost:8080` and your spring application should be running there.
+5. Visit `localhost` at port `80` and your spring application should be running there.
 
 ###### Restarting the application
 Every time you make a change and wish to restart the application, run:

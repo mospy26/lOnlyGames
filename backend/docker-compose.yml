@@ -39,7 +39,7 @@ services:
       dockerfile: docker/nginx.Dockerfile
     container_name: nginx-lb
     ports:
-      - 8080:80
+      - 80:80
     networks:
       lonlygames:
         ipv4_address: 192.168.1.4
