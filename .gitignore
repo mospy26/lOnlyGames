@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### jenv stuff ###
+**/*.java-version
