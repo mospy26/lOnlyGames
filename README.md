@@ -10,7 +10,7 @@ Make sure you're in the directory of front end and run: `npm start`
 
 You can dockerize every service. For ease of development, we have provided a script called `run.sh`. This option lets you dockerize every service and includes `nginx`, a load balancer. If you only want to dockerize the mysql db, then follow instructions on 2. instead.
 
-1. Make sure you install [docker-compose](https://docs.docker.com/compose/install/)
+1. Make sure you install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) in your computer
 2. Download the repository, and `cd backend`
 3. Run `./run.sh run` and wait until the program finishes.
 4. Wait for a few seconds.
