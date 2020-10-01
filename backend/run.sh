@@ -21,6 +21,10 @@ function start() {
     run
 }
 
+function run_database() {
+    docker-compose up --no-deps -d lonlygames-mysql
+}
+
 
 case $1 in
     run)
@@ -31,5 +35,17 @@ case $1 in
         ;;
     restart)
         restart
+        ;;
+    db-only)
+        run_database
+        ;;
+    *)
+        echo "Usage: ./run.sh command"
+        echo "\nUtility for running lOnlyGames services.\n"
+        echo "command:"
+        echo "  run\t\t runs the service stack"
+        echo "  stop\t\t stops the service stack"
+        echo "  restart\t only restarts the spring boot app in a docker container"
+        echo "  db-only\t only runs the db (if you are running mvn outside docker)"
         ;;
 esac
