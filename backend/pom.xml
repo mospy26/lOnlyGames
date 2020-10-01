@@ -8,15 +8,14 @@
 		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>lOnlyGames</artifactId>
+	<groupId>com.lOnlyGames</groupId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lOnlyGames</name>
-	<description>An ELEC5619 Project </description>
+	<name>backend</name>
+	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>11</java.version>
-		<testcontainers.version>1.14.3</testcontainers.version>
 	</properties>
 
 	<dependencies>

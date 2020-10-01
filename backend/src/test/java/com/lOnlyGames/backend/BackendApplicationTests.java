@@ -1,10 +1,10 @@
-package com.Group21.lOnlyGames;
+package com.lOnlyGames.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LOnlyGamesApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
