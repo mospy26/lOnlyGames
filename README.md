@@ -6,7 +6,7 @@ Make sure you're in the directory of front end and run: `npm start`
 
 ## Back end 
 
-#### Using Docker:
+### 1. Using Docker:
 
 1. Make sure you install [docker-compose](https://docs.docker.com/compose/install/)
 2. Download the repository, and `cd backend`
@@ -25,7 +25,7 @@ Every time you make a change and wish to restart the application, run:
 
 If you want to stop the application, run `./run.sh stop`.
 
-#### Docker for mysql but no docker for spring
+### 2. Docker for mysql but no docker for spring
 
 You can still run the application on your computer while having docker run the database. A reason to do this would be to have faster effects of the changes to the spring application. To do this, do the following:
 
@@ -34,7 +34,7 @@ You can still run the application on your computer while having docker run the d
 mvn spring-boot:run
 ```
 
-#### Without Docker at all
+### 3. Without Docker at all
 
 1. Ensure you're using IntelliJ
 2. Ensure that you have MySQL Installed
