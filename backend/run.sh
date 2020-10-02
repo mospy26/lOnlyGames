@@ -3,7 +3,7 @@ function get_jar() {
 }
 
 function run() {
-    docker-compose up -d
+    docker-compose up -d --build
 }
 
 function stop() {
@@ -44,6 +44,10 @@ case $1 in
         ;;
     db-only)
         run_database
+        ;;
+    restart)
+        stop
+        run
         ;;
     *)
         usage
