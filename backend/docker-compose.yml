@@ -11,6 +11,8 @@ services:
     volumes:
       - lonlygames-mysql-volume:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+        - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "password"
       MYSQL_DATABASE: "db_lonlygames"
@@ -21,7 +23,9 @@ services:
       - lonlygames-mysql
     build:
       context: .
-      dockerfile: docker/lonlygames.Dockerfile
+      dockerfile: docker/lonlygames-docker.Dockerfile
+    volumes:
+      - ./:/app
     container_name: lonlygames-rest
     ports:
       - "8082:8080"
@@ -39,7 +43,7 @@ services:
       dockerfile: docker/nginx.Dockerfile
     container_name: nginx-lb
     ports:
-      - 8080:80
+      - 80:80
     networks:
       lonlygames:
         ipv4_address: 192.168.1.4
@@ -60,7 +64,6 @@ services:
       lonlygames:
         ipv4_address: 192.168.1.5
 
-
 networks:
   lonlygames:
     driver: bridge
@@ -69,4 +72,4 @@ networks:
         - subnet: 192.168.1.0/24
 
 volumes:
-  lonlygames-mysql-volume:
+  lonlygames-mysql-volume: {}
