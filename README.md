@@ -13,15 +13,12 @@ You can dockerize every service. For ease of development, we have provided a scr
 1. Make sure you install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) in your computer
 2. Download the repository, and `cd backend`
 3. Run `./run.sh run` and wait until the program finishes.
-4. Wait for a few seconds.
-5. Visit `localhost` at port `80` and your spring application should be running there.
+4. Wait for a few minutes (this will only be needed in the first run).
+5. Do not stop any container.
+6. Visit `localhost` at port `80` and your spring application should be running there.
 
-###### Restarting the application
-Every time you make a change and wish to restart the application, run:
-
-```bash
-./run.sh restart
-```
+###### What if there are changes to the application, does it reflect?
+Yes, every time you make a change it will automatically reload in the docker container.
 
 ###### Stopping the application
 
@@ -29,7 +26,7 @@ If you want to stop the application, run `./run.sh stop`.
 
 ### 2. Docker for mysql but no docker for spring
 
-You can still run the application on your computer while having docker run the database. A reason to do this would be to have faster effects of the changes to the spring application. To do this, do the following:
+You can still run the application on your computer while having docker run the database.To do this, do the following:
 
 1. Install java 11 in your machine.
 2. Run `mvn clean install`

@@ -23,7 +23,9 @@ services:
       - lonlygames-mysql
     build:
       context: .
-      dockerfile: docker/lonlygames.Dockerfile
+      dockerfile: docker/lonlygames-docker.Dockerfile
+    volumes:
+      - ./:/app
     container_name: lonlygames-rest
     ports:
       - "8082:8080"
@@ -62,7 +64,6 @@ services:
       lonlygames:
         ipv4_address: 192.168.1.5
 
-
 networks:
   lonlygames:
     driver: bridge
@@ -71,4 +72,5 @@ networks:
         - subnet: 192.168.1.0/24
 
 volumes:
-  lonlygames-mysql-volume:
+  lonlygames-mysql-volume: {}
+  lonlygames-mysql-workbench-volume: {}
