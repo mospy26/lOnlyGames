@@ -26,6 +26,7 @@ services:
       dockerfile: docker/lonlygames-docker.Dockerfile
     volumes:
       - ./:/app
+      - lonlygames-rest-volume:/root/.m2
     container_name: lonlygames-rest
     ports:
       - "8082:8080"
@@ -73,3 +74,4 @@ networks:
 
 volumes:
   lonlygames-mysql-volume: {}
+  lonlygames-rest-volume: {}
