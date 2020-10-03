@@ -1,6 +1,6 @@
 # lOnlyGames
 
-## Front end 
+## Front end
 Make sure you're in the directory of front end and run: `npm start`
 
 
@@ -11,14 +11,17 @@ Make sure you're in the directory of front end and run: `npm start`
 You can dockerize every service. For ease of development, we have provided a script called `run.sh`. This option lets you dockerize every service and includes `nginx`, a load balancer. If you only want to dockerize the mysql db, then follow instructions on 2. instead.
 
 1. Make sure you install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) in your computer
+(If docker compose does not work, install it using pip3 i.e. `pip3 install docker-compose`)
 2. Download the repository, and `cd backend`
 3. Run `./run.sh run` and wait until the program finishes.
 4. Wait for a few minutes (this will only be needed in the first run).
-5. Do not stop any container.
-6. Visit `localhost` at port `80` and your spring application should be running there.
+5. Visit `localhost` at port `80` and your spring application should be running there.
 
 ###### What if there are changes to the application, does it reflect?
 Yes, every time you make a change it will automatically reload in the docker container.
+
+###### Database management
+You can visit `localhost:8081` that will open adminer, which allows db management of the mysql data.
 
 ###### Stopping the application
 
@@ -36,13 +39,15 @@ You can still run the application on your computer while having docker run the d
 ./run.sh db-only
 mvn spring-boot:run
 ```
+###### Database management
+You can visit `localhost:8081` that will open adminer, which allows db management of the mysql data.
+
+###### What if there are changes to the application, does it reflect?
+Yes, every time you make a change, the spring application should automatically reload.
 
 ###### Stopping the application
 
-You can kill the mvn process through hitting `ctrl+c` in the terminal. And, you can stop the db container using:
-```bash
-./run.sh stop
-```
+You can kill the mvn process through hitting `ctrl+c` in the terminal. And, you can stop the db container using: `./run.sh stop`
 
 ### 3. Without Docker at all
 
