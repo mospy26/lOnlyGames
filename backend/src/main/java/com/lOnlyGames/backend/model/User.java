@@ -26,27 +26,27 @@ public class User {
     private Avatar avatar;
 
     // Games
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserGame> games;
 
     // Availabilities
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserAvailability> availabilities;
 
     // Likes
-    @OneToMany(mappedBy = "liker")
+    @OneToMany(mappedBy = "liker", cascade = CascadeType.REMOVE)
     private Set<Liked> likes;
 
     // Liked By
-    @OneToMany(mappedBy="likes")
+    @OneToMany(mappedBy="likes", cascade = CascadeType.REMOVE)
     private Set<Liked> likedBy;
 
     // Blocked
-    @OneToMany(mappedBy = "blocker")
+    @OneToMany(mappedBy = "blocker", cascade = CascadeType.REMOVE)
     private Set<Blocked> blocked;
 
     // Blockers
-    @OneToMany(mappedBy = "blockee")
+    @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 
 }
