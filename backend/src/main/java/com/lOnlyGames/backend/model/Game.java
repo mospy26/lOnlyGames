@@ -14,7 +14,7 @@ public class Game {
     private String apiURL;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
-    private Set<UserGame> game;
+    private Set<UserGame> users;
 
     public String getName() {
         return name;
