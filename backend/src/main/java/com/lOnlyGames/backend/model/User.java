@@ -16,8 +16,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String discordID;
-    private String steamID;
+    private String discordId;
+    private String steamId;
     private String bio;
     private String location;
 

@@ -18,4 +18,6 @@ public class UserGame {
     @MapsId("name")
     @JoinColumn(name = "gameName")
     private Game game;
+
+    public String gameRank;
 }
