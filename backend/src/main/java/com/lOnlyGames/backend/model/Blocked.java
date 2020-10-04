@@ -2,11 +2,9 @@ package com.lOnlyGames.backend.model;
 
 import java.util.Set;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class Blocked {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
