@@ -14,7 +14,7 @@ public class Availability {
     private Timestamp timeStart;
     private Timestamp timeEnd;
 
-	@OneToMany(mappedBy = "availability")
+	@OneToMany(mappedBy = "availability", cascade = CascadeType.REMOVE)
 	private Set<UserAvailability> users;
 
 }

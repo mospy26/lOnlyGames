@@ -14,6 +14,4 @@ public class Avatar {
     @OneToMany(mappedBy = "avatar")
     private Set<User> users;
 
-
-
 }
