@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -10,8 +11,11 @@ public class Liked {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Set<User> users;
+    @ManyToOne
+    private User liker;
 
-    @OneToOne
-    private User thisUser;
+    @ManyToOne
+    private User likes;
+
+    private boolean liked;
 }
