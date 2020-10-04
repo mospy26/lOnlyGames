@@ -1,12 +1,10 @@
 package com.lOnlyGames.backend.model;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 import com.lOnlyGames.backend.model.ModelKeys.UserGameKey;
 
+@Entity
 public class UserGames {
     @EmbeddedId
     private UserGameKey id;
