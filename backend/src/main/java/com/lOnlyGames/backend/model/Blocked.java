@@ -15,4 +15,16 @@ public class Blocked {
 
     @ManyToOne
     private User blockee;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User getBlocker() {
+        return blocker;
+    }
+
+    public User getBlockee() {
+        return blockee;
+    }
 }

@@ -19,6 +19,7 @@ public class User {
     private String steamId;
     private String bio;
     private String location;
+    private Integer numberOfReports;
 
     // Avatars
     @ManyToOne
@@ -48,4 +49,103 @@ public class User {
     @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDiscordId() {
+        return discordId;
+    }
+
+    public String getSteamId() {
+        return steamId;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public Integer getNumberOfReports() {
+        return numberOfReports;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public Set<UserGame> getGames() {
+        return games;
+    }
+
+    public Set<UserAvailability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public Set<Liked> getLikes() {
+        return likes;
+    }
+
+    public Set<Liked> getLikedBy() {
+        return likedBy;
+    }
+
+    public Set<Blocked> getBlocked() {
+        return blocked;
+    }
+
+    public Set<Blocked> getBlockers() {
+        return blockers;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDiscordId(String discordId) {
+        this.discordId = discordId;
+    }
+
+    public void setSteamId(String steamId) {
+        this.steamId = steamId;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setNumberOfReports(Integer numberOfReports) {
+        this.numberOfReports = numberOfReports;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
+    }
 }
