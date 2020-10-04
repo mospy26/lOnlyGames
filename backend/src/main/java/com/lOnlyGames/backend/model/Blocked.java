@@ -10,8 +10,9 @@ public class Blocked {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Set<User> users;
+    @ManyToOne
+    private User blocker;
 
-    @OneToOne
-    private User thisUser;
+    @ManyToOne
+    private User blockee;
 }

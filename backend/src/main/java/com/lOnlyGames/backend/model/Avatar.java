@@ -11,6 +11,6 @@ public class Avatar {
     private int id;
     private String avatarURL;
 
-    @OneToMany(mappedBy = "avatars")
+    @OneToMany(mappedBy = "avatar")
     private Set<User> users;
 }
