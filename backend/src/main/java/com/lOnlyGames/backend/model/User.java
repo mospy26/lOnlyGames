@@ -12,7 +12,6 @@ public class User {
     // User's properties
     @Id
     private String username;
-
     private String firstName;
     private String lastName;
     private String email;
@@ -41,11 +40,11 @@ public class User {
     @OneToMany(mappedBy="likes", cascade = CascadeType.REMOVE)
     private Set<Liked> likedBy;
 
-    // Blocked
+    // THIS user's block list
     @OneToMany(mappedBy = "blocker", cascade = CascadeType.REMOVE)
     private Set<Blocked> blocked;
 
-    // Blockers
+    // The users who blocked THIS person
     @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 
