@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -12,6 +13,6 @@ public class Game {
     private String iconURL;
     private String apiURL;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private Set<UserGame> game;
 }
