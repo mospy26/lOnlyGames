@@ -14,4 +14,11 @@ public class Avatar {
     @OneToMany(mappedBy = "avatar")
     private Set<User> users;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
 }

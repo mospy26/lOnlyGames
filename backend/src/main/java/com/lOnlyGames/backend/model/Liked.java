@@ -18,4 +18,24 @@ public class Liked {
     private User likes;
 
     private boolean liked;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User getLiker() {
+        return liker;
+    }
+
+    public User getLikes() {
+        return likes;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
 }

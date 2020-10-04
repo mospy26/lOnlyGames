@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 public class UserGame {
+
     @EmbeddedId
     private UserGameCK id;
 
@@ -20,4 +21,24 @@ public class UserGame {
     private Game game;
 
     public String gameRank;
+
+    public String getGameRank() {
+        return gameRank;
+    }
+
+    public void setGameRank(String gameRank) {
+        this.gameRank = gameRank;
+    }
+
+    public UserGameCK getId() {
+        return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Game getGame() {
+        return game;
+    }
 }
