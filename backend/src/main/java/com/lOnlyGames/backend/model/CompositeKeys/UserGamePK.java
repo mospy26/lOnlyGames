@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend.model;
+package com.lOnlyGames.backend.model.CompositeKeys;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
