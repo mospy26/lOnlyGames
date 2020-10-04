@@ -24,7 +24,7 @@ public class User {
     // Availabilities 
     @ManyToMany
     @JoinTable(
-        name="UserAvailabilities",
+        name="user_availability",
         joinColumns = @JoinColumn(name="username"),
         inverseJoinColumns = @JoinColumn(name="avaliability_id")
     )
@@ -34,9 +34,9 @@ public class User {
     @ManyToOne
     private Avatar avatar;
 
-//    // Games
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Set<UserGames> games;
+    // Games
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserGame> games;
 
     // Likes
     @OneToMany(mappedBy = "liker")
