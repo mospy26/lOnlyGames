@@ -21,15 +21,6 @@ public class User {
     private String bio;
     private String location;
 
-    // Availabilities 
-    @ManyToMany
-    @JoinTable(
-        name="user_availability",
-        joinColumns = @JoinColumn(name="username"),
-        inverseJoinColumns = @JoinColumn(name="avaliability_id")
-    )
-    private Set<Availability> availabilities;
-
     // Avatars
     @ManyToOne
     private Avatar avatar;
@@ -37,6 +28,10 @@ public class User {
     // Games
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserGame> games;
+
+    // Availabilities
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserAvailability> availabilities;
 
     // Likes
     @OneToMany(mappedBy = "liker")

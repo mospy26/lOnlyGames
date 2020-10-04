@@ -1,13 +1,13 @@
 package com.lOnlyGames.backend.model;
 
-import com.lOnlyGames.backend.model.CompositeKeys.UserGamePK;
+import com.lOnlyGames.backend.model.CompositeKeys.UserGameCK;
 
 import javax.persistence.*;
 
 @Entity
 public class UserGame {
     @EmbeddedId
-    private UserGamePK id;
+    private UserGameCK id;
 
     @ManyToOne
     @MapsId("username")

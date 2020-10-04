@@ -4,9 +4,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class UserGamePK implements Serializable {
+public class UserAvailabilityCK implements Serializable {
 
     private String username;
-    private String gameName;
+    private Integer availabilityId;
 
 }
