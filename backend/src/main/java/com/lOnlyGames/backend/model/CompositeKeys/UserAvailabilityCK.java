@@ -1,12 +1,14 @@
 package com.lOnlyGames.backend.model.CompositeKeys;
 
+import com.lOnlyGames.backend.model.Availability;
+import com.lOnlyGames.backend.model.User;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
 public class UserAvailabilityCK implements Serializable {
 
-    private String username;
-    private Integer availabilityId;
+    private User user;
+    private Availability availability;
 
 }

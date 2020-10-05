@@ -1,12 +1,14 @@
 package com.lOnlyGames.backend.model.CompositeKeys;
 
+import com.lOnlyGames.backend.model.Game;
+import com.lOnlyGames.backend.model.User;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
 public class UserGameCK implements Serializable {
 
-    private String username;
-    private String gameName;
+    private User user;
+    private Game game;
 
 }
