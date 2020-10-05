@@ -8,7 +8,12 @@ import java.io.Serializable;
 
 public class UserGameCK implements Serializable {
 
-    private User user;
-    private Game game;
+    private String user; // Must have the same name AND same PK type as the connected entity
+    private String game;
 
+    public UserGameCK() {}
+    public UserGameCK(String user, String game) {
+        this.user = user;
+        this.game = game;
+    }
 }

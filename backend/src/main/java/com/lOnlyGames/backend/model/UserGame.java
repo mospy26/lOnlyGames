@@ -20,8 +20,10 @@ public class UserGame {
     @Id
     private Game game;
 
-    public UserGame() {
-
+    public UserGame() { }
+    public UserGame(User user, Game game) {
+        this.user = user;
+        this.game = game;
     }
 
     public String gameRank;
