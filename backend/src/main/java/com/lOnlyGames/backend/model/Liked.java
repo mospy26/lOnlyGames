@@ -17,8 +17,6 @@ public class Liked {
     @ManyToOne
     private User likes;
 
-    private boolean liked;
-
     public Liked() {
 
     }
@@ -38,13 +36,5 @@ public class Liked {
 
     public User getLikes() {
         return likes;
-    }
-
-    public boolean isLiked() {
-        return liked;
-    }
-
-    public void setLiked(boolean liked) {
-        this.liked = liked;
     }
 }
