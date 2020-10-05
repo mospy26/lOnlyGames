@@ -90,4 +90,5 @@ public class UserRepositoryTests {
         assertEquals(object.getNumberOfReports(), 1);
 
     }
+
 }

@@ -1,7 +1,5 @@
 package com.lOnlyGames.backend.model;
 
-import javassist.bytecode.analysis.ControlFlow;
-
 import java.util.Set;
 
 import javax.persistence.*;

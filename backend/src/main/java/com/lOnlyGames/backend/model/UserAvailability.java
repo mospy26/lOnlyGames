@@ -23,6 +23,11 @@ public class UserAvailability {
 
     }
 
+    public UserAvailability(User user, Availability availability) {
+        this.user = user;
+        this.availability = availability;
+    }
+
     public UserAvailabilityCK getId() {
         return id;
     }
