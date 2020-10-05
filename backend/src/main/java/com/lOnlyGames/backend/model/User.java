@@ -113,6 +113,9 @@ public class User {
         return blockers;
     }
 
+    public User(String Fname, String User, String password) {
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
