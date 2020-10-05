@@ -19,6 +19,15 @@ public class Liked {
 
     private boolean liked;
 
+    public Liked() {
+
+    }
+
+    public Liked(User a, User b) {
+        this.liker = a;
+        this.likes = b;
+    }
+
     public Integer getId() {
         return id;
     }

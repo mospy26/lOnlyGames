@@ -49,6 +49,15 @@ public class User {
     @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 
+    public User() {
+        this.numberOfReports = 0;
+    }
+
+    public User(String username) {
+        this.username = username;
+        this.numberOfReports = 0;
+    }
+
     public String getUsername() {
         return username;
     }

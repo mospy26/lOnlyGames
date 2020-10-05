@@ -16,6 +16,15 @@ public class Blocked {
     @ManyToOne
     private User blockee;
 
+    public Blocked(User blocker, User blockee) {
+        this.blocker = blocker;
+        this.blockee = blockee;
+    }
+
+    public Blocked() {
+
+    }
+
     public Integer getId() {
         return id;
     }

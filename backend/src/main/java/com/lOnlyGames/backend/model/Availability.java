@@ -17,6 +17,10 @@ public class Availability {
 	@OneToMany(mappedBy = "availability", cascade = CascadeType.REMOVE)
 	private Set<UserAvailability> users;
 
+	public Availability() {
+
+    }
+
     public Integer getId() {
         return id;
     }

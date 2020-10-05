@@ -16,6 +16,10 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private Set<UserGame> users;
 
+    public Game() {
+
+    }
+
     public String getName() {
         return name;
     }
