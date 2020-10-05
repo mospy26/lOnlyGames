@@ -20,6 +20,10 @@ public class UserGame {
     @JoinColumn(name = "gameName")
     private Game game;
 
+    public UserGame() {
+
+    }
+
     public String gameRank;
 
     public String getGameRank() {
