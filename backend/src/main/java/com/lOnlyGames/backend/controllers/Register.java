@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping(value = "/api/v1/register")
 public class Register {
 
-    @PostMapping(path = "/Register")
+    @PostMapping(path = "")
     public @ResponseBody String registerUser(@RequestParam String Fname, @RequestParam String Lname, @RequestParam String email, @RequestParam String password)
     { return "TO-DO";}
+
+
 
 
 
