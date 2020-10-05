@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -24,23 +25,29 @@ public class UserRepositoryTests {
     private UserRepository repository;
 
     @Test
-    public void createTestUser() {
-        User user = repository.save(new User("yeeted"));
-        assertNotNull(user);
+    public void testCreateUser() {
+        String name = "user101";
+        User user = repository.save(new User(name));
+
+        // Find the User
+        Optional<User> userFound = repository.findById(name);
+        assertNotNull(userFound);
+        assertEquals(userFound.get().getUsername(), name);
     }
 
     @Test
-    public void testFindUser() {
-        String name = "yeeted";
-        Optional<User> user = repository.findById(name);
-        assertNotNull(user);
-        assertEquals(user.get().getUsername(), name);
+    public void testDeleteUser() {
+        User user = repository.save(new User("user101"));
+        assertTrue(repository.findById("user101").isPresent());
+        repository.delete(repository.findById("user101").get());
+        assertFalse(repository.findById("user101").isPresent());
     }
 
     @Test
     public void testNotFoundUser() {
-        String name = "lol";
-        assertFalse(repository.findById(name).isPresent());
+        User user = new User("XD");
+        repository.save(user);
+        assertFalse(repository.findById("XD123").isPresent());
     }
 
     @Test
@@ -78,6 +85,7 @@ public class UserRepositoryTests {
         assertEquals(object.getLocation(), user.get("location"));
         assertEquals(object.getNumberOfReports(), 0);
 
+        // Test Whether setters work
         object.setNumberOfReports(object.getNumberOfReports() + 1);
         assertEquals(object.getNumberOfReports(), 1);
 
