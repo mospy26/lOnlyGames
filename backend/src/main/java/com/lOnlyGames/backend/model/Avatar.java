@@ -7,19 +7,14 @@ import javax.persistence.*;
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     private String avatarURL;
 
     @OneToMany(mappedBy = "avatar")
     private Set<User> users;
 
-    public Avatar() {
-
-    }
-
-    public int getId() {
-        return id;
+    public Avatar() { }
+    public Avatar(String avatarURL) {
+        this.avatarURL = avatarURL;
     }
 
     public String getAvatarURL() {

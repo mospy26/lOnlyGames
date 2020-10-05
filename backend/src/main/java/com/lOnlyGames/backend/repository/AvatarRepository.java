@@ -5,4 +5,5 @@ import com.lOnlyGames.backend.model.Avatar;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AvatarRepository extends CrudRepository<Avatar, Integer> {
+    public Avatar findByAvatarURL(String url);
 }
