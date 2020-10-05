@@ -19,6 +19,10 @@ public class Liked {
 
     private boolean liked;
 
+    public Liked() {
+
+    }
+
     public Integer getId() {
         return id;
     }

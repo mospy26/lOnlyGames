@@ -19,6 +19,10 @@ public class UserAvailability {
     @JoinColumn(name = "availabilityId")
     private Availability availability;
 
+    public UserAvailability() {
+
+    }
+
     public UserAvailabilityCK getId() {
         return id;
     }
