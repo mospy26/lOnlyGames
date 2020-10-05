@@ -1,10 +1,8 @@
 package com.lOnlyGames.backend;
 
-import com.lOnlyGames.backend.model.Avatar;
 import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
-import com.lOnlyGames.backend.repository.AvatarRepository;
 import com.lOnlyGames.backend.repository.GameRepository;
 import com.lOnlyGames.backend.repository.UserGameRepository;
 import com.lOnlyGames.backend.repository.UserRepository;

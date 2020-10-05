@@ -18,11 +18,8 @@ public class User {
     private String steamId;
     private String bio;
     private String location;
+    private String avatarURL;
     private Integer numberOfReports;
-
-    // Avatars
-    @ManyToOne
-    private Avatar avatar;
 
     // Games
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -93,10 +90,6 @@ public class User {
         return numberOfReports;
     }
 
-    public Avatar getAvatar() {
-        return avatar;
-    }
-
     public Set<UserGame> getGames() {
         return games;
     }
@@ -153,7 +146,4 @@ public class User {
         this.numberOfReports = numberOfReports;
     }
 
-    public void setAvatar(Avatar avatar) {
-        this.avatar = avatar;
-    }
 }
