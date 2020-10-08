@@ -1,0 +1,41 @@
+.background {
+    background-image: url("../resources/background-image.jpg");
+ }
+
+ .logo-img {
+     /* height: 250px;
+     padding-top: 10em; */
+ }
+
+ .banner-text {
+     background-color: white;
+     opacity: .8;
+     width: 75%;
+     margin: auto;
+     border-radius: 10px;
+ }
+
+.banner-text p {
+    color: black;
+}
+
+ .banner-text h1 {
+     color: black;
+ }
+
+
+ .button-container {
+
+}
+
+.button-container button {
+    background-color: #4BAFEA;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    outline: 0;
+    text-transform: uppercase;
+    box-shadow: 0px 2px 2px lightgray;
+    margin-left: 10px;
+    margin-top: 10px;
+ }
