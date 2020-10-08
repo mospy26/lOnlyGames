@@ -18,7 +18,7 @@ class Home extends Component {
                 />
 
                 <div className="banner-text">
-                    <h1>Welcome to lOnlyGames</h1>
+                    <h1>18+ ONLY</h1>
                     <p>
                         lOnlyGames is a social gaming collaboration platform, 
                         aimed at connecting users with similar gaming interests. 
