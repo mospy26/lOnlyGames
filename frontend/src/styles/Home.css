@@ -1,10 +1,17 @@
 .background {
-    background-image: url("../resources/background-image.jpg");
+    /* background-image: url("../resources/background-image.jpg"); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
  }
 
  .logo-img {
-     /* height: 250px;
-     padding-top: 10em; */
+    width: 5%;
+    transform: scale(10);
+    margin-top: 10%;
+    margin-bottom: 10%;
  }
 
  .banner-text {
