@@ -8,5 +8,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface BlockedRepository extends CrudRepository<Blocked, Integer> {
     public Blocked findByBlocker(User user);
-    public Blocked findByBlockee(User user);
 }
