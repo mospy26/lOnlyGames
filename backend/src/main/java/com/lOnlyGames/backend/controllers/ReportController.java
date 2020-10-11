@@ -19,7 +19,7 @@ public class ReportController {
 
 
     @RequestMapping (value = "/reports")
-    public @ResponseBody String getReports()
+    public @ResponseBody String getReports(@RequestBody User user)
     {
         return " TO-DO : takes a user as the parameter and returns everyone who reported them";
     }
