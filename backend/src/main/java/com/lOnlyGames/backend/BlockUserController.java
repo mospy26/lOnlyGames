@@ -17,7 +17,7 @@ public class BlockUserController {
     private BlockedDAO blockedDAO;
 
     @GetMapping("/allBlockedUsers")
-    public @ResponseBody List<Blocked> allBlockedByUser(@RequestParam String blkr_username) {
+    public @ResponseBody List<String> allBlockedByUser(@RequestParam String blkr_username) {
         return blockedDAO.allBlockedByUser(blkr_username);
     }
 

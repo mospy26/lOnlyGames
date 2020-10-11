@@ -19,9 +19,14 @@ public class BlockedDAO {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Blocked> allBlockedByUser(String username){
+    public List<String> allBlockedByUser(String username){
         List<Blocked> blockedUsers = blockedRepository.findByBlocker(userRepository.findById(username).get());
-        return blockedUsers;
+        var listBlocks = new ArrayList<String>();
+        for(Blocked blocked:blockedUsers)
+        {
+            listBlocks.add(blocked.getBlockee().getUsername());
+        }
+        return listBlocks;
 
     }
 
@@ -35,6 +40,6 @@ public class BlockedDAO {
 
         //saves the blocked item to the db
         blockedRepository.save(block);
-        return blkee_username + "has been blocked.";
+        return blkee_username + " has been blocked.";
     }
 }

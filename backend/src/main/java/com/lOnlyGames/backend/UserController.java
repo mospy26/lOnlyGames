@@ -17,7 +17,7 @@ public class UserController {
     private UserDAO userDAO;
 
     @GetMapping("/all") //Map GET requests
-    public @ResponseBody List<User> getAllUsers() {
+    public @ResponseBody List<String> getAllUsers() {
         // This returns a JSON or XML with the users
         //UserDAO dao = new UserDAO();
         return userDAO.getAllUsers();
