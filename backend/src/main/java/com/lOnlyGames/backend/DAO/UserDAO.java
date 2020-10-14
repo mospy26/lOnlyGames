@@ -1,6 +1,9 @@
 package com.lOnlyGames.backend.DAO;
 
 import com.lOnlyGames.backend.model.User;
+import com.lOnlyGames.backend.model.UserGame;
+import com.lOnlyGames.backend.repository.GameRepository;
+import com.lOnlyGames.backend.repository.UserGameRepository;
 import com.lOnlyGames.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,12 @@ public class UserDAO {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private GameRepository gameRepository;
+
+    @Autowired
+    private UserGameRepository userGameRepository;
+
     public List<String> getAllUsers(){
 
         var it = userRepository.findAll();
@@ -22,14 +31,23 @@ public class UserDAO {
 
         return users;
     }
-    public String addUser(String name){
-        User user = new User(name);
-        if(userRepository.findById(name).isPresent()){
+    public String addUser(User user){
+        if(userRepository.findById(user.getUsername()).isPresent()){
             return "Username already exists\nPlease select another.";
         }
         else{
             userRepository.save(user);
-            return "Saved\n" + name + " has been added.";
+            return "Saved\n" + user.getUsername() + " has been added.";
         }
+    }
+
+    public String addGame(UserGame userGame){
+        if(!gameRepository.findById(userGame.getGame().getName()).isPresent()){
+            //Game is not already present.
+            //Save the game
+            gameRepository.save(userGame.getGame());
+        }
+        userGameRepository.save(userGame);
+        return "Game and userGame objects created.";
     }
 }
