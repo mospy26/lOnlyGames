@@ -26,21 +26,21 @@ public class BlockedRepositoryTests {
     @Autowired
     private BlockedRepository block;
 
-    @Test
-    public void TestUserABlockedUserB() {
-        User eGirl = new User("EGrill123");
-        User eBoy = new User("EBoy123");
-        user.save(eGirl);
-        user.save(eBoy);
-
-        Blocked blocked = new Blocked(user.findById("EBoy123").get(), user.findById("EGrill123").get());
-        block.save(blocked);
-
-        Blocked foundFromDB = block.findByBlocker(user.findById("EBoy123").get());
-        assertNotNull(foundFromDB);
-
-        // Better to extract the username and compare from there
-        assertEquals("EBoy123", foundFromDB.getBlocker().getUsername());
-        assertEquals("EGrill123", foundFromDB.getBlockee().getUsername());
-    }
+//    @Test
+//    public void TestUserABlockedUserB() {
+//        User eGirl = new User("EGrill123");
+//        User eBoy = new User("EBoy123");
+//        user.save(eGirl);
+//        user.save(eBoy);
+//
+//        Blocked blocked = new Blocked(user.findById("EBoy123").get(), user.findById("EGrill123").get());
+//        block.save(blocked);
+//
+//        Blocked foundFromDB = block.findByBlocker(user.findById("EBoy123").get());
+//        assertNotNull(foundFromDB);
+//
+//        // Better to extract the username and compare from there
+//        assertEquals("EBoy123", foundFromDB.getBlocker().getUsername());
+//        assertEquals("EGrill123", foundFromDB.getBlockee().getUsername());
+//    }
 }
