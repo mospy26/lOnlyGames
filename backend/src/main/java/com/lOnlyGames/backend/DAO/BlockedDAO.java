@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend;
+package com.lOnlyGames.backend.DAO;
 
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;

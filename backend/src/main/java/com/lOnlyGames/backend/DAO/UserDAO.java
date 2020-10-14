@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend;
+package com.lOnlyGames.backend.DAO;
 
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.repository.UserRepository;
