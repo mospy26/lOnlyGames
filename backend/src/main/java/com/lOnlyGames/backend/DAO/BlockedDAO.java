@@ -20,34 +20,13 @@ public class BlockedDAO {
     @Autowired
     private UserRepository userRepository;
 
-    public List<String> allBlockedByUser(User user){
-        try{
-            List<Blocked> blockedUsers = blockedRepository.findByBlocker(user);
-            var listBlocks = new ArrayList<String>();
-            for(Blocked blocked:blockedUsers)
-            {
-                listBlocks.add(blocked.getBlockee().getUsername());
-            }
-            return listBlocks;
-        } catch(NoSuchElementException e){
-            var error = new ArrayList<String>();
-            error.add("User does not exist. Please enter a different username.");
-            return error;
-        }
+    public BlockedRepository getBlockedRepository() {
+        return blockedRepository;
     }
-
-    public String blockUser(Blocked block){
-        //User who is doing the blocking
-        try{
-            //User doing the blocking
-            User blocker = userRepository.findById(block.getBlocker().getUsername()).get();
-            //User who has been blocked
-            User blockee = userRepository.findById(block.getBlockee().getUsername()).get();
-            //saves the blocked item to the db
-            blockedRepository.save(block);
-            return block.getBlockee().getUsername() + " has been blocked.";
-        } catch(NoSuchElementException e){
-            return "Blocker or blockee missing from database. Please try again.";
-        }
+    public UserRepository getUserRepository(){
+        return userRepository;
+    }
+    public void blockUser(Blocked block){
+        blockedRepository.save(block);
     }
 }
