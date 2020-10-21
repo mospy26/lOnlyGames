@@ -16,9 +16,6 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserGameRepository userGameRepository;
-
-    @Autowired
     private UserDAO userDAO;
 
     public List<String> getAllUsers(){
