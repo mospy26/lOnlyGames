@@ -1,11 +1,17 @@
 package com.lOnlyGames.backend.model;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Entity
-public class User {
+public class User implements UserDetails {
 
     // User's properties
     @Id
@@ -21,6 +27,8 @@ public class User {
     private String avatarURL;
     private Integer numberOfReports;
 
+    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     // Games
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserGame> games;
@@ -34,7 +42,7 @@ public class User {
     private Set<Liked> likes;
 
     // Liked By
-    @OneToMany(mappedBy="likes", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "likes", cascade = CascadeType.REMOVE)
     private Set<Liked> likedBy;
 
     // THIS user's block list
@@ -47,6 +55,14 @@ public class User {
 
     public User() {
         this.numberOfReports = 0;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public User(String username) {
@@ -144,6 +160,36 @@ public class User {
 
     public void setNumberOfReports(Integer numberOfReports) {
         this.numberOfReports = numberOfReports;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

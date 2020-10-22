@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserDAO {
@@ -31,5 +32,13 @@ public class UserDAO {
             userRepository.save(user);
             return "Saved\n" + name + " has been added.";
         }
+    }
+
+    public User getUser(String username) throws Exception {
+        Optional<User> user = userRepository.findById(username);
+
+        if (!user.isPresent()) throw new Exception("User not found");
+
+        return user.get();
     }
 }
