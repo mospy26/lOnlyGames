@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lOnlyGames.backend.model.CompositeKeys.UserAvailabilityCK;
 
 import javax.persistence.*;
@@ -8,12 +9,14 @@ import javax.persistence.*;
 @IdClass(UserAvailabilityCK.class)
 public class UserAvailability {
 
+    //@JsonManagedReference
     @ManyToOne
     @MapsId("username")
     @JoinColumn(name = "username")
     @Id
     private User user;
 
+    //@JsonManagedReference
     @ManyToOne
     @MapsId("id")
     @JoinColumn(name = "availabilityId")

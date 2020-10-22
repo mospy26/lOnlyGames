@@ -40,6 +40,7 @@ public class UserDAO {
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
     }
+
     public void addUser(User user){
             userRepository.save(user);
     }

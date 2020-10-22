@@ -1,5 +1,8 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
 import javax.persistence.*;
@@ -22,26 +25,32 @@ public class User {
     private Integer numberOfReports;
 
     // Games
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserGame> games;
 
     // Availabilities
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserAvailability> availabilities;
 
     // Likes
+    @JsonIgnore
     @OneToMany(mappedBy = "liker", cascade = CascadeType.REMOVE)
     private Set<Liked> likes;
 
     // Liked By
+    @JsonIgnore
     @OneToMany(mappedBy="likes", cascade = CascadeType.REMOVE)
     private Set<Liked> likedBy;
 
     // THIS user's block list
+    @JsonIgnore
     @OneToMany(mappedBy = "blocker", cascade = CascadeType.REMOVE)
     private Set<Blocked> blocked;
 
     // The users who blocked THIS person
+    @JsonIgnore
     @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 

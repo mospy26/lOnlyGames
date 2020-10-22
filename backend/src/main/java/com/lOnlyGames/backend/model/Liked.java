@@ -1,5 +1,7 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import java.util.Set;
 
@@ -11,9 +13,11 @@ public class Liked {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    //@JsonManagedReference
     @ManyToOne
     private User liker;
 
+    //@JsonManagedReference
     @ManyToOne
     private User likes;
 

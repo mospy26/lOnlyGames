@@ -3,14 +3,9 @@ package com.lOnlyGames.backend.Service;
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
-import com.lOnlyGames.backend.repository.GameRepository;
-import com.lOnlyGames.backend.repository.UserGameRepository;
-import com.lOnlyGames.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Component(value="UserService")
 public class UserService {
@@ -18,14 +13,10 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    public List<String> getAllUsers(){
-
-        var it = userDAO.getAllUsers();
-        var users = new ArrayList<String>();
-        it.forEach(e -> users.add(e.getUsername()));
-
-        return users;
+    public Iterable<User> getAllUsers(){
+        return userDAO.getAllUsers();
     }
+
     public String addUser(User user){
         if(userDAO.getUserRepository().findById(user.getUsername()).isPresent()){
             return "Username already exists\nPlease select another.";
