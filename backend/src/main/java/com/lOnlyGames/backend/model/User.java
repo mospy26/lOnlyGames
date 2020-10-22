@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 public class User implements UserDetails {
@@ -16,6 +14,7 @@ public class User implements UserDetails {
     // User's properties
     @Id
     private String username;
+
     private String password;
     private String firstName;
     private String lastName;
@@ -26,8 +25,6 @@ public class User implements UserDetails {
     private String location;
     private String avatarURL;
     private Integer numberOfReports;
-
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     // Games
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -62,7 +59,7 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = PASSWORD_ENCODER.encode(password);
+        this.password = password;
     }
 
     public User(String username) {

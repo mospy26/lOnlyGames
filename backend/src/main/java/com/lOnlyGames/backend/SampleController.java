@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.lOnlyGames.backend.response.*;
+import com.lOnlyGames.backend.services.UserService;
 import com.lOnlyGames.backend.auth.JwtTokenUtil;
-import com.lOnlyGames.backend.auth.LonlygamesUserDetailsService;
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.repository.BlockedRepository;
@@ -29,43 +31,37 @@ public class SampleController {
     BlockedRepository blocked;
     
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-	private LonlygamesUserDetailsService userDetailsService;
+    UserService userService;
     
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     
     @PostMapping(value="/authenticate")
-    public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> login(@RequestBody User user) throws InvalidCredentialsException {
         authenticate(user.getUsername(), user.getPassword());
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-
-        JwtTokenResponse token = new JwtTokenResponse(jwtTokenUtil.generateToken(userDetails));
-
-        return new ResponseEntity<JwtTokenResponse>(token, HttpStatus.OK);
+        return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
     }
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            User u = userRepository.findByUsernameAndPassword(username, password);
-		} catch (Exception e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
+    @PostMapping(value="/register")
+    public ResponseEntity<?> register(@RequestBody User user) throws InvalidUsernameException {
+        userService.register(user);
+        return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
     }
 
     @GetMapping("/hello")
-    public String hello() {
-        Optional<User> u = userRepository.findById("hello");
-
-        if (!u.isPresent()) {
-            userRepository.save(new User("hello"));
-        }
-
-        User us = userRepository.findById("hello").get();
+    public String hello() throws Exception {
+        User us = userService.getUser("hello");
         List<Blocked> b = blocked.findByBlocker(us);
-        return "hehehehehe";
+        return b.toString();
+    }
+
+    private void authenticate(String username, String password) throws InvalidCredentialsException {
+        userService.authenticate(username, password);
+    }
+
+    private JwtTokenResponse generateTokenResponse(String username) {
+        UserDetails userDetails = userService.loadUserByUsername(username);
+        JwtTokenResponse token = new JwtTokenResponse(jwtTokenUtil.generateToken(userDetails));
+        return token;
     }
 }

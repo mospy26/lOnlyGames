@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.auth;
 
 import com.lOnlyGames.backend.model.User;
+import com.lOnlyGames.backend.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-    private LonlygamesUserDetailsService userDetailsService;
+    private UserService userService;
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
@@ -30,14 +31,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-			.userDetailsService(this.userDetailsService)
+			.userDetailsService(this.userService)
 				.passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-            .authorizeRequests().antMatchers("/authenticate").permitAll()
+            .authorizeRequests().antMatchers("/authenticate", "/register").permitAll()
             .anyRequest().authenticated()
 				.and()
             .formLogin()

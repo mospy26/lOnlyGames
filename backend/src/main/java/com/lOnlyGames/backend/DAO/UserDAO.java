@@ -1,8 +1,11 @@
 package com.lOnlyGames.backend.DAO;
 
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +17,9 @@ public class UserDAO {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<String> getAllUsers(){
 
@@ -41,4 +47,19 @@ public class UserDAO {
 
         return user.get();
     }
+	public User authenticate(String username, String password) {
+        Optional<User> user = userRepository.findById(username);
+        if (!user.isPresent()) throw new InvalidUsernameException();
+        if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
+        
+        return user.get();
+	}
+	public void register(User user) {
+        if (userRepository.findById(user.getUsername()).isPresent()) {
+            throw new InvalidUsernameException();
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+	}
 }
