@@ -1,7 +1,6 @@
 package com.lOnlyGames.backend;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.lOnlyGames.backend.response.*;
 import com.lOnlyGames.backend.services.UserService;
@@ -11,7 +10,6 @@ import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.repository.BlockedRepository;
-import com.lOnlyGames.backend.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path="")
-public class SampleController {
+public class AuthenticationController {
 
     @Autowired
     BlockedRepository blocked;
@@ -48,9 +46,10 @@ public class SampleController {
         return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
     }
 
+    // Example function, needs to be deleted later on
     @GetMapping("/hello")
     public String hello() throws Exception {
-        User us = userService.getUser("hello");
+        User us = userService.getUser("mustafa");
         List<Blocked> b = blocked.findByBlocker(us);
         return b.toString();
     }
