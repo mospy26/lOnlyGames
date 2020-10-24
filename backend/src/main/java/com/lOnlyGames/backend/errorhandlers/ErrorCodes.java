@@ -8,7 +8,10 @@ public class ErrorCodes {
         UNAUTHENTICATED,
         INVALID_CREDS,
         INVALID_DATA,
-        INVALID_USERNAME
+        INVALID_USERNAME,
+        ACCESS_DENIED,
+        PARAMS_MISSING,
+        INTERNAL_ERROR
     }
     
 }

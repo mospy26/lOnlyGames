@@ -46,7 +46,7 @@ public class MatchesService {
 //            }
         }
         if(listUserGames.isEmpty()){
-            return null;
+            return new ArrayList<>();
         }
         return listUserGames;
     }
