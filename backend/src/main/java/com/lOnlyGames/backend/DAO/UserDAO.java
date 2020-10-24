@@ -1,43 +1,62 @@
 package com.lOnlyGames.backend.DAO;
 
+import java.util.Optional;
+
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
+import com.lOnlyGames.backend.model.UserGame;
+import com.lOnlyGames.backend.repository.GameRepository;
+import com.lOnlyGames.backend.repository.UserGameRepository;
 import com.lOnlyGames.backend.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+/*DAO should only be used for remove/update
+insert/select, all other logic should occur
+in the service layer*/
 @Component
 public class UserDAO {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GameRepository gameRepository;
+    @Autowired
+    private UserGameRepository userGameRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<String> getAllUsers(){
-
-        var it = userRepository.findAll();
-        var users = new ArrayList<String>();
-        it.forEach(e -> users.add(e.getUsername()));
-
-        return users;
+    //UserRepository should be accessible from DAO so
+    //business logic can be performed in the Service Layer
+    public UserRepository getUserRepository(){
+        return userRepository;
     }
-    public String addUser(String name){
-        User user = new User(name);
-        if(userRepository.findById(name).isPresent()){
-            return "Username already exists\nPlease select another.";
-        }
-        else{
-            userRepository.save(user);
-            return "Saved\n" + name + " has been added.";
-        }
+    public UserGameRepository getUserGameRepository(){
+        return userGameRepository;
+    }
+    public GameRepository getGameRepository(){
+        return gameRepository;
+    }
+
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public void addUser(User user){
+        userRepository.save(user);
+    }
+
+    public void addGame(Game game){
+        gameRepository.save(game);
+    }
+
+    public void addUserGame(UserGame userGame){
+        userGameRepository.save(userGame);
     }
 
     public User getUser(String username) throws Exception {

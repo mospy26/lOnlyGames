@@ -29,7 +29,7 @@ public class AuthenticationController {
     BlockedRepository blocked;
     
     @Autowired
-    UserService userService;
+    com.lOnlyGames.backend.services.UserService userService;
     
     @Autowired
     private JwtTokenUtil jwtTokenUtil;

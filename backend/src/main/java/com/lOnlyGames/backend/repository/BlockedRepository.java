@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface BlockedRepository extends CrudRepository<Blocked, Integer> {
     //returns all the blocks that a user has made
-    @PreAuthorize("#user?.username == authentication?.name")
+    // @PreAuthorize("#user?.username == authentication?.name")
     public List<Blocked> findByBlocker(User user);
 }
