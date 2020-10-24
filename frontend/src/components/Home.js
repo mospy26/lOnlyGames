@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from './Header'
-import Footer from './Footer'
 import logo from '../resources/logo-photo-with-text.png'
 import "../styles/Home.css"
 import {NavLink} from 'react-router-dom'
