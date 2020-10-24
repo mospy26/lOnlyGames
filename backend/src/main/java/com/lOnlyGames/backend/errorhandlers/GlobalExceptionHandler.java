@@ -27,13 +27,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidUsernameException.class)
     public ResponseEntity<ExceptionResponse> invalidUsername(InvalidUsernameException ex) {
         return new ResponseEntity<ExceptionResponse>(
-                generateExceptionResponse(ErrorCode.INVALID_USERNAME, ex.getMessage()), HttpStatus.NOT_FOUND);
+                generateExceptionResponse(ErrorCode.INVALID_USERNAME, ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ExceptionResponse> invalidUsername(InvalidCredentialsException ex) {
         return new ResponseEntity<ExceptionResponse>(
-                generateExceptionResponse(ErrorCode.INVALID_CREDS, ex.getMessage()), HttpStatus.NOT_FOUND);
+                generateExceptionResponse(ErrorCode.INVALID_CREDS, ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     
@@ -53,10 +53,10 @@ public class GlobalExceptionHandler {
     /**
      * FALLBACK *
      */
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex) {
-        return new ResponseEntity<>(generateExceptionResponse(ErrorCode.INTERNAL_ERROR, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-}
+    // @ExceptionHandler(Exception.class)
+    // public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex) {
+    //     return new ResponseEntity<>(generateExceptionResponse(ErrorCode.INTERNAL_ERROR, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
 
     private ExceptionResponse generateExceptionResponse(ErrorCode code, String message) {
         ExceptionResponse response = new ExceptionResponse();

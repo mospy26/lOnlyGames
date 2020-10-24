@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.lOnlyGames.backend.auth.JwtTokenUtil;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
@@ -43,10 +46,13 @@ public class AuthenticationTests {
 
         User testUser = new User("username");
         testUser.setPassword("password");
+        Map<String, String> creds = new HashMap<>();
+        creds.put("username", "username");
+        creds.put("password", "password");
         when(userService.authenticate("username", "password")).thenReturn(testUser);
         when(userService.loadUserByUsername("username")).thenReturn(testUser);
         when(jwtTokenUtil.generateToken(testUser)).thenReturn("TOKENN");
-        ResponseEntity<JwtTokenResponse> responseEntity = (ResponseEntity<JwtTokenResponse>) authenticationController.login(testUser);
+        ResponseEntity<JwtTokenResponse> responseEntity = (ResponseEntity<JwtTokenResponse>) authenticationController.login(creds);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody().getToken()).isEqualTo("TOKENN");
@@ -59,9 +65,12 @@ public class AuthenticationTests {
 
         User testUser = new User("invalid username");
         testUser.setPassword("password");
+        Map<String, String> creds = new HashMap<>();
+        creds.put("username", "invalid username");
+        creds.put("password", "password");
         when(userService.authenticate("invalid username", "password")).thenThrow(new InvalidCredentialsException());
         Assertions.assertThrows(InvalidCredentialsException.class, () -> {
-            authenticationController.login(testUser);
+            authenticationController.login(creds);
         });
     }
 

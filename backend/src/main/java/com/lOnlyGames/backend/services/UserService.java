@@ -1,13 +1,17 @@
 package com.lOnlyGames.backend.services;
 
+import java.util.Optional;
+
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
@@ -16,6 +20,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -47,10 +54,21 @@ public class UserService implements UserDetailsService {
     }
 
     public User authenticate(String username, String password) throws InvalidCredentialsException {
-        return userDAO.authenticate(username, password);
+        Optional<User> user = userDAO.authenticate(username, password);
+
+        if (!user.isPresent()) throw new InvalidCredentialsException();
+        if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
+
+        return user.get();
     }
 
     public void register(User user) {
+        if (userDAO.getUser(user.getUsername()) != null) {
+            throw new InvalidUsernameException();
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userDAO.register(user);
     }
 

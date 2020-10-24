@@ -1,24 +1,25 @@
 package com.lOnlyGames.backend.model;
 
 import java.util.Collection;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+@JsonIgnoreProperties(value={ "password" }, allowSetters=true)
 @Entity
 public class User implements UserDetails {
 
     // User's properties
     @Id
     private String username;
-
-    @JsonIgnore
     private String password;
     private String firstName;
     private String lastName;

@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lOnlyGames.backend.response.*;
 import com.lOnlyGames.backend.services.UserService;
@@ -35,9 +36,13 @@ public class AuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
     
     @PostMapping(value="/authenticate")
-    public ResponseEntity<?> login(@RequestBody User user) throws InvalidCredentialsException {
-        authenticate(user.getUsername(), user.getPassword());
-        return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
+    public ResponseEntity<?> login(@RequestBody Map<String, String> payload) throws InvalidCredentialsException {
+        if (!payload.containsKey("username") || !payload.containsKey("password")) throw new InvalidCredentialsException("Username or password is missing");
+
+        String username = payload.get("username");
+        String password = payload.get("password");
+        authenticate(username, password);
+        return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(username), HttpStatus.OK);
     }
 
     @PostMapping(value="/register")

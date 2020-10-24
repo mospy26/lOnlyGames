@@ -5,6 +5,7 @@ import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class MatchesService {
     @Autowired
     private BlockedService blockedService;
 
+    @PreAuthorize("#user?.username == authentication?.name")
     public List<List<UserGame>> getMatches(User user){
         //find the list of games played by the user
         List<UserGame> userGames = matchesDAO.getUserGameRepository().findByUser(user);

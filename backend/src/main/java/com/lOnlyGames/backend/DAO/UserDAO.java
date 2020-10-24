@@ -28,9 +28,6 @@ public class UserDAO {
     @Autowired
     private UserGameRepository userGameRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     //UserRepository should be accessible from DAO so
     //business logic can be performed in the Service Layer
     public UserRepository getUserRepository(){
@@ -59,26 +56,19 @@ public class UserDAO {
         userGameRepository.save(userGame);
     }
 
-    public User getUser(String username) throws Exception {
+    public User getUser(String username) {
         Optional<User> user = userRepository.findById(username);
 
-        if (!user.isPresent()) throw new Exception("User not found");
+        if (!user.isPresent()) return null;
 
         return user.get();
     }
-	public User authenticate(String username, String password) {
+	public Optional<User> authenticate(String username, String password) {
         Optional<User> user = userRepository.findById(username);
-        if (!user.isPresent()) throw new InvalidUsernameException();
-        if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
         
-        return user.get();
+        return user;
 	}
 	public void register(User user) {
-        if (userRepository.findById(user.getUsername()).isPresent()) {
-            throw new InvalidUsernameException();
-        }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 	}
 }
