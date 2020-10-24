@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
 #background-spacing > * + * {
     margin-bottom: 200px;
@@ -26,16 +26,16 @@
      width: 75%;
      margin: auto;
      border-radius: 10px;
-     font-family: 'Roboto', sans-serif;
+     font-family: 'Play', sans-serif;
      font-size: xx-large;
  }
 
 .banner-text p {
-    color: black;
+    color: #4BAFEA;
 }
 
  .banner-text h1 {
-     color: black;
+     color: #4BAFEA;
  }
 
 
