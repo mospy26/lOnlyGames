@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lOnlyGames.backend.model.CompositeKeys.UserGameCK;
 
 import javax.persistence.*;
