@@ -1,16 +1,19 @@
 package com.lOnlyGames.backend.DAO;
 
+import java.util.Optional;
+
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.repository.GameRepository;
 import com.lOnlyGames.backend.repository.UserGameRepository;
 import com.lOnlyGames.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 /*DAO should only be used for remove/update
 insert/select, all other logic should occur
@@ -24,6 +27,9 @@ public class UserDAO {
     private GameRepository gameRepository;
     @Autowired
     private UserGameRepository userGameRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //UserRepository should be accessible from DAO so
     //business logic can be performed in the Service Layer
@@ -42,7 +48,7 @@ public class UserDAO {
     }
 
     public void addUser(User user){
-            userRepository.save(user);
+        userRepository.save(user);
     }
 
     public void addGame(Game game){
@@ -52,4 +58,27 @@ public class UserDAO {
     public void addUserGame(UserGame userGame){
         userGameRepository.save(userGame);
     }
+
+    public User getUser(String username) throws Exception {
+        Optional<User> user = userRepository.findById(username);
+
+        if (!user.isPresent()) throw new Exception("User not found");
+
+        return user.get();
+    }
+	public User authenticate(String username, String password) {
+        Optional<User> user = userRepository.findById(username);
+        if (!user.isPresent()) throw new InvalidUsernameException();
+        if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
+        
+        return user.get();
+	}
+	public void register(User user) {
+        if (userRepository.findById(user.getUsername()).isPresent()) {
+            throw new InvalidUsernameException();
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+	}
 }

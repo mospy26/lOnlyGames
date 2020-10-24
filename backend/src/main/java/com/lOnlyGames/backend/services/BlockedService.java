@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend.Service;
+package com.lOnlyGames.backend.services;
 
 import com.lOnlyGames.backend.DAO.BlockedDAO;
 import com.lOnlyGames.backend.model.Blocked;

@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.model;
 
+import java.util.Collection;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -7,12 +8,17 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
-public class User {
+public class User implements UserDetails {
 
     // User's properties
     @Id
     private String username;
+
+    @JsonIgnore
     private String password;
     private String firstName;
     private String lastName;
@@ -56,6 +62,14 @@ public class User {
 
     public User() {
         this.numberOfReports = 0;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User(String username) {
@@ -153,6 +167,41 @@ public class User {
 
     public void setNumberOfReports(Integer numberOfReports) {
         this.numberOfReports = numberOfReports;
+    }
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

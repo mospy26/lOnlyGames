@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend.Service;
+package com.lOnlyGames.backend.services;
 
 import com.lOnlyGames.backend.DAO.MatchesDAO;
 import com.lOnlyGames.backend.model.Blocked;
@@ -46,7 +46,7 @@ public class MatchesService {
 //            }
         }
         if(listUserGames.isEmpty()){
-            return null;
+            return new ArrayList<>();
         }
         return listUserGames;
     }
