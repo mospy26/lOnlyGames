@@ -5,10 +5,9 @@ import logo from '../resources/logo-photo-with-text.png'
 import "../styles/Home.css"
 import {NavLink} from 'react-router-dom'
 
-class Home extends Component {
-
-    render() {
-        return(
+const Home = () => {
+    return(
+        <React.Fragment>
             <div className="background">
                 {/* <Header /> */}
                 <img src={logo} alt="logo" className="logo-img"/>
@@ -34,8 +33,9 @@ class Home extends Component {
 
                 <Footer />
             </div>
-        )
-    }
+        </React.Fragment>
+        
+    )
 }
 
 export default Home;
