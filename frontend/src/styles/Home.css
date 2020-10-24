@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+#background-spacing > * + * {
+    margin-bottom: 200px;
+}
+
 .background {
     /* background-image: url("../resources/background-image.jpg"); */
     background-position: center;
@@ -15,11 +21,13 @@
  }
 
  .banner-text {
-     background-color: white;
+     /* background-color: white; */
      opacity: .8;
      width: 75%;
      margin: auto;
      border-radius: 10px;
+     font-family: 'Roboto', sans-serif;
+     font-size: xx-large;
  }
 
 .banner-text p {
@@ -31,18 +39,27 @@
  }
 
 
- .button-container {
-
+.button-container {
+    
 }
 
 .button-container button {
     background-color: #4BAFEA;
-    color: white;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
     padding: 5px 15px;
     border-radius: 5px;
     outline: 0;
     text-transform: uppercase;
-    box-shadow: 0px 2px 2px lightgray;
     margin-left: 10px;
     margin-top: 10px;
+    transition-duration: 0.4s;
+
+ }
+
+ .button-container button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
  }
