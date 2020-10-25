@@ -1,17 +1,26 @@
 package com.lOnlyGames.backend.model;
 
-import javassist.bytecode.analysis.ControlFlow;
+import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@JsonIgnoreProperties(value={ "password" }, allowSetters=true)
 @Entity
-public class User {
+public class User implements UserDetails {
 
     // User's properties
     @Id
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,38 +28,49 @@ public class User {
     private String steamId;
     private String bio;
     private String location;
+    private String avatarURL;
     private Integer numberOfReports;
 
-    // Avatars
-    @ManyToOne
-    private Avatar avatar;
-
     // Games
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserGame> games;
 
     // Availabilities
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<UserAvailability> availabilities;
 
     // Likes
+    @JsonIgnore
     @OneToMany(mappedBy = "liker", cascade = CascadeType.REMOVE)
     private Set<Liked> likes;
 
     // Liked By
+    @JsonIgnore
     @OneToMany(mappedBy="likes", cascade = CascadeType.REMOVE)
     private Set<Liked> likedBy;
 
     // THIS user's block list
+    @JsonIgnore
     @OneToMany(mappedBy = "blocker", cascade = CascadeType.REMOVE)
     private Set<Blocked> blocked;
 
     // The users who blocked THIS person
+    @JsonIgnore
     @OneToMany(mappedBy = "blockee", cascade = CascadeType.REMOVE)
     private Set<Blocked> blockers;
 
     public User() {
         this.numberOfReports = 0;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User(String username) {
@@ -92,10 +112,6 @@ public class User {
 
     public Integer getNumberOfReports() {
         return numberOfReports;
-    }
-
-    public Avatar getAvatar() {
-        return avatar;
     }
 
     public Set<UserGame> getGames() {
@@ -157,7 +173,39 @@ public class User {
         this.numberOfReports = numberOfReports;
     }
 
-    public void setAvatar(Avatar avatar) {
-        this.avatar = avatar;
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        return null;
     }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

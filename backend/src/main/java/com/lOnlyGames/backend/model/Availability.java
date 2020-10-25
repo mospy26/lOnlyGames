@@ -17,8 +17,11 @@ public class Availability {
 	@OneToMany(mappedBy = "availability", cascade = CascadeType.REMOVE)
 	private Set<UserAvailability> users;
 
-	public Availability() {
+	public Availability() {}
 
+	public Availability(Timestamp timeStart, Timestamp timeEnd) {
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
 
     public Integer getId() {

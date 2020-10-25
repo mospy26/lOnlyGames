@@ -1,5 +1,7 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 import java.util.Set;
 
@@ -11,13 +13,13 @@ public class Liked {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    //@JsonManagedReference
     @ManyToOne
     private User liker;
 
+    //@JsonManagedReference
     @ManyToOne
     private User likes;
-
-    private boolean liked;
 
     public Liked() {
 
@@ -38,13 +40,5 @@ public class Liked {
 
     public User getLikes() {
         return likes;
-    }
-
-    public boolean isLiked() {
-        return liked;
-    }
-
-    public void setLiked(boolean liked) {
-        this.liked = liked;
     }
 }
