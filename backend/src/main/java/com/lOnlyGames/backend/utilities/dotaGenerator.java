@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend.utilities;
-
-public class dotaGenerator {
-}
+//package com.lOnlyGames.backend.utilities;
+//
+//public class dotaGenerator {
+//}
