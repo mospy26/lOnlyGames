@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.DAO;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
@@ -70,5 +71,9 @@ public class UserDAO {
 	}
 	public void register(User user) {
         userRepository.save(user);
-	}
+    }
+    
+    public List<User> findUsersStartWith(String username) {
+        return userRepository.findByUsernameStartsWith(username);
+    }
 }

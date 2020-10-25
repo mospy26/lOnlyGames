@@ -1,5 +1,7 @@
 package com.lOnlyGames.backend.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.lOnlyGames.backend.DAO.UserDAO;
@@ -70,6 +72,10 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userDAO.register(user);
+    }
+
+    public List<User> getUsersWithNameLike(String partialUsername) {
+        return userDAO.findUsersStartWith(partialUsername);
     }
 
     @Override

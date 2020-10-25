@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend;
+package com.lOnlyGames.backend.controllers;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="")
+@RequestMapping(path="/api/v1/auth")
 public class AuthenticationController {
-
-    @Autowired
-    BlockedRepository blocked;
     
     @Autowired
     com.lOnlyGames.backend.services.UserService userService;
@@ -35,13 +32,13 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     
-    @PostMapping(value="/authenticate")
+    @PostMapping(value="/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> payload) throws InvalidCredentialsException {
         if (!payload.containsKey("username") || !payload.containsKey("password")) throw new InvalidCredentialsException("Username or password is missing");
 
         String username = payload.get("username");
         String password = payload.get("password");
-        authenticate(username, password);
+        userService.authenticate(username, password);
         return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(username), HttpStatus.OK);
     }
 
@@ -49,18 +46,6 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@RequestBody User user) throws InvalidUsernameException {
         userService.register(user);
         return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
-    }
-
-    // Example function, needs to be deleted later on
-    @GetMapping("/hello")
-    public String hello() throws Exception {
-        User us = userService.getUser("mustafa");
-        List<Blocked> b = blocked.findByBlocker(us);
-        return b.toString();
-    }
-
-    private void authenticate(String username, String password) throws InvalidCredentialsException {
-        userService.authenticate(username, password);
     }
 
     private JwtTokenResponse generateTokenResponse(String username) {

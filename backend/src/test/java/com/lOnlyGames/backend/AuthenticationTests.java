@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.lOnlyGames.backend.auth.JwtTokenUtil;
+import com.lOnlyGames.backend.controllers.AuthenticationController;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.User;

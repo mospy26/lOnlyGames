@@ -47,7 +47,7 @@ case $1 in
         run_database
         ;;
     restart)
-        stop
+        # stop
         run
         ;;
     *)
