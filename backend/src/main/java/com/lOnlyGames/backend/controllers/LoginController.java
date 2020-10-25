@@ -14,11 +14,9 @@ public class LoginController {
     /*
     Cant this test this method until User class has been finalized.
      */
-    @PostMapping("/login")
+    @PostMapping("")
     public String loginRoot(@RequestBody User user) {return "TO-DO";}
 
 
-    @RequestMapping("/failed")
-    public String failedLogin()
-    { return "TO-DO";}
+
 }

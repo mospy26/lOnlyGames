@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterController {
 
     @PostMapping(path = "")
-    public @ResponseBody String registerUser(@RequestParam String Fname, @RequestParam String Lname, @RequestParam String email, @RequestParam String password)
+    public @ResponseBody String registerUser(@RequestBody User user)
     { return "TO-DO";}
 
 
