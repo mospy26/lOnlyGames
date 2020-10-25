@@ -22,6 +22,7 @@ function start() {
 
 function run_database() {
     docker-compose up --no-deps -d lonlygames-mysql
+    docker-compose up --no-deps -d adminer
 }
 
 function usage() {
