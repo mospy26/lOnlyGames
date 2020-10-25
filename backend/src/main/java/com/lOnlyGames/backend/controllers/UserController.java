@@ -1,186 +1,66 @@
 package com.lOnlyGames.backend.controllers;
+
+import com.lOnlyGames.backend.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
-@RestController
-@RequestMapping("api/v1/user")
+@RestController (value = "/users")
 public class UserController {
 
-    @RequestMapping(value = "/getAvatar")
-    public @ResponseBody String getUserAvatar()
+    //HIGH PRIORITY
+    @GetMapping(value = "/matches")
+    public String getAllMatches()
     {
-       return "To-DO";
+        return "all me matches";
     }
 
-    @RequestMapping(value = "/userLikedBy")
-    public @ResponseBody String getLikedBy()
+    //HIGH PRIORITY
+    @PostMapping(value = "/block")
+    public String blockUser(@RequestBody User toBlock)
     {
-        return "return the likedBy";
+        return "Block me";
     }
 
-    @RequestMapping(value = "/userLikes")
-    public @ResponseBody String getUserLikes()
-    { return "return the user likes"; }
-
-
-    @RequestMapping(value = "/discord_id")
-    public @ResponseBody String getDiscordID()
+    //LOW PRIORITY
+    @GetMapping(value = "/users-blocked")
+    public String getAllBlockedUsers()
     {
-        return "User Discord ID(Should be Long)";
-    }
-    @RequestMapping(value = "/steam_id/")
-    public @ResponseBody String getSteamID()
-    {
-        return "User Discord ID(Should be Long)";
+        return "All blocked users";
     }
 
-    @RequestMapping(value = "/played_games")
-    public @ResponseBody String getGamesPlayed()
+    //HIGH Priority
+    @GetMapping(value = "")
+    public String getUserDetails(@RequestParam String username)
     {
-        return "Return all games the user plays";
+        return "Return the instance of the user that is logged in";
     }
 
-    @RequestMapping(value = "/location")
-    public @ResponseBody String getLocation()
+    @GetMapping(value = "/search/")
+    public String dynamicSearch(@RequestParam String s)
     {
-        return "Location";
+        return "Search";
     }
 
-    @RequestMapping(value = "/blocked_by")
-    public @ResponseBody String getBlockedBy()
+    // MEDIUM
+    @PostMapping(value = "/like")
+    public String likeUser(@RequestBody User toLike) {return "Like this user";}
+
+
+
+    @PutMapping(value = "/update/")
+    public String update(@RequestBody User user)
     {
-        return "The users that block THIS User";
+        return "Update the details of this user";
     }
 
-    @RequestMapping(value = "/blocked")
-    public @ResponseBody String getBlocked()
+    @PostMapping(value = "/dislike/")
+    public String dislikeUser(@RequestBody User dislikeUser)
     {
-        return "The users that THIS user has BLOCKED";
+        return "Dislikeuser";
     }
 
-    @RequestMapping(value = "/get_aval")
-    public  @ResponseBody String getAval()
-    {
-        return "The users avalabilities";
-    }
-
-
-    @RequestMapping(value = "/get_bio")
-    public  @ResponseBody String getBio()
-    {
-        return "The users Bio";
-    }
-
-    @RequestMapping(value = "/get_reports")
-    public  @ResponseBody String getReports()
-    {
-        return "The users Reports";
-    }
-
-    @PostMapping(value = "/update/firstName")
-
-    public @ResponseBody String updateFName()
-    {
-        return "Update the users firstname";
-    }
-
-    @PostMapping(value = "/update/lastName")
-    public @ResponseBody String updateLastName()
-    {
-        return "Update the users firstname";
-    }
-
-    @PostMapping(value = "/update/discordID")
-    public @ResponseBody String updateDiscordID()
-    {
-        return "Update the users discordID";
-    }
-
-    @PostMapping(value = "/update/steamid")
-    public @ResponseBody String updateSteamID()
-    {
-        return "Update the users firstname";
-    }
-
-    @PostMapping(value = "/update/bio")
-    public @ResponseBody String updateBio()
-    {
-        return "Update the users Bio";
-    }
-
-
-    @RequestMapping(value = "/steam/all_played")
-    public @ResponseBody String allPlayedGames()
-    {
-        return "All the games the user has played";
-    }
-    @RequestMapping(value = "/steam/csgo/total_kills")
-    public @ResponseBody String totalKillsCSGO()
-    {
-        return "Use STEAM API and fetch total kill in CSGO";
-    }
-    @RequestMapping(value = "/steam/csgo/kdr")
-    public @ResponseBody String calculateCSGOKDR()
-    {
-        return "Kill Death Ratio of Player";
-    }
-
-
-    @RequestMapping(value = "/steam/csgo/total_hours")
-    public @ResponseBody String getCSGOHours()
-    {
-        return "Get Total Hours Played";
-    }
-    @RequestMapping(value = "/steam/dota/total_hours")
-    public @ResponseBody String getDotaHours()
-    {
-        return "Get Total Hours Played";
-    }
-    @RequestMapping(value = "/steam/rb6/total_hours")
-    public @ResponseBody String getRB6Hours()
-    {
-        return "Get Total Hours Played";
-    }
-
-
-
-    @RequestMapping(value = "/steam/dota/total_kills")
-    public @ResponseBody String getTotalKillsDota()
-    {
-        return "Use STEAM API and fetch total kill in CSGO";
-    }
-
-
-    @RequestMapping(value = "/steam/dota/kdr")
-    public @ResponseBody String calculateDotaKDR()
-    {
-        return "Kill Death Ratio of Player";
-    }
-
-
-    @RequestMapping(value = "/steam/rb6/total_kills")
-    public @ResponseBody String getTotalKillsRb6()
-    {
-        return "Use STEAM API and fetch total kill in CSGO";
-    }
-
-
-    @RequestMapping(value = "/steam/rb6/kdr")
-    public @ResponseBody String calculateRb6KDR()
-    {
-        return "Kill Death Ratio of Player";
-    }
-
-
-    @PostMapping(value = "/matches/unmatch/{userid}")
-   public @ResponseBody String unmatchUser(@PathVariable("userid") String username)
-{
-    return "Umatch user based on userid";
-}
-
-
-
+    @GetMapping(value = "/liked")
+    public String getAllLikes(){return "Everyone this user has liked";}
 
 
 

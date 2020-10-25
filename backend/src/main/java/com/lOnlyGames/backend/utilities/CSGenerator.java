@@ -1,5 +1,4 @@
 package com.lOnlyGames.backend.utilities;
-
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import com.lukaspradel.steamapi.data.json.playerstats.GetUserStatsForGame;
 import com.lukaspradel.steamapi.data.json.playerstats.Playerstats;
@@ -9,42 +8,38 @@ import com.lukaspradel.steamapi.webapi.request.GetUserStatsForGameRequest;
 import com.lukaspradel.steamapi.webapi.request.builders.SteamWebApiRequestFactory;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class Driver {
+/*
+A singleton class designed for shooting synchronous requests to retrieve data, note this object may need to be run on a
+Async task if you want to use it using spring.
 
-    public static void main(String args[]) throws SteamApiException {
-//        steamFacade steamFacade = new steamFacade();
-//        steamFacade.test();
+For more info on singleton see
+https://www.tutorialspoint.com/design_pattern/singleton_pattern.htm
+
+I decided to use the singleton pattern, since this method calls on the network to retrieve user data.
+ */
+public class CSGenerator implements Generator {
+
+    private String totalHours;
+    private String KDR;
 
 
+    public CSGenerator() throws SteamApiException {
         SteamWebApiClient client = new SteamWebApiClient.SteamWebApiClientBuilder("BD01DFF46072331CAF754AE917231860").build();
         GetUserStatsForGameRequest request = SteamWebApiRequestFactory.createGetUserStatsForGameRequest(730,"76561198068222746");
         GetUserStatsForGame gameStats =  client.<GetUserStatsForGame> processRequest(request);
-        Playerstats playerstats = gameStats.getPlayerstats();
-        List<Stat> stats = playerstats.getStats();
-
-
-        GetUserStatsForGameRequest request2 = SteamWebApiRequestFactory.createGetUserStatsForGameRequest(730,"76561198882328170");
-        GetUserStatsForGame gamestats2 =  client.<GetUserStatsForGame> processRequest(request);
-        Playerstats playerstats2 = gameStats.getPlayerstats();
-        List<Stat> stats2 = playerstats.getStats();
-
-
-
-        for(int i = 0; i<stats.size(); ++i)
-        {
-
-            if(stats.get(i).getName().equalsIgnoreCase("total_kills"))
-            {
-                System.out.println(stats.get(i).getValue());
-            }
-        }
+    }
 
 
 
 
+    @Override
+    public String getTotalHours() {
+        return null;
+    }
 
-
+    @Override
+    public String getKDR() {
+        return null;
     }
 }
