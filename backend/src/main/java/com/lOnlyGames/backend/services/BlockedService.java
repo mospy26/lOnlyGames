@@ -16,7 +16,7 @@ public class BlockedService {
     @Autowired
     private BlockedDAO blockedDAO;
 
-    public List<Blocked> allBlockedByUser(User user){
+    public List<Blocked> allBlockedByUser(User user) {
         try{
             return blockedDAO.getBlockedRepository().findByBlocker(user);
         } catch(NoSuchElementException e){
