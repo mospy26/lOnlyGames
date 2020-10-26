@@ -34,7 +34,7 @@ public class MatchesService {
         //don't want any matches to users that have been blocked
 
         //all blocked objects from the user
-        List<Blocked> blockedUsers = blockedService.allBlockedByUser(user);
+        List<Blocked> blockedUsers = blockedService.allBlockedByUser();
         //all user objects blocked by the user
         List<User> blockees = new ArrayList<>();
         for(Blocked blk: blockedUsers){

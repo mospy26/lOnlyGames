@@ -1,22 +1,17 @@
 package com.lOnlyGames.backend.controllers;
 
-import java.util.List;
 import java.util.Map;
 
-import com.lOnlyGames.backend.response.*;
-import com.lOnlyGames.backend.services.UserService;
 import com.lOnlyGames.backend.auth.JwtTokenUtil;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
-import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
-import com.lOnlyGames.backend.repository.BlockedRepository;
+import com.lOnlyGames.backend.response.JwtTokenResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
