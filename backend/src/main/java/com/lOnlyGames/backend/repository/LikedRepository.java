@@ -9,5 +9,6 @@ public interface LikedRepository extends CrudRepository<Liked, Integer> {
 
     public Liked findByLiker(User user);
     public Liked findByLikes(User user);
+    public Liked findByLikerAndLikes(User liker, User likes);
 
 }
