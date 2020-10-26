@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.BlockedDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
@@ -18,10 +19,11 @@ public class BlockedService {
     @Autowired
     private BlockedDAO blockedDAO;
 
-    public List<Blocked> allBlockedByUser() throws InvalidCredentialsException {
+    public List<User> allBlockedByUser() throws InvalidCredentialsException {
         try{
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            return blockedDAO.getBlockedRepository().findByBlocker(user);
+            List<Blocked> blocked = blockedDAO.getBlockedRepository().findByBlocker(user);
+            return blocked.stream().map(b -> b.getBlockee()).collect(Collectors.toList());
         } catch(Exception e){
             //not sure here what kind of error to return
             throw new InvalidCredentialsException();

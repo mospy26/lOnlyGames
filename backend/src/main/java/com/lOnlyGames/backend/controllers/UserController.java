@@ -56,7 +56,7 @@ public class UserController {
     //gets all users who have been blocked by the current user
     @GetMapping(value = "/users-blocked")
     public ResponseEntity<?> getAllBlockedUsers() throws InvalidCredentialsException {
-        List<Blocked> blockedList = blockedService.allBlockedByUser();
+        List<User> blockedList = blockedService.allBlockedByUser();
         return new ResponseEntity<AllBlockedResponse>(new AllBlockedResponse(blockedList), HttpStatus.OK);
     }
 

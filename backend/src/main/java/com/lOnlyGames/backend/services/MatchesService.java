@@ -33,19 +33,12 @@ public class MatchesService {
         }
         //don't want any matches to users that have been blocked
 
-        //all blocked objects from the user
-        List<Blocked> blockedUsers = blockedService.allBlockedByUser();
         //all user objects blocked by the user
-        List<User> blockees = new ArrayList<>();
-        for(Blocked blk: blockedUsers){
-            blockees.add(blk.getBlockee());
-        }
+        List<User> blockedUsers = blockedService.allBlockedByUser();
+
         //remove any user games that contain a blocked user
         for(List<UserGame> listUG: listUserGames){
-            listUG.removeIf(ug -> blockees.contains(ug.getUser()));
-//            if(listUG.isEmpty()){
-//                listUserGames.remove(listUG);
-//            }
+            listUG.removeIf(ug -> blockedUsers.contains(ug.getUser()));
         }
         if(listUserGames.isEmpty()){
             return new ArrayList<>();

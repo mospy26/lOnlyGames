@@ -1,12 +1,12 @@
 package com.lOnlyGames.backend.response;
 
-import com.lOnlyGames.backend.model.Blocked;
+import com.lOnlyGames.backend.model.User;
 
 import java.util.List;
 
 public class AllBlockedResponse extends ParentResponse{
 
-    public AllBlockedResponse(List<Blocked> list){
+    public AllBlockedResponse(List<User> list){
         super(list);
     }
 }

@@ -83,9 +83,9 @@ public class UserService implements UserDetailsService {
     public List<User> getUsersWithNameLike(String partialUsername) {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<User> fetchedUsers = userDAO.findUsersStartWith(partialUsername);
-        List<Blocked> blocked = blockedService.allBlockedByUser();
+        List<User> blocked = blockedService.allBlockedByUser();
 
-        List<String> blockedUsers = blocked.stream().map(b -> b.getBlockee().getUsername())
+        List<String> blockedUsers = blocked.stream().map(b -> b.getUsername())
                 .collect(Collectors.toList());
 
         // Only fetch those users who aren't blocked
