@@ -1,15 +1,18 @@
 package com.lOnlyGames.backend.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
+import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +25,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private BlockedService blockedService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -75,7 +81,17 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {
-        return userDAO.findUsersStartWith(partialUsername);
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<User> fetchedUsers = userDAO.findUsersStartWith(partialUsername);
+        List<Blocked> blocked = blockedService.allBlockedByUser();
+
+        List<String> blockedUsers = blocked.stream().map(b -> b.getBlockee().getUsername())
+                .collect(Collectors.toList());
+
+        // Only fetch those users who aren't blocked
+        fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()));
+
+        return fetchedUsers;
     }
 
     @Override

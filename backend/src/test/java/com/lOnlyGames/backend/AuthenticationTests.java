@@ -56,7 +56,7 @@ public class AuthenticationTests {
         ResponseEntity<JwtTokenResponse> responseEntity = (ResponseEntity<JwtTokenResponse>) authenticationController.login(creds);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(responseEntity.getBody().getToken()).isEqualTo("TOKENN");
+        assertThat(responseEntity.getBody().getResult()).isEqualTo("TOKENN");
     }
 
     @Test
@@ -88,7 +88,7 @@ public class AuthenticationTests {
         ResponseEntity<JwtTokenResponse> responseEntity = (ResponseEntity<JwtTokenResponse>) authenticationController.register(testUser);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(responseEntity.getBody().getToken()).isEqualTo("TOKENN");
+        assertThat(responseEntity.getBody().getResult()).isEqualTo("TOKENN");
     }
 
     @Test

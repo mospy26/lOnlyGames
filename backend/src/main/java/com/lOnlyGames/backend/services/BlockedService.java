@@ -1,17 +1,16 @@
 package com.lOnlyGames.backend.services;
 
+import java.util.List;
+
 import com.lOnlyGames.backend.DAO.BlockedDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Component
 public class BlockedService {
@@ -19,7 +18,7 @@ public class BlockedService {
     @Autowired
     private BlockedDAO blockedDAO;
 
-    public List<Blocked> allBlockedByUser() throws InvalidCredentialsException{
+    public List<Blocked> allBlockedByUser() throws InvalidCredentialsException {
         try{
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return blockedDAO.getBlockedRepository().findByBlocker(user);
@@ -48,11 +47,11 @@ public class BlockedService {
             //saves the blocked item to the db
             blockedDAO.blockUser(blockObj);
 
-            return user.getUsername() + "has been blocked.";
+            return "User '" + user.getUsername() + "' has been blocked.";
 
         } catch(Exception e){
             //i think this is the correct error to return
-            throw new UsernameNotFoundException("Username \"" + user.getUsername() + "\" is invalid");
+            throw new UsernameNotFoundException("Username '" + user.getUsername() + "' is invalid");
         }
     }
 }
