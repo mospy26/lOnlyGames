@@ -69,6 +69,14 @@
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.elypia.elypiai</groupId>
+			<artifactId>steam</artifactId>
+			<version>4.2.3</version>
+		</dependency>
+
+
 		<!-- h2db for in memory test-->
 		<dependency>
 			<groupId>com.h2database</groupId>

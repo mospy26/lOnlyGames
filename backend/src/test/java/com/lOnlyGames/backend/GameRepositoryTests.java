@@ -36,11 +36,11 @@ public class GameRepositoryTests {
         String iconURL = "https://s3.Region.amazonaws.com/bucket-name/keyname/";
 
         Game g = new Game(name);
-        g.setApiURL(apiURL);
+       // g.setApiURL(apiURL);
         g.setIconURL(iconURL);
 
         g = game.save(g);
-        assertEquals(g.getApiURL(), apiURL);
+       // assertEquals(g.getApiURL(), apiURL);
         assertEquals(g.getIconURL(), iconURL);
         assertEquals(g.getName(), name);
     }

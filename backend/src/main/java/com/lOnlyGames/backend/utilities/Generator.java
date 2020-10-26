@@ -1,7 +1,15 @@
 package com.lOnlyGames.backend.utilities;
 
-public interface Generator {
+import com.lukaspradel.steamapi.data.json.playerstats.Stat;
 
-    public String getTotalHours();
-    public String getKDR();
+import java.util.List;
+
+public interface Generator {
+    public String KDR();
+    public String totalHours();
+    public String totalKills();
+    public String totalDeaths();
+    public List<Stat> getAllStats();
+    public String totalWins();
+
 }

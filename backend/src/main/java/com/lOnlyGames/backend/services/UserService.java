@@ -72,6 +72,11 @@ public class UserService implements UserDetailsService {
         userDAO.register(user);
     }
 
+    public void update(String firstname, String bio, String otherVariable)
+    {
+   //Update Operations
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

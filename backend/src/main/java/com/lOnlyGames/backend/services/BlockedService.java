@@ -3,6 +3,9 @@ package com.lOnlyGames.backend.services;
 import com.lOnlyGames.backend.DAO.BlockedDAO;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
+import com.lOnlyGames.backend.utilities.Generator;
+import com.lOnlyGames.backend.utilities.GeneratorImpl;
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +16,14 @@ import java.util.NoSuchElementException;
 @Component
 public class BlockedService {
 
+
+
     @Autowired
     private BlockedDAO blockedDAO;
+
+    public BlockedService() throws SteamApiException {
+    }
+
 
     public List<Blocked> allBlockedByUser(User user){
         try{

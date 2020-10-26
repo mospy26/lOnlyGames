@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     //HIGH PRIORITY
-    @GetMapping(value = "/matches")
+    @GetMapping(value = "/match/")
     public String getAllMatches()
     {
         return "all me matches";
@@ -50,7 +50,7 @@ public class UserController {
     @PutMapping(value = "/update/")
     public String update(@RequestBody User user)
     {
-        return "Update the details of this user";
+        return "Update me";
     }
 
     @PostMapping(value = "/dislike/")
@@ -62,6 +62,8 @@ public class UserController {
     @GetMapping(value = "/liked")
     public String getAllLikes(){return "Everyone this user has liked";}
 
+//    @GetMgetapping(value ="/updateprofile/")
+//    public String
 
 
 

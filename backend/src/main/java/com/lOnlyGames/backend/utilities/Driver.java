@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.utilities;
 
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
+import com.lukaspradel.steamapi.data.json.ownedgames.Game;
 import com.lukaspradel.steamapi.data.json.playerstats.GetUserStatsForGame;
 import com.lukaspradel.steamapi.data.json.playerstats.Playerstats;
 import com.lukaspradel.steamapi.data.json.playerstats.Stat;
@@ -18,28 +19,18 @@ public class Driver {
 //        steamFacade.test();
 
 
-        SteamWebApiClient client = new SteamWebApiClient.SteamWebApiClientBuilder("BD01DFF46072331CAF754AE917231860").build();
-        GetUserStatsForGameRequest request = SteamWebApiRequestFactory.createGetUserStatsForGameRequest(730,"76561198068222746");
-        GetUserStatsForGame gameStats =  client.<GetUserStatsForGame> processRequest(request);
-        Playerstats playerstats = gameStats.getPlayerstats();
-        List<Stat> stats = playerstats.getStats();
 
+        List<Stat> stats = APIFetcher.getGameStats("76561198068222746",730);
 
-        GetUserStatsForGameRequest request2 = SteamWebApiRequestFactory.createGetUserStatsForGameRequest(730,"76561198882328170");
-        GetUserStatsForGame gamestats2 =  client.<GetUserStatsForGame> processRequest(request);
-        Playerstats playerstats2 = gameStats.getPlayerstats();
-        List<Stat> stats2 = playerstats.getStats();
+        GeneratorImpl generator = new GeneratorImpl("BD01DFF46072331CAF754AE917231860","76561198068222746",730);
 
+        List<Game> games = APIFetcher.getGamesPlayed("76561198882328170");
 
-
-        for(int i = 0; i<stats.size(); ++i)
+        for(int i = 0; i<games.size(); ++i)
         {
-
-            if(stats.get(i).getName().equalsIgnoreCase("total_kills"))
-            {
-                System.out.println(stats.get(i).getValue());
-            }
+            System.out.println(games.get(i).getName());
         }
+
 
 
 

@@ -11,7 +11,6 @@ public class Game {
     @Id
     private String name;
     private String iconURL;
-    private String apiURL;
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private Set<UserGame> users;
@@ -35,13 +34,5 @@ public class Game {
 
     public void setIconURL(String iconURL) {
         this.iconURL = iconURL;
-    }
-
-    public String getApiURL() {
-        return apiURL;
-    }
-
-    public void setApiURL(String apiURL) {
-        this.apiURL = apiURL;
     }
 }
