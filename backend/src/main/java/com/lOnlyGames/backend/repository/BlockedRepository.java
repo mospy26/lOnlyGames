@@ -12,4 +12,5 @@ public interface BlockedRepository extends CrudRepository<Blocked, Integer> {
     //returns all the blocks that a user has made
     // @PreAuthorize("#user?.username == authentication?.name")
     public List<Blocked> findByBlocker(User user);
+    public Blocked findByBlockerAndBlockee(User blocker, User blockee);
 }

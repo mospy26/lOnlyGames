@@ -2,16 +2,22 @@ package com.lOnlyGames.backend.controllers;
 
 import java.util.List;
 
+import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
+import com.lOnlyGames.backend.response.AllBlockedResponse;
+import com.lOnlyGames.backend.response.BlockedResponse;
 import com.lOnlyGames.backend.response.MatchesResponse;
 import com.lOnlyGames.backend.response.UsersListResponse;
+import com.lOnlyGames.backend.services.BlockedService;
 import com.lOnlyGames.backend.services.MatchesService;
 import com.lOnlyGames.backend.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +31,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BlockedService blockedService;
+
     //HIGH PRIORITY
     //finds other users who like the same games as our current user
     //who is searching for matches
@@ -34,19 +43,23 @@ public class UserController {
         return new ResponseEntity<MatchesResponse>(new MatchesResponse(matches), HttpStatus.OK);
     }
 
-    //HIGH PRIORITY
+
+    //BLOCKING RELATED FUNCTIONS IN CONTROLLER
+
+    //blocks a specific user that the current user wants to block
     @PostMapping(value = "/block")
-    public String blockUser(@RequestBody User toBlock)
-    {
-        return "Block me";
+    public ResponseEntity<?> blockUser(@RequestBody User toBlock) throws UsernameNotFoundException {
+        String blockedMsg = blockedService.blockUser(toBlock);
+        return new ResponseEntity<BlockedResponse>(new BlockedResponse(blockedMsg), HttpStatus.OK);
+
+    }
+    //gets all users who have been blocked by the current user
+    @GetMapping(value = "/users-blocked")
+    public ResponseEntity<?> getAllBlockedUsers() throws InvalidCredentialsException {
+        List<Blocked> blockedList = blockedService.allBlockedByUser();
+        return new ResponseEntity<AllBlockedResponse>(new AllBlockedResponse(blockedList), HttpStatus.OK);
     }
 
-    //LOW PRIORITY
-    @GetMapping(value = "/users-blocked")
-    public String getAllBlockedUsers()
-    {
-        return "All blocked users";
-    }
 
     //HIGH Priority
     @GetMapping(value = "")
