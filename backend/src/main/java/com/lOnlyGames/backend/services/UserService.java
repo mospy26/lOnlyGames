@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
 
         // Only fetch those users who aren't blocked
-        fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()));
+        fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
 
         return fetchedUsers;
     }
