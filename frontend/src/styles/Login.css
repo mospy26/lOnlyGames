@@ -1,0 +1,63 @@
+@media all and (min-width: 480px) {
+    
+    .Login {
+      padding: 60px 0;
+      margin-top: 10%;
+      align-items: center;
+      width: 100%;
+      display: block;
+      flex-direction: row;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 450px;
+    }
+
+    .form-group{
+        margin:10px;
+        width:100%;
+    }
+    .form-group input{
+        padding: 10px;
+        width: 100%;
+        height: 70px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        font-size: 22px;
+        line-height: 1.428571429;
+        color: #333;
+    }
+    label{
+        display: block;
+        font-weight: 700;
+        float:left;
+        margin-left:10px;
+        margin-bottom: 15px;
+    }
+
+    .login-btn{
+        width: 100%;
+        margin-left: 10px;
+        margin-top: 10px;
+        height: 50px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        font-size: 14px;
+        color: black;
+        background-color:#4BAFEA;
+        font-size: 20px;
+        font-weight: 500;
+
+    }
+
+    .signup{
+        margin-top: 10px;
+    }
+
+    .signup a{
+        text-decoration: none;
+        color: #4BAFEA;
+        font-weight: 700;
+    }
+  }
