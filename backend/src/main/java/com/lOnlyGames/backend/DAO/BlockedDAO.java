@@ -29,4 +29,5 @@ public class BlockedDAO {
     public void blockUser(Blocked block){
         blockedRepository.save(block);
     }
+    public void unblockUser(Blocked unblock){ blockedRepository.delete(unblock); }
 }

@@ -4,15 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
-import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
-import com.lOnlyGames.backend.response.AllBlockedResponse;
-import com.lOnlyGames.backend.response.BlockedResponse;
-import com.lOnlyGames.backend.response.MatchesResponse;
-import com.lOnlyGames.backend.response.UserResponse;
-import com.lOnlyGames.backend.response.UsersListResponse;
+import com.lOnlyGames.backend.response.*;
 import com.lOnlyGames.backend.services.BlockedService;
+import com.lOnlyGames.backend.services.LikeService;
 import com.lOnlyGames.backend.services.MatchesService;
 import com.lOnlyGames.backend.services.UserService;
 
@@ -22,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,12 +33,16 @@ public class UserController {
     @Autowired
     private BlockedService blockedService;
 
-    //HIGH PRIORITY
+    @Autowired
+    private LikeService likeService;
+
+    //MATCHING RELATED FUNCTION IN CONTROLLER
+
     //finds other users who like the same games as our current user
     //who is searching for matches
     @GetMapping(value = "/matches")
-    public ResponseEntity<?> getMatches(@RequestParam User user) {
-        List<List<UserGame>> matches = matchesService.getMatches(user);
+    public ResponseEntity<?> getMatches() {
+        List<List<UserGame>> matches = matchesService.getMatches();
         return new ResponseEntity<MatchesResponse>(new MatchesResponse(matches), HttpStatus.OK);
     }
 
@@ -54,9 +53,17 @@ public class UserController {
     @PostMapping(value = "/block")
     public ResponseEntity<?> blockUser(@RequestBody User toBlock) throws UsernameNotFoundException {
         String blockedMsg = blockedService.blockUser(toBlock);
-        return new ResponseEntity<BlockedResponse>(new BlockedResponse(blockedMsg), HttpStatus.OK);
+        return new ResponseEntity<BlockUnblockResponse>(new BlockUnblockResponse(blockedMsg), HttpStatus.OK);
 
     }
+
+    //unblocks a specific user that the current user wants to unblock
+    @PostMapping(value = "/unblock")
+    public ResponseEntity<?> unblockUser(@RequestBody User toUnblock) throws UsernameNotFoundException {
+        String unblockMsg = blockedService.unblockUser(toUnblock);
+        return new ResponseEntity<BlockUnblockResponse>(new BlockUnblockResponse(unblockMsg), HttpStatus.OK);
+    }
+
     //gets all users who have been blocked by the current user
     @GetMapping(value = "/users-blocked")
     public ResponseEntity<?> getAllBlockedUsers() throws InvalidCredentialsException {
@@ -79,10 +86,30 @@ public class UserController {
         return new ResponseEntity<UsersListResponse>(new UsersListResponse(userService.getUsersWithNameLike(username)), HttpStatus.OK);
     }
 
-    // MEDIUM
-    @PostMapping(value = "/like")
-    public String likeUser(@RequestBody User toLike) {return "Like this user";}
+    //LIKING RELATED FUNCTIONS IN CONTROLLER
 
+    //the current user likes another user
+    @PostMapping(value = "/like")
+    public ResponseEntity<?> likeUser(@RequestBody User toLike)
+    {
+        String likedMsg = likeService.likeUser(toLike);
+        return new ResponseEntity<LikeDislikeResponse>(new LikeDislikeResponse(likedMsg), HttpStatus.OK);
+    }
+
+    //the current user dislikes another user
+    @PostMapping(value = "/dislike")
+    public ResponseEntity<?> dislikeUser(@RequestBody User dislikeUser)
+    {
+        String dislikeMsg = likeService.dislikeUser(dislikeUser);
+        return new ResponseEntity<LikeDislikeResponse>(new LikeDislikeResponse(dislikeMsg), HttpStatus.OK);
+    }
+
+    //get all users this person has liked
+    @GetMapping(value = "/users-liked")
+    public ResponseEntity<?> getAllLikes(){
+        List<User> likedUsers = likeService.getAllLikes();
+        return new ResponseEntity<AllLikesResponse>(new AllLikesResponse(likedUsers), HttpStatus.OK);
+    }
 
 
     @PutMapping(value = "/update")
@@ -92,14 +119,8 @@ public class UserController {
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/dislike")
-    public String dislikeUser(@RequestBody User dislikeUser)
-    {
-        return "Dislikeuser";
-    }
 
-    @GetMapping(value = "/liked")
-    public String getAllLikes(){return "Everyone this user has liked";}
+
 
 
 
