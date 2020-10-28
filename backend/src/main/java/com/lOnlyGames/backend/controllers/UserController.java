@@ -19,6 +19,7 @@ import com.lOnlyGames.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -66,9 +67,9 @@ public class UserController {
 
     //HIGH Priority
     @GetMapping(value = "")
-    public ResponseEntity<?> getUserDetails(@RequestParam String username)
+    public ResponseEntity<?> getUserDetails()
     {
-        UserDetails user = userService.loadUserByUsername(username);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 

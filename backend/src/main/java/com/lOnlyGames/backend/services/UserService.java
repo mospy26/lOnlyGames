@@ -13,6 +13,7 @@ import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -94,9 +95,8 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-
     public UserDetails updateUser(Map<String, String> payload) {
-        User user = userDAO.getUser(payload.get("username"));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
         if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
