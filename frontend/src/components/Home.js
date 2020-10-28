@@ -17,7 +17,7 @@ const Home = () => {
                     </div>
 
                     <div className="button-container">
-                        <NavLink to='/about' className='button' exact activeClassName='active'>
+                        <NavLink to='/login' className='button' exact activeClassName='active'>
                             <button>Sign In</button>
                         </NavLink>
                         <NavLink to='/profile' className='button' exact activeClassName='active'>
