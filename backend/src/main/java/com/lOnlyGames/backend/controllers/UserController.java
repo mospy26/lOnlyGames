@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.model.Blocked;
@@ -9,6 +10,7 @@ import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.AllBlockedResponse;
 import com.lOnlyGames.backend.response.BlockedResponse;
 import com.lOnlyGames.backend.response.MatchesResponse;
+import com.lOnlyGames.backend.response.UserResponse;
 import com.lOnlyGames.backend.response.UsersListResponse;
 import com.lOnlyGames.backend.services.BlockedService;
 import com.lOnlyGames.backend.services.MatchesService;
@@ -17,6 +19,8 @@ import com.lOnlyGames.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,9 +67,10 @@ public class UserController {
 
     //HIGH Priority
     @GetMapping(value = "")
-    public String getUserDetails(@RequestParam String username)
+    public ResponseEntity<?> getUserDetails()
     {
-        return "Return the instance of the user that is logged in";
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")
@@ -81,9 +86,10 @@ public class UserController {
 
 
     @PutMapping(value = "/update")
-    public String update(@RequestBody User user)
+    public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
     {
-        return "Update the details of this user";
+        UserDetails user = userService.updateUser(payload);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
     @PostMapping(value = "/dislike")
