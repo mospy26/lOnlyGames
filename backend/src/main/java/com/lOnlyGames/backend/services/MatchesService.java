@@ -19,6 +19,8 @@ public class MatchesService {
     private MatchesDAO matchesDAO;
     @Autowired
     private BlockedService blockedService;
+    @Autowired
+    private LikeService likedService;
 
     public List<List<UserGame>> getMatches(){
         //get the user
@@ -37,11 +39,19 @@ public class MatchesService {
 
         //all user objects blocked by the user
         List<User> blockedUsers = blockedService.allBlockedByUser();
-
         //remove any user games that contain a blocked user
         for(List<UserGame> listUG: listUserGames){
             listUG.removeIf(ug -> blockedUsers.contains(ug.getUser()));
         }
+        //don't want any matches to users that I have liked
+
+        //all user objects liked by the user
+        List<User> likedUsers = likedService.getAllLikes();
+        //remove any user games that contain a liked user
+        for(List<UserGame> listUG: listUserGames){
+            listUG.removeIf(ug -> likedUsers.contains(ug.getUser()));
+        }
+
         if(listUserGames.isEmpty()){
             return new ArrayList<>();
         }

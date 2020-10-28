@@ -11,7 +11,10 @@ public class ErrorCodes {
         INVALID_USERNAME,
         ACCESS_DENIED,
         PARAMS_MISSING,
-        INTERNAL_ERROR
+        INTERNAL_ERROR,
+        ALREADY_LIKE_DISLIKE,
+        ALREADY_BLOCKED,
+        ALREADY_UNBLOCKED
     }
     
 }
