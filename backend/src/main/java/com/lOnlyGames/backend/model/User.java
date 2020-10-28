@@ -31,6 +31,10 @@ public class User implements UserDetails {
     private String avatarURL;
     private Integer numberOfReports;
 
+    public void setGames(Set<UserGame> games) {
+        this.games = games;
+    }
+
     // Games
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

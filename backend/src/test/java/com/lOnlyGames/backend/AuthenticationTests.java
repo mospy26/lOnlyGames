@@ -16,6 +16,7 @@ import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.response.JwtTokenResponse;
 import com.lOnlyGames.backend.services.UserService;
 
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +78,7 @@ public class AuthenticationTests {
     }
 
     @Test
-    public void testControllerRegisterWithValidCreds() throws IOException {
+    public void testControllerRegisterWithValidCreds() throws IOException, SteamApiException {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 

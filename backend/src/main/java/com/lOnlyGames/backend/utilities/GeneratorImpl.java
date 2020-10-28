@@ -15,7 +15,7 @@ public class GeneratorImpl implements Generator {
 
     private List<Stat> stat;
 
-    public GeneratorImpl(String key, String steamID, int appId) throws SteamApiException {
+    public GeneratorImpl(String steamID, int appId) throws SteamApiException {
        stat =  APIFetcher.getGameStats(steamID,appId);
     }
 
@@ -42,8 +42,9 @@ public class GeneratorImpl implements Generator {
     @Override
     public String totalHours() {
         Optional<Stat> totalHours = stat.stream().
-                filter(p -> p.getName().equals("total_hours")).
+                filter(p -> p.getName().equals("total_time_played")).
                 findFirst();
+
         Double hours = totalHours.get().getValue().doubleValue() / 60 / 60;
         return hours.toString();
     }

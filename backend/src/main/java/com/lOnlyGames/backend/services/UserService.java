@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,9 +9,11 @@ import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +25,10 @@ import org.springframework.stereotype.Component;
 
 @Component(value="UserService")
 public class UserService implements UserDetailsService {
+
+
+    @Autowired
+    private  GamesAPIService gamesAPIService;
 
     @Autowired
     private UserDAO userDAO;
@@ -70,14 +77,16 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public void register(User user) {
+    public void register(User user) throws IOException, SteamApiException {
         if (userDAO.getUser(user.getUsername()) != null) {
             throw new InvalidUsernameException();
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userDAO.register(user);
+        System.out.println(userDAO.getGameRepository().count());
+        gamesAPIService.preload(user);
+
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {

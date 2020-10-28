@@ -23,10 +23,11 @@ public class Driver {
 
         List<Stat> stats = APIFetcher.getGameStats("76561198068222746",730);
 
-        GeneratorImpl generator = new GeneratorImpl("BD01DFF46072331CAF754AE917231860","76561198882328170",730);
-
-      System.out.println(APIFetcher.getGamesPlayed("76561198882328170").size());
-
+        GeneratorImpl generator = new GeneratorImpl("76561198882328170",730);
+        for(int i = 0; i<generator.getAllStats().size(); ++i)
+        {
+            System.out.println(generator.getAllStats().get(i).getName() + " " + generator.getAllStats().get(i).getValue());
+        }
 
 
 
