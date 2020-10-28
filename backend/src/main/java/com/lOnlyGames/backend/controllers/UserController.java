@@ -9,6 +9,7 @@ import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.AllBlockedResponse;
 import com.lOnlyGames.backend.response.BlockedResponse;
 import com.lOnlyGames.backend.response.MatchesResponse;
+import com.lOnlyGames.backend.response.UserResponse;
 import com.lOnlyGames.backend.response.UsersListResponse;
 import com.lOnlyGames.backend.services.BlockedService;
 import com.lOnlyGames.backend.services.MatchesService;
@@ -17,6 +18,7 @@ import com.lOnlyGames.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,9 +65,10 @@ public class UserController {
 
     //HIGH Priority
     @GetMapping(value = "")
-    public String getUserDetails(@RequestParam String username)
+    public ResponseEntity<?> getUserDetails(@RequestParam String username)
     {
-        return "Return the instance of the user that is logged in";
+        UserDetails user = userService.loadUserByUsername(username);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")
