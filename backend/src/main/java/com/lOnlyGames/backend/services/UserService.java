@@ -1,10 +1,12 @@
 package com.lOnlyGames.backend.services;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,11 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private GamesAPIService gamesAPIService;
+
+
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -62,14 +69,18 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public void register(User user) {
+    public void register(User user) throws IOException {
         if (userDAO.getUser(user.getUsername()) != null) {
             throw new InvalidUsernameException();
         }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userDAO.register(user);
+        Game g = new Game("Counter Strike");
+        userDAO.getGameRepository().save(g);
+        System.out.print(userDAO.getGameRepository().count());
+        gamesAPIService.preload(user);
+
+
     }
 
     public void update(String firstname, String bio, String otherVariable)
@@ -89,4 +100,6 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Username \"" + username + "\" is invalid");
         }
     }
+
+
 }

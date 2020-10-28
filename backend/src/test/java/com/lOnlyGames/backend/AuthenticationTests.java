@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class AuthenticationTests {
     }
 
     @Test
-    public void testControllerRegisterWithValidCreds() {
+    public void testControllerRegisterWithValidCreds() throws IOException {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 

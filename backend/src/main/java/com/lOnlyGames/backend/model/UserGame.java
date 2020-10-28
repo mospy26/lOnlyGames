@@ -28,6 +28,51 @@ public class UserGame {
     }
 
     public String gameRank;
+    public String Kdr;
+    public String totalKills;
+    public String totalHoursPlayed;
+    public String totalDeaths;
+    public String lastActive;
+
+    public String getKdr() {
+        return Kdr;
+    }
+
+    public void setKdr(String kdr) {
+        Kdr = kdr;
+    }
+
+    public String getTotalKills() {
+        return totalKills;
+    }
+
+    public void setTotalKills(String totalKills) {
+        this.totalKills = totalKills;
+    }
+
+    public String getTotalHoursPlayed() {
+        return totalHoursPlayed;
+    }
+
+    public void setTotalHoursPlayed(String totalHoursPlayed) {
+        this.totalHoursPlayed = totalHoursPlayed;
+    }
+
+    public String getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public void setTotalDeaths(String totalDeaths) {
+        this.totalDeaths = totalDeaths;
+    }
+
+    public String getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(String lastActive) {
+        this.lastActive = lastActive;
+    }
 
     public String getGameRank() {
         return gameRank;

@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value="/register")
-    public ResponseEntity<?> register(@RequestBody User user) throws InvalidUsernameException {
+    public ResponseEntity<?> register(@RequestBody User user) throws InvalidUsernameException, IOException {
         userService.register(user);
         return new ResponseEntity<JwtTokenResponse>(generateTokenResponse(user.getUsername()), HttpStatus.OK);
     }

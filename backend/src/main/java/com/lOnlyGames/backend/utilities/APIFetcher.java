@@ -1,5 +1,7 @@
 package com.lOnlyGames.backend.utilities;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import com.lukaspradel.steamapi.data.json.ownedgames.Game;
 import com.lukaspradel.steamapi.data.json.ownedgames.GetOwnedGames;
@@ -10,6 +12,13 @@ import com.lukaspradel.steamapi.webapi.client.SteamWebApiClient;
 import com.lukaspradel.steamapi.webapi.request.GetOwnedGamesRequest;
 import com.lukaspradel.steamapi.webapi.request.GetUserStatsForGameRequest;
 import com.lukaspradel.steamapi.webapi.request.builders.SteamWebApiRequestFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 
 
@@ -26,11 +35,28 @@ public class APIFetcher {
         return stats;
     }
 
-    public static List<Game> getGamesPlayed(String steamID) throws SteamApiException {
-        SteamWebApiClient client = new SteamWebApiClient.SteamWebApiClientBuilder(API_KEY).build();
-        GetOwnedGamesRequest request = SteamWebApiRequestFactory.createGetOwnedGamesRequest(steamID);
-        GetOwnedGames gamesOwned = client.<GetOwnedGames> processRequest(request);
-        List<Game> games = gamesOwned.getResponse().getGames();
+    public static List<JsonNode> getGamesPlayed(String steamID) throws IOException {
+        URL url = new URL("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" +API_KEY+ "&steamid="+steamID+"&format=json&include_appinfo");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setConnectTimeout(5000);
+        con.setReadTimeout(5000);
+        BufferedReader reader;
+        String line;
+        StringBuffer responseContent = new StringBuffer();
+        reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        while((line = reader.readLine()) != null)
+        {
+            responseContent.append(line);
+        }
+        ObjectMapper om = new ObjectMapper();
+        JsonNode node = om.readTree(responseContent.toString());
+        List<JsonNode> games = node.findValues("appid");
+
+        reader.close();
         return games;
+
     }
+
+
 }
