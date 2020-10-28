@@ -15,7 +15,21 @@ function Login() {
     
       function handleSubmit(event) {
         event.preventDefault();
-        console.log(username, password)
+        
+        const url = 'http://localhost/api/v1/auth/login'
+        const payload = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        };
+
+        fetch(url, payload)
+            .then(async response => {
+                const data = response.json()
+                console.log(data)
+            })
+
+
       }
     
     return (
