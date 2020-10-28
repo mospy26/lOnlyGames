@@ -1,8 +1,14 @@
-@media all and (min-width: 480px) {
-    
+
+    .wrapper{
+        margin-top: 10%;
+    }
+
+    .logo img{
+        height: 200px;
+        cursor: pointer;
+    }
+
     .Login {
-      padding: 60px 0;
-      margin-top: 10%;
       align-items: center;
       width: 100%;
       display: block;
@@ -12,6 +18,8 @@
     .Login form {
       margin: 0 auto;
       max-width: 450px;
+      align-items: center;
+      flex-direction: row;
     }
 
     .form-group{
@@ -48,7 +56,6 @@
         background-color:#4BAFEA;
         font-size: 20px;
         font-weight: 500;
-
     }
 
     .signup{
@@ -60,4 +67,32 @@
         color: #4BAFEA;
         font-weight: 700;
     }
-  }
+
+    /* media query */
+    @media screen and (max-width:768px){
+        .form-group input{
+            width:60%;
+            height:50px;
+        }
+        .login-btn{
+            width: 60%;
+        }
+
+        .Login{
+            display: block;
+            flex-direction: row;
+        }
+
+        .label{
+            display: none;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+
+        .login-btn{
+            margin-left: 100px;
+        }
+        .signup{
+            margin-left: 100px;
+        }
+    }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import Header from './Header'
-import Footer from './Footer'
+import {NavLink} from 'react-router-dom'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Login.css";
+import logo from '../resources/logo.png'
+
 
 function Login() {
     const [username, setUsername] = useState("")
@@ -14,12 +15,28 @@ function Login() {
     
       function handleSubmit(event) {
         event.preventDefault();
-        console.log(username, password)
+        
+        const url = 'http://localhost/api/v1/auth/login'
+        const payload = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        };
+
+        fetch(url, payload)
+            .then(async response => {
+                const data = response.json()
+                console.log(data)
+            })
+
+
       }
     
     return (
         <div className="wrapper">
-            <Header />
+            <div className='logo'>
+                <NavLink to='/' exact><img src={logo} /></NavLink>
+            </div>
             <div className="Login">
             <form onSubmit={handleSubmit}>
                 <label>Username</label>
@@ -43,10 +60,8 @@ function Login() {
                 Login
                 </Button>
                 <div className='signup'>Need an account? <a href="/about"> Register Now</a></div>
-
             </form>
             </div>
-            <Footer />
         </div>
       );
 };
