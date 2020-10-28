@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -92,6 +93,22 @@ public class UserService implements UserDetailsService {
         fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
 
         return fetchedUsers;
+    }
+
+    public UserDetails updateUser(Map<String, String> payload) {
+        User user = userDAO.getUser(payload.get("username"));
+
+        if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
+        if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
+        if (payload.containsKey("email")) user.setEmail(payload.get("email"));
+        if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
+        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+        if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
+        if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
+        if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
+
+        userDAO.addUser(user);
+        return user;
     }
 
     @Override
