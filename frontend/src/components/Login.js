@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import Header from './Header'
-import Footer from './Footer'
+import {NavLink} from 'react-router-dom'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Login.css";
+import logo from '../resources/logo.png'
+
 
 function Login() {
     const [username, setUsername] = useState("")
@@ -19,7 +20,9 @@ function Login() {
     
     return (
         <div className="wrapper">
-            <Header />
+            <div className='logo'>
+                <NavLink to='/' exact><img src={logo} /></NavLink>
+            </div>
             <div className="Login">
             <form onSubmit={handleSubmit}>
                 <label>Username</label>
@@ -43,10 +46,8 @@ function Login() {
                 Login
                 </Button>
                 <div className='signup'>Need an account? <a href="/about"> Register Now</a></div>
-
             </form>
             </div>
-            <Footer />
         </div>
       );
 };
