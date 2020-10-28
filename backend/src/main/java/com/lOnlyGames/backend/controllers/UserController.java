@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.model.Blocked;
@@ -84,9 +85,10 @@ public class UserController {
 
 
     @PutMapping(value = "/update")
-    public String update(@RequestBody User user)
+    public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
     {
-        return "Update the details of this user";
+        UserDetails user = userService.updateUser(payload);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
     @PostMapping(value = "/dislike")
