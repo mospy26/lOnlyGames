@@ -30,6 +30,33 @@ public class User implements UserDetails {
     private String location;
     private String avatarURL;
     private Integer numberOfReports;
+    private String pubGPlayerName;
+    private String runescapeDisplayName;
+    private String leagueOfLegendsName;
+
+    public String getPubGPlayerName() {
+        return pubGPlayerName;
+    }
+
+    public void setPubGPlayerName(String pubGPlayerName) {
+        this.pubGPlayerName = pubGPlayerName;
+    }
+
+    public String getRunescapeDisplayName() {
+        return runescapeDisplayName;
+    }
+
+    public void setRunescapeDisplayName(String runescapeDisplayName) {
+        this.runescapeDisplayName = runescapeDisplayName;
+    }
+
+    public String getLeagueOfLegendsName() {
+        return leagueOfLegendsName;
+    }
+
+    public void setLeagueOfLegendsName(String leagueOfLegendsName) {
+        this.leagueOfLegendsName = leagueOfLegendsName;
+    }
 
     public void setGames(Set<UserGame> games) {
         this.games = games;

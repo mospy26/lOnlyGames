@@ -61,20 +61,11 @@ public class GamesAPIService {
             int code = nodes.get(i).asInt();
             switch(code)
             {
-                case 238090:
+                case 238090: //RB6
                     continue;
-                case 730:
-                    UserGame userGame = new UserGame(user,userDAO.getGameRepository().findByName("Counter Strike Global Offensive"));
-                    //Lets get the stats
-                    userGame.setKdr(new GeneratorImpl(user.getSteamId(),730).KDR());
-                    userGame.setTotalKills(new GeneratorImpl(user.getSteamId(),730).totalKills());
-                    userGame.setTotalDeaths(new GeneratorImpl(user.getSteamId(),730).totalDeaths());
-                    userGame.setTotalHoursPlayed(new GeneratorImpl(user.getSteamId(),730).totalHours());
-                    userDAO.getUserGameRepository().save(userGame);
-                    Set<UserGame> games = new HashSet<>();
-                    user.setGames(games);
-                    user.getGames().add(userGame);
-                case 698780:
+                case 730:  // CSGO
+                   loadCSGO(user,"Counter Strike Global Offensive",730);
+                case 698780: // Forgot wat this was
                     continue;
 
             }
@@ -87,6 +78,36 @@ public class GamesAPIService {
 
     }
 
+    private void loadCSGO(User user, String gameName,int appID) throws SteamApiException {
+        UserGame userGame = new UserGame(user,userDAO.getGameRepository().findByName(gameName));
+        //Lets get the stats
+        userGame.setKdr(new GeneratorImpl(user.getSteamId(),appID).KDR());
+        //set the details
+        userGame.setTotalKills(new GeneratorImpl(user.getSteamId(),appID).totalKills());
+        userGame.setTotalDeaths(new GeneratorImpl(user.getSteamId(),appID).totalDeaths());
+        userGame.setTotalHoursPlayed(new GeneratorImpl(user.getSteamId(),appID).totalHours());
+        //And away we go.
+        userDAO.getUserGameRepository().save(userGame);
+        //Dont forget to link a reference that the user can access
+        Set<UserGame> games = new HashSet<>();
+        user.setGames(games);
+        user.getGames().add(userGame);
+    }
+
+    private void loadPUBG(String playerName)
+    {}
+
+    private void loadLeague(String playerName)
+    {
+    }
+
+    private void loadRunescape(String playerName)
+    {
+    }
+
+    private void loadCallofDuty()
+    {
+    }
 
 
 
