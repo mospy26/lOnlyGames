@@ -1,4 +1,8 @@
 package com.lOnlyGames.backend.auth;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+import java.util.Arrays;
 
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.services.UserService;
@@ -43,7 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
             .formLogin()
                 .disable()
-            .csrf().disable()
+			.csrf().disable()
+			.cors().disable()
             .httpBasic().disable()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -56,4 +61,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 }
