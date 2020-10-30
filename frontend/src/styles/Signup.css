@@ -1,0 +1,113 @@
+
+    .wrapper{
+        margin: 10%;
+    }
+
+    .logo img{
+        height: 150px;
+        width: 300px;
+        cursor: pointer;
+    }
+
+    .welcome{
+        padding: 10px;
+    }
+
+    .message{
+        padding: 10px;
+    }
+
+    .passwordmatch{
+        color: red;
+        font-weight: bold;
+    }
+
+    .Login {
+      align-items: center;
+      width: 100%;
+      display: block;
+      flex-direction: row;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 450px;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .form-group{
+        margin:10px;
+        width:100%;
+    }
+    .form-group input{
+        padding: 10px;
+        width: 100%;
+        height: 70px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        font-size: 22px;
+        line-height: 1.428571429;
+        color: #333;
+    }
+    label{
+        display: block;
+        font-weight: 700;
+        float:left;
+        margin-left:10px;
+        margin-bottom: 15px;
+    }
+
+    .signup-btn{
+        width: 100%;
+        margin-left: 10px;
+        margin-top: 10px;
+        height: 50px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        font-size: 14px;
+        color: black;
+        background-color:#4BAFEA;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .signup{
+        margin-top: 10px;
+    }
+
+    .signup a{
+        text-decoration: none;
+        color: #4BAFEA;
+        font-weight: 700;
+    }
+
+    /*media query*/
+    /* @media screen and (max-width:768px){
+        .form-group input{
+            width:60%;
+            height:50px;
+        }
+        .login-btn{
+            width: 60%;
+        }
+
+        .Login{
+            display: block;
+            flex-direction: row;
+        }
+
+        .label{
+            display: none;
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+
+        .login-btn{
+            margin-left: 100px;
+        }
+        .signup{
+            margin-left: 100px;
+        }
+    } */

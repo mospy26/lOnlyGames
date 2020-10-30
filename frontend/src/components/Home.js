@@ -20,7 +20,7 @@ const Home = () => {
                         <NavLink to='/login' className='button' exact activeClassName='active'>
                             <button>Sign In</button>
                         </NavLink>
-                        <NavLink to='/profile' className='button' exact activeClassName='active'>
+                        <NavLink to='/signup' className='button' exact activeClassName='active'>
                             <button>Sign Up</button>
                         </NavLink>
                     </div>
