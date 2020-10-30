@@ -14,7 +14,7 @@ function Login() {
     const history = useHistory()
 
     function validateForm() {
-        return username.length > 0 && password.length > 0;
+        return username.length > 0 && password.length > 0 && password2.length > 0 && password===password2;
     }
     function validatePassword() {
         if (password.length>0 && password2.length>0 && password!==password2){
@@ -106,7 +106,7 @@ function Login() {
                 />
                 </FormGroup>
                 <div className="passwordmatch">{validatePassword()}</div>
-                <Button block disabled={!validateForm() && !validatePassword()} type="submit" className="signup-btn">
+                <Button block disabled={!validateForm()} type="submit" className="signup-btn">
                 Sign up
                 </Button>
             </form>
