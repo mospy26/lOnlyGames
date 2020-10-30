@@ -47,7 +47,7 @@ function Login() {
                 console.log(res.data.result)
                 localStorage.setItem("token", res.data.result);
                 uservalidate(true)
-                history.push('/matches')
+                history.push('/profile')
             }
         })
         .catch(err => {
