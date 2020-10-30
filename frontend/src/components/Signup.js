@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import {NavLink} from 'react-router-dom'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Signup.css";
-import logo from '../resources/logo.svg'
+import logo from '../resources/logo.svg';
+import axios from 'axios';
+
 
 
 function Login() {
@@ -21,26 +23,32 @@ function Login() {
     function handleSubmit(event) {
     event.preventDefault();
     
-    const url = 'http://localhost/api/v1/auth/register'
+    const url = '/auth/register'
     const payload = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
 
-    fetch(url, payload)
-        .then(async response => {
-            const data = response.json()
-            console.log(data)
-            if (data) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-              } 
+    axios.post(url, { username, password })
+        .then( res =>{
+            if (res){
+                console.log(res.data.result)
+                localStorage.setItem("token", res.data.result);
+            }
+        }
+  
+    )
+
+    // fetch(url, payload)
+    //     .then(async response => {
+    //         const data = response.json()
+    //         console.log(response)
+    //         if (response.ok){
+    //             
+    //         } 
             
-        })
-
-    return
-
-
+    //     })
     }
 
     return (
@@ -62,14 +70,14 @@ function Login() {
                     autoFocus
                     type="text"
                     value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={e => setUsername(e.target.value.trim())}
                 />
                 </FormGroup>
                 <label>Password</label>
                 <FormGroup controlId="password">
                 <FormControl
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value.trim())}
                     type="password"
                 />
                 </FormGroup>
@@ -77,7 +85,7 @@ function Login() {
                 <FormGroup controlId="password">
                 <FormControl
                     value={password2}
-                    onChange={e => setPassword2(e.target.value)}
+                    onChange={e => setPassword2(e.target.value.trim())}
                     type="password"
                 />
                 </FormGroup>

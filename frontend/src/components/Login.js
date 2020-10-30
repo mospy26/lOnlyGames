@@ -57,7 +57,7 @@ function Login() {
                 <Button block disabled={!validateForm()} type="submit" className="login-btn">
                 Login
                 </Button>
-                <div className='signup'>Need an account? <a href="/about"> Register Now</a></div>
+                <div className='signup'>Need an account? <a href="/signup"> Register Now</a></div>
             </form>
             </div>
         </div>
