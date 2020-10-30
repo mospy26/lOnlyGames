@@ -4,6 +4,8 @@ import com.lOnlyGames.backend.utilities.APIFetcher;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import com.lukaspradel.steamapi.data.json.playerstats.Stat;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class TeamFortress2 {
@@ -51,7 +53,7 @@ public class TeamFortress2 {
         return totalPlaytime/60/60;
     }
 
-    public String TeamFortressTwoKills() throws SteamApiException {
+    public String resolveTF2Kills() throws SteamApiException {
 
         String totalKills = "";
         for(int i = 0; i<stats.size(); ++i) {
@@ -92,7 +94,9 @@ public class TeamFortress2 {
                 totalKills += "Sniper Total Kills: " + stats.get(i).getValue()+"\n";
             }
         }
-
-        return totalKills;
+        double totalKill = Double.parseDouble(totalKills);
+        BigDecimal bd = BigDecimal.valueOf(totalKill);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return Double.toString(bd.doubleValue());
 
     }}

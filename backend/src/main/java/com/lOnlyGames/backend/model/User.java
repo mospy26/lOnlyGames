@@ -32,7 +32,15 @@ public class User implements UserDetails {
     private Integer numberOfReports;
     private String pubGPlayerName;
     private String runescapeDisplayName;
-    private String leagueOfLegendsName;
+    private String battlenet;
+
+    public String getBattlenet() {
+        return battlenet;
+    }
+
+    public void setBattlenet(String battlenet) {
+        this.battlenet = battlenet;
+    }
 
     public String getPubGPlayerName() {
         return pubGPlayerName;
@@ -50,13 +58,10 @@ public class User implements UserDetails {
         this.runescapeDisplayName = runescapeDisplayName;
     }
 
-    public String getLeagueOfLegendsName() {
-        return leagueOfLegendsName;
-    }
 
-    public void setLeagueOfLegendsName(String leagueOfLegendsName) {
-        this.leagueOfLegendsName = leagueOfLegendsName;
-    }
+
+
+
 
     public void setGames(Set<UserGame> games) {
         this.games = games;

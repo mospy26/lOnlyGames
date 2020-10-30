@@ -7,27 +7,34 @@ import com.github.michaelbull.rs.hiscores.Player;
 import com.github.michaelbull.rs.hiscores.Skill;
 
 import java.io.IOException;
+
 import java.util.Map;
 import java.util.Optional;
 
 public class Runescape {
 
-   Optional<Player> optional;
+   private Optional<Player> optional;
+   private Hiscores hiscores;
+   private String userName;
+    public Runescape(String userName) {
 
-    public Runescape(String userName) throws IOException {
+           this.userName = userName;
+            RuneScapeAPI api = RuneScapeAPI.createHttp();
+             hiscores = api.hiscores();
 
-        RuneScapeAPI api = RuneScapeAPI.createHttp();
-        Hiscores hiscores = api.hiscores();
-        optional = hiscores.playerInformation(userName, HiscoreTable.DEFAULT);
+
     }
 
-    public String getAllStats()
-    {
+    public String resolveAllStats() throws IOException {
+        optional = hiscores.playerInformation(userName, HiscoreTable.DEFAULT);
         String s = "";
-        for (Map.Entry<String, Skill> entry : optional.get().getSkills().entrySet()) {
-            s+= entry.getKey() + ": " + entry.getValue().getLevel() + "\n" ;
-        }
-        System.out.println(s);
+
+
+    for (Map.Entry<String, Skill> entry : optional.get().getSkills().entrySet()) {
+        s += entry.getKey() + ": " + entry.getValue().getLevel() + "\n";
+    }
+
+
         return s;
     }
 }

@@ -32,7 +32,11 @@ public class UserGame {
     public String totalKills;
     public String totalHoursPlayed;
     public String totalDeaths;
-    public String lastActive;
+    public String pubgWins;
+    public String pubGTop10s;
+    public String modernWarfareKDR;
+    public String modernWarfareWarZoneWins;
+
 
     public String getKdr() {
         return Kdr;
@@ -66,13 +70,7 @@ public class UserGame {
         this.totalDeaths = totalDeaths;
     }
 
-    public String getLastActive() {
-        return lastActive;
-    }
 
-    public void setLastActive(String lastActive) {
-        this.lastActive = lastActive;
-    }
 
     public String getGameRank() {
         return gameRank;
