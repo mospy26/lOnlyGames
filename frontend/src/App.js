@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios'
+import {BrowserRouter as Router, Switch, Route,} from "react-router-dom";
+
 import './styles/App.css';
 import Home from './components/Home'
 import Matches from './components/Matches'
@@ -7,10 +10,40 @@ import Profile from './components/Profile'
 import About from './components/About'
 import Login from './components/Login'
 
-import {BrowserRouter as Router, Switch, Route,} from "react-router-dom";
+
 
 
 function App() {
+
+  // useEffect(() => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: 'Bearer ' + localStorage.getItem('token')
+  //     }
+  //   };
+
+  //   // axios.get('/users', config)
+  //   //   .then(res => {
+  //   //     console.log(res)
+  //   //   })
+  //   //   .catch(err => {
+  //   //     console.log("ERROR" + err)
+  //   //   })
+  //    const payload = {
+  //           method: 'GET',
+  //           headers: { Authorization: 'Bearer ' + localStorage.getItem('token')},
+  //       };
+
+  //       fetch('http://localhost/api/v1/users', payload)
+  //         .then(response => {
+  //           console.log(response)
+  //         })
+  //         .catch(err =>{
+  //           console.log(err)
+  //         })
+  
+  // }, []);
+
   return (
     <Router>
       <div className="App">
