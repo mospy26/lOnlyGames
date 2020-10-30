@@ -58,6 +58,12 @@
         font-weight: 500;
     }
 
+    #incorrect__pwd{
+        display: none;
+        color: red;
+        font-weight: 700;
+    }
+
     .signup{
         margin-top: 10px;
     }

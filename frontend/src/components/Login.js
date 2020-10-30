@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink, useHistory} from 'react-router-dom'
+import axios from 'axios'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Login.css";
 import logo from '../resources/logo.png'
 
 
 function Login() {
+    const history = useHistory()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+
 
     function validateForm() {
         return username.length > 0 && password.length > 0;
@@ -16,17 +19,20 @@ function Login() {
       function handleSubmit(event) {
         event.preventDefault();
         
-        const url = 'http://localhost/api/v1/auth/login'
-        const payload = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        };
+        const url = '/auth/login'
 
-        fetch(url, payload)
-            .then(async response => {
-                const data = response.json()
-                console.log(data)
+        axios.post(url, { username, password })
+            .then(res => {
+                if(res.status == 200){
+                    localStorage.setItem('token', res.data.result)
+                    history.push('/')
+                }
+            })
+            .catch(err => {
+                console.log(err.response)
+                if(err.response.status == 400){
+                    document.getElementById('incorrect__pwd').style.display = 'block';
+                }
             })
       }
     
@@ -35,6 +41,7 @@ function Login() {
             <div className='logo'>
                 <NavLink to='/' exact><img src={logo} /></NavLink>
             </div>
+            <div id="incorrect__pwd">Incorrect Username or Password</div>
             <div className="Login">
             <form onSubmit={handleSubmit}>
                 <label>Username</label>
@@ -43,14 +50,14 @@ function Login() {
                     autoFocus
                     type="text"
                     value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={e => setUsername(e.target.value.trim())}
                 />
                 </FormGroup>
                 <label>Password</label>
                 <FormGroup controlId="password">
                 <FormControl
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value.trim())}
                     type="password"
                 />
                 </FormGroup>
@@ -60,7 +67,7 @@ function Login() {
                 <div className='signup'>Need an account? <a href="/signup"> Register Now</a></div>
             </form>
             </div>
-        </div>
+    </div>
       );
 };
 
