@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink, useHistory} from 'react-router-dom'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Signup.css";
 import logo from '../resources/logo.svg';
@@ -11,6 +11,7 @@ function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [password2, setPassword2] = useState("")
+    const history = useHistory()
 
     function validateForm() {
         return username.length > 0 && password.length > 0;
@@ -18,6 +19,16 @@ function Login() {
     function validatePassword() {
         if (password.length>0 && password2.length>0 && password!==password2){
             return <p>Passwords do not match</p>
+        }
+    }
+
+    function uservalidate(val) {
+
+        if (username.length > 0 && !val) {
+            document.getElementById('userexist').style.display = 'block';
+    }
+        else if(username.length > 0 && val){
+            document.getElementById('userexist').style.display = 'none';
         }
     }
     function handleSubmit(event) {
@@ -31,14 +42,18 @@ function Login() {
     };
 
     axios.post(url, { username, password })
-        .then( res =>{
+        .then(res =>{
             if (res){
                 console.log(res.data.result)
                 localStorage.setItem("token", res.data.result);
+                uservalidate(true)
+                history.push('/matches')
             }
-        }
-  
-    )
+        })
+        .catch(err => {
+            console.log(err.response)
+            uservalidate(false)
+        })
 
     // fetch(url, payload)
     //     .then(async response => {
@@ -72,6 +87,7 @@ function Login() {
                     value={username}
                     onChange={e => setUsername(e.target.value.trim())}
                 />
+                <div id="userexist">User already exists</div>
                 </FormGroup>
                 <label>Password</label>
                 <FormGroup controlId="password">
@@ -90,11 +106,9 @@ function Login() {
                 />
                 </FormGroup>
                 <div className="passwordmatch">{validatePassword()}</div>
-
                 <Button block disabled={!validateForm() && !validatePassword()} type="submit" className="signup-btn">
                 Sign up
                 </Button>
-                {/* <div className='signup'>Need an account? <a href="/about"> Register Now</a></div> */}
             </form>
             </div>
         </div>

@@ -22,6 +22,12 @@
         font-weight: bold;
     }
 
+    #userexist{
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
     .Login {
       align-items: center;
       width: 100%;
