@@ -6,6 +6,7 @@ import YoutubeBackground from 'react-youtube-background'
 import "../styles/Home.css"
 import Login from './Login'
 
+
 const Home = () => {
    
     useEffect(() => {
@@ -26,8 +27,8 @@ const Home = () => {
                 method: 'GET',
                 headers: { Authorization: 'Bearer ' + localStorage.getItem('token')},
             };
-    
-            fetch('http://localhost/api/v1/users', payload)
+        
+            fetch('/http://localhost/api/v1/users', payload)
               .then(response => {
                 console.log(response)
               })
