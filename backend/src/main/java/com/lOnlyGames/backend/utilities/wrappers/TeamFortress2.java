@@ -94,9 +94,8 @@ public class TeamFortress2 {
                 totalKills += "Sniper Total Kills: " + stats.get(i).getValue()+"\n";
             }
         }
-        double totalKill = Double.parseDouble(totalKills);
-        BigDecimal bd = BigDecimal.valueOf(totalKill);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return Double.toString(bd.doubleValue());
+
+
+        return totalKills;
 
     }}

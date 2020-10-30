@@ -19,12 +19,30 @@ public class CODMW {
 
     private String userID;
     private StringBuffer content;
-    private CacheFactory cacheFactory;
+    private final String API_KEY = "c8e7025684msh6371be6d590c323p19fe31jsnc680714fd143";
 
     public CODMW(String userID) throws IOException {
         this.userID = userID;
-        cacheFactory = new ConcreteGameDataFactory();
-        content = cacheFactory.create("COD").connect(userID);
+        String[] uniqueIdentifier = userID.split("#");
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://call-of-duty-modern-warfare.p.rapidapi.com/multiplayer/"+  uniqueIdentifier[0] +  "%2523"+uniqueIdentifier[1]+ "/battle")
+                .get()
+                .addHeader("x-rapidapi-host", "call-of-duty-modern-warfare.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", API_KEY)
+                .build();
+
+        Response response = client.newCall(request).execute();
+        BufferedReader read;
+        String Line;
+        content = new StringBuffer();
+        read = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+        while((Line = read.readLine()) != null)
+        {
+            content.append(Line);
+        }
+
 
     }
 
@@ -32,7 +50,9 @@ public class CODMW {
     public  String resolveKDRWarzone() throws IOException {
         ObjectMapper om = new ObjectMapper();
         JsonNode node = om.readTree(content.toString());
+        System.out.println("The content is ");
         List<JsonNode> games = node.findValues("br");
+        System.out.println("The size of games is " + games.size());
         double a = games.get(0).get("properties").get("kdRatio").asDouble();
         double finalVal = Math.round(a * 100.0) / 100.0;
         return Double.toString(finalVal);

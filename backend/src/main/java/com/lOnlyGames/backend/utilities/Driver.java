@@ -1,4 +1,5 @@
 package com.lOnlyGames.backend.utilities;
+import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.utilities.wrappers.CODMW;
 import com.lOnlyGames.backend.utilities.wrappers.PUBG;
 import com.lOnlyGames.backend.utilities.wrappers.Runescape;
@@ -11,6 +12,9 @@ import java.io.IOException;
 public class Driver {
 
     public static void main(String args[]) throws SteamApiException, IOException {
-       System.out.println(new CODMW("BigBick47#1647").resolveTotalWarzoneWins());
+        User user = new User();
+        user.setBattlenet("BigBick47#1647");
+        user.setPubGPlayerName("LonelyDeBaby");
+        System.out.println(new GeneratorImpl(user).getPUBTop10s());
     }
 }

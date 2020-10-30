@@ -3,6 +3,8 @@ package com.lOnlyGames.backend.utilities;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.utilities.wrappers.*;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
@@ -10,7 +12,7 @@ import java.io.IOException;
 public class GeneratorImpl{
 
 
-    private User user;
+private User user;
     public GeneratorImpl(User user){
         this.user = user;
     }
@@ -31,7 +33,7 @@ public class GeneratorImpl{
 
     public String TeamFortressTwoKills() throws SteamApiException { return new TeamFortress2(user.getSteamId()).resolveTF2Kills(); }
 
-    public double totalTeamFortressHours(String steamID) throws SteamApiException { return new TeamFortress2(user.getSteamId()).resolvePlayTime(); }
+    public double totalTeamFortressHours() throws SteamApiException { return new TeamFortress2(user.getSteamId()).resolvePlayTime(); }
 
 
     //WARZONE
@@ -42,6 +44,8 @@ public class GeneratorImpl{
     public String getMWTotalTimePlayed() throws IOException{ return new CODMW(user.getBattlenet()).resolveTotalTimePlayer(); }
 
     public String getMWMultiplayerKDR() throws IOException{ return new CODMW(user.getBattlenet()).resolveMultiplayerKDR(); }
+
+    public String getMWtotalWarzoneGame() throws IOException {return new CODMW(user.getBattlenet()).resolveTotalWarzoneGames();}
 
 
     //PUBG

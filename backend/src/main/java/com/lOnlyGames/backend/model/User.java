@@ -4,6 +4,7 @@ import java.util.Collection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -70,7 +71,7 @@ public class User implements UserDetails {
     // Games
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Set<UserGame> games;
+    private Set<UserGame> games  = new HashSet<>();
 
     // Availabilities
     @JsonIgnore
@@ -112,6 +113,7 @@ public class User implements UserDetails {
     public User(String username) {
         this.username = username;
         this.numberOfReports = 0;
+
     }
 
     public String getUsername() {

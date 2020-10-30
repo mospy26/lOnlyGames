@@ -83,8 +83,8 @@ public class UserService implements UserDetailsService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        gamesAPIService.preload(user);
         userDAO.register(user);
+        gamesAPIService.preload(user);
 
 
 

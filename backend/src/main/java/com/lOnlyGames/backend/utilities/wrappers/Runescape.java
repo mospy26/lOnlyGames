@@ -20,7 +20,7 @@ public class Runescape {
 
            this.userName = userName;
             RuneScapeAPI api = RuneScapeAPI.createHttp();
-             hiscores = api.hiscores();
+            hiscores = api.hiscores();
 
 
     }

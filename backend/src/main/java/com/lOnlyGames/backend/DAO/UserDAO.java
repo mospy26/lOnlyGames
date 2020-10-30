@@ -70,6 +70,7 @@ public class UserDAO {
         return user;
 	}
 	public void register(User user) {
+
         userRepository.save(user);
     }
     

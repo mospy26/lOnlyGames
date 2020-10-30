@@ -44,7 +44,6 @@ public class PUBG {
     }
 
     public String resolveTop10s() throws IOException {
-
         responseContent = minimumCalls(playerName);
         ObjectMapper om = new ObjectMapper();
         JsonNode node = om.readTree(responseContent.toString());
