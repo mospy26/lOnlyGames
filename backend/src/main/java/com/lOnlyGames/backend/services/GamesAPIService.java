@@ -102,6 +102,7 @@ public class GamesAPIService {
         user.getGames().add(userGame);
         userDAO.getUserGameRepository().save(userGame);
         userDAO.getUserRepository().save(user);
+        System.out.println("Added due to github errors");
     }
 
     private void loadTF2(User user) throws SteamApiException {

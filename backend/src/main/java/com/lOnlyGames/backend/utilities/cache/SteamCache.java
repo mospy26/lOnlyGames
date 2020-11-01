@@ -15,6 +15,7 @@ public class SteamCache implements GameDataCache {
 
     private final String API_KEY = "BD01DFF46072331CAF754AE917231860";
 
+
     @Override
     public StringBuffer connect(String userID) throws IOException {
         URL url = new URL("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" +API_KEY+ "&steamid="+userID+"&format=json&include_appinfo");
@@ -29,8 +30,10 @@ public class SteamCache implements GameDataCache {
         while((line = reader.readLine()) != null)
         {
             responseContent.append(line);
+
         }
 
+        System.out.println("Added due to github errors");
 
         return responseContent;
     }
