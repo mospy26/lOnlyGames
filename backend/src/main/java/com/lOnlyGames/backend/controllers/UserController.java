@@ -120,7 +120,12 @@ public class UserController {
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/report")
+    public ResponseEntity<?> report(@RequestBody User toReport) {
+        String reportMsg = userService.reportUser(toReport);
+        return new ResponseEntity<ReportResponse>(new ReportResponse(reportMsg), HttpStatus.OK);
 
+    }
 
 
 

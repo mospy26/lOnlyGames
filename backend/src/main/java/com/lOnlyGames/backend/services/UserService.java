@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.UserDAO;
+import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
@@ -109,6 +110,22 @@ public class UserService implements UserDetailsService {
 
         userDAO.addUser(user);
         return user;
+    }
+
+    public String reportUser(User user) {
+        user = userDAO.getUser(user.getUsername());
+
+        //Throw exception if user reports themselves
+        String currentUsername = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        if (user.getUsername().matches(currentUsername)) throw new CannotReportSelfException();
+
+        //block user as well to prevent multiple reporting exploits
+        blockedService.blockUser(user);
+
+        user.setNumberOfReports(user.getNumberOfReports()+1);
+        userDAO.addUser(user);
+
+        return "User '" + user.getUsername() + "' has been reported.";
     }
 
     @Override

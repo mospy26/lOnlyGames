@@ -65,6 +65,12 @@ public class GlobalExceptionHandler {
                 generateExceptionResponse(ErrorCode.ALREADY_UNBLOCKED, ex.getMessage()), HttpStatus.OK);
     }
 
+    @ExceptionHandler({CannotReportSelfException.class})
+    public ResponseEntity<ExceptionResponse> reportingSelf(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
     /**
      * FALLBACK *
      */
