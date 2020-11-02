@@ -111,6 +111,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public String reportUser(User user) {
+        user.setNumberOfReports(user.getNumberOfReports()+1);
+        userDAO.addUser(user);
+        //block user as well after report
+        blockedService.blockUser(user);
+        return user.getUsername() + " has been reported";
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
