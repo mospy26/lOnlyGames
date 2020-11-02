@@ -112,6 +112,7 @@ public class UserService implements UserDetailsService {
     }
 
     public String reportUser(User user) {
+        user = userDAO.getUser(user.getUsername());
         user.setNumberOfReports(user.getNumberOfReports()+1);
         userDAO.addUser(user);
         //block user as well after report
