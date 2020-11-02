@@ -119,7 +119,7 @@ public class UserService implements UserDetailsService {
         user.setNumberOfReports(user.getNumberOfReports()+1);
         userDAO.addUser(user);
 
-        return user.getUsername() + " has been reported";
+        return "User '" + user.getUsername() + "' has been reported.";
     }
 
     @Override
