@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({CannotReportSelfException.class})
     public ResponseEntity<ExceptionResponse> reportingSelf(Exception ex){
         return new ResponseEntity<ExceptionResponse>(
-                generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.OK);
+                generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     /**
