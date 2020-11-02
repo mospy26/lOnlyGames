@@ -14,7 +14,8 @@ public class ErrorCodes {
         INTERNAL_ERROR,
         ALREADY_LIKE_DISLIKE,
         ALREADY_BLOCKED,
-        ALREADY_UNBLOCKED
+        ALREADY_UNBLOCKED,
+        REPORT_SELF
     }
     
 }
