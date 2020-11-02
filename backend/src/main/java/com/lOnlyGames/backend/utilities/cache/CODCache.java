@@ -15,7 +15,33 @@ public class CODCache implements GameDataCache {
 
     @Override
     public StringBuffer connect(String userID) throws IOException {
-        System.out.println("Added due to github errors");
-        return null;
+
+        String[] uniqueIdentifier = userID.split("#");
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://call-of-duty-modern-warfare.p.rapidapi.com/multiplayer/"+  uniqueIdentifier[0] +  "%2523"+uniqueIdentifier[1]+ "/battle")
+                .get()
+                .addHeader("x-rapidapi-host", "call-of-duty-modern-warfare.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", API_KEY)
+                .build();
+
+        System.out.println("MY SINGLE API CALL OKAY");
+
+
+
+        Response response = client.newCall(request).execute();
+        System.out.println("MY REQUEST CODE IS " + response.code());
+        BufferedReader read;
+        String Line;
+        content = new StringBuffer();
+        read = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+        while((Line = read.readLine()) != null)
+        {
+            content.append(Line);
+        }
+
+        return content;
     }
 }

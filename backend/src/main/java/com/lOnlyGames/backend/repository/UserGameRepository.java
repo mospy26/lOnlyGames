@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface UserGameRepository extends CrudRepository<UserGame, UserGameCK> {
-    public UserGame findByGameRank(String rank);
     public UserGame findByGame(Game game);
     public List<UserGame> findByUser(User user);
     public List<UserGame> findByGameAndUserNot(Game game, User user);

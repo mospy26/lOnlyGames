@@ -32,9 +32,6 @@ public class SteamCache implements GameDataCache {
             responseContent.append(line);
 
         }
-
-        System.out.println("Added due to github errors");
-
         return responseContent;
     }
 }

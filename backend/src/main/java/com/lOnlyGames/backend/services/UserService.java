@@ -22,6 +22,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transaction;
+import javax.websocket.Session;
+
 
 @Component(value="UserService")
 public class UserService implements UserDetailsService {
@@ -78,6 +81,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void register(User user) throws IOException, SteamApiException {
+
         if (userDAO.getUser(user.getUsername()) != null) {
             throw new InvalidUsernameException();
         }

@@ -27,8 +27,9 @@ public class PUBG {
 
 
 
-    public String resolveWins() throws IOException {
+    public String resolveAllStats() throws IOException {
         responseContent = minimumCalls(playerName);
+
         ObjectMapper om = new ObjectMapper();
         JsonNode node = om.readTree(responseContent.toString());
         List<JsonNode> duo = node.findValues("duo");
@@ -37,25 +38,21 @@ public class PUBG {
         int Duowins = duo.get(0).get("wins").asInt();
         int SoloWins = solo.get(0).get("wins").asInt();
         int squadWins = squad.get(0).get("wins").asInt();
-        return "Duo Wins: " + Duowins+ "\n"
+        String stats =  "Duo Wins: " + Duowins+ "\n"
                 + "Solo Wins: " + SoloWins + "\n"
-                +  "Squad Wins: " + squadWins;
+                +  "Squad Wins: " + squadWins + "\n";
 
-    }
-
-    public String resolveTop10s() throws IOException {
-        responseContent = minimumCalls(playerName);
-        ObjectMapper om = new ObjectMapper();
-        JsonNode node = om.readTree(responseContent.toString());
-        List<JsonNode> duo = node.findValues("duo");
-        List<JsonNode> solo = node.findValues("solo");
-        List<JsonNode> squad = node.findValues("squad");
         int Top10Duos = duo.get(0).get("top10s").asInt();
         int Top10Solo = solo.get(0).get("top10s").asInt();
         int Top10Squads = squad.get(0).get("top10s").asInt();
-        return "Solo Top 10 Finishes : " + Top10Solo + "\n"
+        stats += "Solo Top 10 Finishes : " + Top10Solo + "\n"
                 + "Squad Top 10 Finishes: " + Top10Squads +"\n"
                 + "Duo Top 10 Finishes: " + Top10Duos;
+
+
+        return stats;
+
+
     }
 
     private StringBuffer minimumCalls(String playerName) throws IOException {

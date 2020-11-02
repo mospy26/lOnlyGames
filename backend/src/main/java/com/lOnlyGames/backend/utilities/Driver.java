@@ -15,6 +15,7 @@ public class Driver {
         User user = new User();
         user.setBattlenet("BigBick47#1647");
         user.setPubGPlayerName("LonelyDeBaby");
-        System.out.println(new GeneratorImpl(user).getPUBTop10s());
+        System.out.println(new CODMW("BigBick47#1647").resolveAllGameStats());
+        System.out.println(new PUBG("LongDeBaby").resolveAllStats());
     }
 }

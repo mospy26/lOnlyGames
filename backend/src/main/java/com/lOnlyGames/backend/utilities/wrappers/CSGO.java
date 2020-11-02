@@ -16,7 +16,10 @@ public class CSGO {
         stat =  APIFetcher.getGameStats(steamID,APP_ID);
     }
 
-    public String resolveKDR() {
+    public String resolveGameStats() {
+
+        String stats = "";
+
 
         DecimalFormat df = new DecimalFormat("#.##");
         //Calculate Ratio
@@ -24,37 +27,41 @@ public class CSGO {
         //Format to 2dp
         String ratio2dp = df.format(ratio);
         //Return
-        return ratio2dp;
-    }
+        stats = "CSGO Kill Death Ratio = " + ratio2dp + "\n";
 
-    public String resolveTotalHours() {
         Optional<Stat> totalHours = stat.stream().
                 filter(p -> p.getName().equals("total_time_played")).
                 findFirst();
 
         Double hours = totalHours.get().getValue().doubleValue() / 60 / 60;
-        return hours.toString();
+
+        stats = "Total Hours Played = " + hours + "\n";
+        stats = "Total Kills = " + resolvetotalKills() + "\n" + "Total Deaths =" + resolveTotalDeaths() + "\n" + "Total Wins = " + resolveTotalWins() + "\n";
+
+        return stats;
     }
-    public String resolvetotalKills() {
+
+
+    private String resolvetotalKills() {
         Optional<Stat> totalKills = stat.stream().
                 filter(p -> p.getName().equals("total_kills")).
                 findFirst();
         return totalKills.get().getValue().toString();
     }
 
-    public String resolveTotalDeaths() {
+    private
+    String resolveTotalDeaths() {
         Optional<Stat> totalKills = stat.stream().
                 filter(p -> p.getName().equals("total_deaths")).
                 findFirst();
         return totalKills.get().getValue().toString();
     }
 
-
-    public List<Stat> resolveAllStats() {
+    private List<Stat> resolveAllStats() {
         return stat;
     }
 
-    public String resolveTotalWins() {
+    private String resolveTotalWins() {
         Optional<Stat> totalWins = stat.stream().
                 filter(p -> p.getName().equals("total_wins")).
                 findFirst();
