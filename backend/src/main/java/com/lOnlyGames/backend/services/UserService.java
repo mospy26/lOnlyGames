@@ -113,10 +113,12 @@ public class UserService implements UserDetailsService {
 
     public String reportUser(User user) {
         user = userDAO.getUser(user.getUsername());
+        //block user as well to prevent multiple reporting exploits
+        blockedService.blockUser(user);
+
         user.setNumberOfReports(user.getNumberOfReports()+1);
         userDAO.addUser(user);
-        //block user as well after report
-        blockedService.blockUser(user);
+
         return user.getUsername() + " has been reported";
     }
 
