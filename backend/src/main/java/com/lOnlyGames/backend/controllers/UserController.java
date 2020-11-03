@@ -12,6 +12,7 @@ import com.lOnlyGames.backend.services.LikeService;
 import com.lOnlyGames.backend.services.MatchesService;
 import com.lOnlyGames.backend.services.UserService;
 
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -112,11 +113,17 @@ public class UserController {
         return new ResponseEntity<AllLikesResponse>(new AllLikesResponse(likedUsers), HttpStatus.OK);
     }
 
-
+    //get a user's profile
+    @GetMapping(value="/profile")
+    public ResponseEntity<?> getProfile(@RequestParam String username){
+        User user = userService.getProfile(username);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
+    }
+    //update a user's profile
     @PutMapping(value = "/update")
     public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
     {
-        UserDetails user = userService.updateUser(payload);
+        User user = userService.updateUser(payload);
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 
