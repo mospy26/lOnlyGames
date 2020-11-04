@@ -1,4 +1,80 @@
+body{
+    overflow: hidden;
+}
+
+hr{
+    width: 400px;
+}
+
 .profile_container{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 20px; */
     justify-content: center;
+    align-items: center;
+    
+}
+
+.social__ids{
+    display: flex;
+    padding: 10px;
+    align-content: center;
+    align-items: center;
+    /* justify-content: space-evenly; */
+}
+
+.id{
+    position: relative;
+    float:left;
+    margin: 15px 30px;
+}
+
+.card__container{
+    width: 100%;
+    align-items: center;
+    margin-left: 25%;
+
+}
+
+.card__info{
+    align-self: center;
+    width: 50%;
+    margin: 10px;
+    padding-right: 40px;
+
+}
+.avatar{
+    width:400px;
+    height:400px;
+    position: center;
+    padding: 20px;
+}
+
+.avatar img{
+    width: 100%;
+    height: 100%;
+}
+
+.form__group__profile{
+    margin:10px;
+    width:50% !important;
+}
+
+.form__group__profile input{
+    padding: 10px;
+    width: 50%;
+    height: 70px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    font-size: 22px;
+    line-height: 1.428571429;
+    color: #333;
+}
+/* .row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+} */
+.form__container{
+    width: 100%;
 }
