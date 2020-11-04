@@ -71,6 +71,12 @@ public class GlobalExceptionHandler {
                 generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler({InvalidAvailabilityException.class})
+    public ResponseEntity<ExceptionResponse> invalidAvailability(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.INVALID_AVAILABILITY, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
     /**
      * FALLBACK *
      */

@@ -15,7 +15,8 @@ public class ErrorCodes {
         ALREADY_LIKE_DISLIKE,
         ALREADY_BLOCKED,
         ALREADY_UNBLOCKED,
-        REPORT_SELF
+        REPORT_SELF,
+        INVALID_AVAILABILITY
     }
     
 }
