@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.BlockedDAO;
+import com.lOnlyGames.backend.DAO.LikeDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyBlockedException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyLikedException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyUnblockedException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 
@@ -18,6 +22,8 @@ public class BlockedService {
 
     @Autowired
     private BlockedDAO blockedDAO;
+    @Autowired
+    private LikeDAO likeDAO;
 
     public List<User> allBlockedByUser() throws InvalidCredentialsException {
         try{
@@ -30,30 +36,65 @@ public class BlockedService {
         }
     }
 
-    public String blockUser(User user) throws UsernameNotFoundException{
-        //User who is doing the blocking
+    public String blockUser(User user) throws UsernameNotFoundException, UserAlreadyBlockedException{
+        //User doing the blocking
+        User blocker = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //User who has been blocked
         try{
-            //User doing the blocking
-            User blocker = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            //User who has been blocked
             User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
-
-            //check to see if user has been blocked already
-            if(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker,blockee) != null){
-                return "This user has already been blocked";
-            }
-            
-            //create a new Blocked object
-            Blocked blockObj = new Blocked(blocker, blockee);
-
-            //saves the blocked item to the db
-            blockedDAO.blockUser(blockObj);
-
-            return "User '" + user.getUsername() + "' has been blocked.";
-
-        } catch(Exception e){
+        }catch(Exception e){
             //i think this is the correct error to return
             throw new UsernameNotFoundException("Username '" + user.getUsername() + "' is invalid");
+        }
+        User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
+
+        //remove the like on a user if we are blocking them
+        if(likeDAO.getLikedRepository().findByLikerAndLikes(blocker, blockee) != null){
+            likeDAO.removeLike(likeDAO.getLikedRepository().findByLikerAndLikes(blocker, blockee));
+        }
+
+        //for when a user tries to block themselves
+        if(blocker.getUsername().matches(blockee.getUsername())){
+            throw new IllegalArgumentException();
+        }
+        //check to see if user has been blocked already
+        if(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker,blockee) != null){
+            throw new UserAlreadyBlockedException();
+        }
+
+        //create a new Blocked object
+        Blocked blockObj = new Blocked(blocker, blockee);
+
+        //saves the blocked item to the db
+        blockedDAO.blockUser(blockObj);
+
+        return "User '" + user.getUsername() + "' has been blocked.";
+
+    }
+
+    public String unblockUser(User user) throws UsernameNotFoundException, UserAlreadyUnblockedException {
+        //User who is doing the blocking
+        //User doing the unblocking
+        User blocker = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //User to be unblocked
+        try{
+            User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
+        }catch(Exception e){
+            //i think this is the correct error to return
+            throw new UsernameNotFoundException("Username '" + user.getUsername() + "' is invalid");
+        }
+        User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
+
+        if(blocker.getUsername().matches(blockee.getUsername())){
+            throw new IllegalArgumentException();
+        }
+        //check to see if user has been blocked already
+        if(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker,blockee) != null){
+            blockedDAO.unblockUser(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker, blockee));
+            return "User '" + user.getUsername() + "' has been unblocked.";
+        }
+        else{
+            throw new UserAlreadyUnblockedException();
         }
     }
 }
