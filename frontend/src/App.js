@@ -10,6 +10,7 @@ import Profile from './components/Profile'
 import About from './components/About'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import DashboardCard from './components/DashboardCard';
 
 
 
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/profile" component={Profile}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/signup" component={Signup}/>
+          <Route exact path="/card" component={DashboardCard}/>
           <Route path="/" component={Home}/>
         </Switch>
       </div>
