@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Component } from 'react';
+import React, { useState, useMemo } from 'react';
 import "../styles/DashboardCard.css";
 import TinderCard from 'react-tinder-card'
 import Header from './Header'
@@ -7,23 +7,23 @@ import Footer from './Footer'
 const db = [
     {
         name: 'Richard Hendricks',
-        url: '../resources/logo.png'
+        url: './img/richard.jpg'
     },
     {
         name: 'Erlich Bachman',
-        url: '../resources/logo.png'
+        url: './frontend/src/resources/logo.png'
     },
     {
         name: 'Monica Hall',
-        url: '../resources/logo.png'
+        url: './frontend/src/resources/logo.png'
     },
     {
         name: 'Jared Dunn',
-        url: '../resources/logo.png'
+        url: './frontend/src/resources/logo.png'
     },
     {
         name: 'Dinesh Chugtai',
-        url: '../resources/logo.png'
+        url: './img/richard.jpg'
     }
 ]
 
@@ -59,29 +59,28 @@ const DashboardCard = () => {
     }
 
     return (
-        <>
-        <Header/>
         <div>
-            <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
-            <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
-            <h1>React Tinder Card</h1>
+        <Header/>
+        <div className='toplevel'>
+            <h1>Choose your gamer</h1>
             <div className='cardContainer'>
                 {characters.map((character, index) =>
                     <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-                        <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
-                            <h3>{character.name}</h3>
+                        <div style={{ backgroundImage: 'url('+ character.url + ')' }} className='card'>
                         </div>
+                        <h3>{character.name}</h3>
                     </TinderCard>
                 )}
+                
             </div>
             <div className='buttons'>
-                <button onClick={() => swipe('left')}>Swipe left!</button>
-                <button onClick={() => swipe('right')}>Swipe right!</button>
+                <button onClick={() => swipe('left')}>Dislike</button>
+                <button onClick={() => swipe('right')}>Like</button>
             </div>
-            {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}
-        </div>
+            {/* {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}     */}
+            </div>
         <Footer/>
-        </>
+        </div>
     )
 }
 
