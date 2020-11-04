@@ -16,7 +16,8 @@ public class ErrorCodes {
         ALREADY_BLOCKED,
         ALREADY_UNBLOCKED,
         REPORT_SELF,
-        INVALID_AVAILABILITY
+        INVALID_AVAILABILITY,
+        AVAILABILITY_OVERLAP
     }
     
 }
