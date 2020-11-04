@@ -1,74 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import "../styles/Profile.css"
+import { Button, FormGroup, FormControl } from "react-bootstrap";
 
-function Profile() {
+
+const Profile = () => {
+
+    const [fName, setFname] = useState()
+    const [lName, setLname] = useState()
+    const [bio, setBio] = useState()
+    const [discord, setDiscord] = useState()
+    const [steam, setSteam] = useState()
+    
     return (
         <div>
             <Header />
-            <div class="profile-page">
-                <div class="profile-card">
-                    <img src="favicon.ico" alt="John" style={{ width: 100 }} />
-                    <h1>John Doe</h1>
-                    <p class="title">DiscordID: abcd</p>
-                    <p>SteamID: abcd</p>
+            <div className='profile_container'>
+                <div className='image_container'>
+                    <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
                 </div>
+                <div className='form_container'>
+                    <form >
+                        <label>First Name</label>
+                        <FormGroup controlId="fName">
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={fName}
+                            onChange={e => setFname(e.target.value.trim())}
+                        />
+                        </FormGroup>
 
-                <div class="profile-items">
-                    <table class="profile-table">
-                        <tr class="profile-row">
-                            <td>Name</td>
-                            <td> Namememe </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                        <tr class="profile-row">
-                            <td>Games Played</td>
-                            <td> hhahaha </td>
-                        </tr>
-                    </table>
+                        <label>Last Name</label>
+                        <FormGroup controlId="lName">
+                        <FormControl
+                            value={lName}
+                            onChange={e => setLname(e.target.value.trim())}
+                            type="text"
+                        />
+                        </FormGroup>
+
+                        <label>Bio</label>
+                        <FormGroup controlId="bio">
+                        <FormControl
+                            value={bio}
+                            onChange={e => setBio(e.target.value.trim())}
+                            type="text"
+                        />
+                        </FormGroup>
+
+                        <label>Discord ID</label>
+                        <FormGroup controlId="discord">
+                        <FormControl
+                            value={discord}
+                            onChange={e => setDiscord(e.target.value.trim())}
+                            type="text"
+                        />
+                        </FormGroup>
+
+                        <label>Steam ID</label>
+                        <FormGroup controlId="steam">
+                        <FormControl
+                            value={steam}
+                            onChange={e => setSteam(e.target.value.trim())}
+                            type="text"
+                        />
+                        </FormGroup>
+
+
+                        <Button block type="submit" className="save-btn">
+                        Save
+                        </Button>
+                    </form>
                 </div>
             </div>
             <Footer />
