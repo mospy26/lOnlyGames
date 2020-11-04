@@ -1,9 +1,10 @@
-body{
+/* body{
     overflow: hidden;
-}
+} */
 
 hr{
-    width: 400px;
+    width: 95%;
+   align-self: center;
 }
 
 .profile_container{
@@ -12,6 +13,7 @@ hr{
     /* grid-gap: 20px; */
     justify-content: center;
     align-items: center;
+    margin-bottom: 70px;
     
 }
 

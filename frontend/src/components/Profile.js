@@ -18,9 +18,9 @@ const Profile = () => {
     return (
         <div>
             <Header />
-            <ProfileCard/>
             <div className='profile_container'>
-                <div className='card__container'>
+            <ProfileCard/>
+                {/* <div className='card__container'>
                     <div className='avatar'>
                         <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
                     </div>
@@ -33,7 +33,7 @@ const Profile = () => {
                         <div className='id'>{discord}</div>
                         <div className='id'>{steam}</div>
                     </div>
-                </div>
+                </div> */}
                 <div className='form_container'>
                     <form >
                         <div className='row inner'>

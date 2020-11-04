@@ -18,11 +18,10 @@ import "../styles/ProfileCard.css"
 
 const ProfileCard = () => {
 
-    const [steamID , setSteamID] = useState()
-    const [discordID , setDiscordID] = useState()
-    var [bio , setBio] = useState()
+    const [steamID , setSteamID] = useState('stemoo')
+    const [discordID , setDiscordID] = useState('discoo')
+    const [bio , setBio] = useState("I am Nabeel, I love CSS")
 
-    bio = "I am Nabeel, I love CSS"
 
     return (
         <>

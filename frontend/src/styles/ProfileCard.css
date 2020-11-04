@@ -350,6 +350,10 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 Copyright (c) 2015 Daniel Eden
 */
 
+.button-container{
+    display: flex;
+
+}
 .animated {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
@@ -5814,7 +5818,7 @@ License - nucleoapp.com/license/
 .card {
     border-radius: 12px;
     box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
-    background-color: #D3D3D3;
+    background-color: whitesmoke;
     color: #252422;
     margin-bottom: 20px;
     position: relative;
@@ -6016,6 +6020,7 @@ License - nucleoapp.com/license/
 
 .card-user .image img {
     border-radius: 12px;
+    width: 100%;
 }
 
 .card-user .author {
