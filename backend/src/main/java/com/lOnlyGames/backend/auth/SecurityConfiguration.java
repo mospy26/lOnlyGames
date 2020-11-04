@@ -42,13 +42,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-            .authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/api/v1/users").permitAll()
+            .authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/register").permitAll()
             .anyRequest().authenticated()
 				.and()
             .formLogin()
                 .disable()
 			.csrf().disable()
-			.cors().disable()
             .httpBasic().disable()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
