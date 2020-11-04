@@ -3,6 +3,7 @@ import Header from './Header'
 import Footer from './Footer'
 import "../styles/Profile.css"
 import { Button, FormGroup, FormControl } from "react-bootstrap";
+import ProfileCard from "./ProfileCard"
 
 
 const Profile = () => {
@@ -16,6 +17,7 @@ const Profile = () => {
     return (
         <div>
             <Header />
+            <ProfileCard/>
             <div className='profile_container'>
                 <div className='image_container'>
                     <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
