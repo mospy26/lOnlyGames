@@ -1,11 +1,12 @@
 package com.lOnlyGames.backend.response;
 
-import org.springframework.security.core.userdetails.UserDetails;
+
+import com.lOnlyGames.backend.model.User;
 
 public class UserResponse extends ParentResponse {
 
 
-    public UserResponse(UserDetails user) {
+    public UserResponse(User user) {
         super(user);
 
     }

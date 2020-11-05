@@ -6,12 +6,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.lOnlyGames.backend.DAO.LikeDAO;
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.Game;
+import com.lOnlyGames.backend.model.Liked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
@@ -44,6 +46,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LikeDAO likeDAO;
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -111,7 +116,7 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-    public UserDetails updateUser(Map<String, String> payload) {
+    public User updateUser(Map<String, String> payload) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
@@ -125,6 +130,45 @@ public class UserService implements UserDetailsService {
 
         userDAO.addUser(user);
         return user;
+    }
+
+    public User getProfile(String username) throws UsernameNotFoundException{
+        User current_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        /*check if we are looking at the profile for the
+        user who is currently logged in.
+         */
+        if(current_user.getUsername().equals(username)){
+            return current_user;
+        }
+        /*must be the profile of another user so we must
+        check if we have they have liked us or not
+        before revealing their steamID etc.
+         */
+        else{
+            try{
+                User targetUser = getUser(username);
+                User userObj = new User(username);
+                userObj.setBio(targetUser.getBio());
+                userObj.setFirstName(targetUser.getFirstName());
+                userObj.setLastName(targetUser.getLastName());
+                userObj.setAvatarURL(targetUser.getAvatarURL());
+                userObj.setNumberOfReports(targetUser.getNumberOfReports());
+                userObj.setLocation(targetUser.getLocation());
+
+                //checking if user has liked us
+                /*adding in the extra personal details if that
+                user has already liked us when we visit their profile.
+                 */
+                if(likeDAO.getLikedRepository().findByLikerAndLikes(targetUser, current_user) != null) {
+                    userObj.setEmail(targetUser.getEmail());
+                    userObj.setDiscordId(targetUser.getDiscordId());
+                    userObj.setSteamId(targetUser.getSteamId());
+                }
+                return userObj;
+            } catch(Exception e){
+                throw new UsernameNotFoundException("Username \"" + username + "\" is invalid");
+            }
+        }
     }
 
     public String reportUser(User user) {
