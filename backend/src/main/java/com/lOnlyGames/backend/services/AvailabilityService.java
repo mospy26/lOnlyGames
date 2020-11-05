@@ -12,12 +12,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AvailabilityService {
 
     @Autowired
     private AvailabilityDAO availabilityDAO;
+
+    public List<Availability> allUserAvailabilities(User user) {
+        List<UserAvailability> userAvailabilities = availabilityDAO.getUserAvailabilityRepository().findByUser(user);
+        List<Availability> availabilities = new ArrayList<>();
+
+        for (UserAvailability availability: userAvailabilities) {
+            availabilities.add(availability.getAvailability());
+        }
+        return availabilities;
+    }
 
     public String addAvailability(Availability availability) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
