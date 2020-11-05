@@ -65,6 +65,24 @@ public class GlobalExceptionHandler {
                 generateExceptionResponse(ErrorCode.ALREADY_UNBLOCKED, ex.getMessage()), HttpStatus.OK);
     }
 
+    @ExceptionHandler({CannotReportSelfException.class})
+    public ResponseEntity<ExceptionResponse> reportingSelf(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({InvalidAvailabilityException.class})
+    public ResponseEntity<ExceptionResponse> invalidAvailability(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.INVALID_AVAILABILITY, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({AvailabilityOverlapException.class})
+    public ResponseEntity<ExceptionResponse> availabilityOverlap(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.AVAILABILITY_OVERLAP, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
     /**
      * FALLBACK *
      */
