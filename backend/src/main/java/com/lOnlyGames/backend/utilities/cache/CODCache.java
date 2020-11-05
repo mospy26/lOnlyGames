@@ -28,13 +28,7 @@ public class CODCache implements GameDataCache {
                 .addHeader("x-rapidapi-host", "call-of-duty-modern-warfare.p.rapidapi.com")
                 .addHeader("x-rapidapi-key", API_KEY)
                 .build();
-
-        System.out.println("MY SINGLE API CALL OKAY");
-
-
-
         Response response = client.newCall(request).execute();
-        System.out.println("MY REQUEST CODE IS " + response.code());
         BufferedReader read;
         String Line;
         content = new StringBuffer();

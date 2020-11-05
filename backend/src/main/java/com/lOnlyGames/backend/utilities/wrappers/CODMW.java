@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.utilities.wrappers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lOnlyGames.backend.utilities.Util;
 import com.lOnlyGames.backend.utilities.factories.ConcreteGameDataFactory;
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +10,6 @@ public class CODMW {
 
     private String userID;
     private StringBuffer content;
-    private final String API_KEY = "c8e7025684msh6371be6d590c323p19fe31jsnc680714fd143";
 
     public CODMW(String userID) throws IOException {
         this.userID = userID;
