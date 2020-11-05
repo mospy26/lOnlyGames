@@ -148,12 +148,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/availability/add")
-    public String availability(@RequestBody Availability availability) {
-        return availabilityService.addAvailability(availability);
+    public ResponseEntity<?> availability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.addAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
     }
 
     @PostMapping(value = "/availability/remove")
-    public String removeAvailability(@RequestBody Availability availability) {
-        return availabilityService.removeAvailability(availability);
+    public ResponseEntity<?> removeAvailability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.removeAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
     }
 }
