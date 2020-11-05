@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,10 +12,12 @@ import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.Liked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,9 +27,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transaction;
+import javax.websocket.Session;
+
 
 @Component(value="UserService")
 public class UserService implements UserDetailsService {
+
+
+    @Autowired
+    private  GamesAPIService gamesAPIService;
 
     @Autowired
     private UserDAO userDAO;
@@ -69,23 +79,28 @@ public class UserService implements UserDetailsService {
         return userDAO.getUser(username);
     }
 
-    public User authenticate(String username, String password) throws InvalidCredentialsException {
+    public User authenticate(String username, String password) throws InvalidCredentialsException, IOException, SteamApiException {
         Optional<User> user = userDAO.authenticate(username, password);
 
         if (!user.isPresent()) throw new InvalidCredentialsException();
         if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
-
+        gamesAPIService.poll(user.get());
         return user.get();
     }
 
-    public void register(User user) {
+    public void register(User user) throws IOException, SteamApiException {
+
         if (userDAO.getUser(user.getUsername()) != null) {
             throw new InvalidUsernameException();
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userDAO.register(user);
+        gamesAPIService.preload(user);
+
+
+
+
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {

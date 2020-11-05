@@ -70,10 +70,16 @@ public class UserDAO {
         return user;
 	}
 	public void register(User user) {
+
         userRepository.save(user);
     }
     
     public List<User> findUsersStartWith(String username) {
         return userRepository.findByUsernameStartsWith(username);
+    }
+
+    public void deleteUserGame(UserGame userGame)
+    {
+        userGameRepository.delete(userGame);
     }
 }

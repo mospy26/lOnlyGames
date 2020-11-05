@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BlockedService {
+public class    BlockedService {
 
     @Autowired
     private BlockedDAO blockedDAO;

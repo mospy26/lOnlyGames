@@ -21,21 +21,34 @@ public class UserGame {
     @Id
     private Game game;
 
+
+    private String userGameID;
+
+    public String getUserGameID() {
+        return userGameID;
+    }
+
+    public void setUserGameID(String userGameID) {
+        this.userGameID = userGameID;
+    }
+
     public UserGame() { }
     public UserGame(User user, Game game) {
         this.user = user;
         this.game = game;
     }
 
-    public String gameRank;
-
-    public String getGameRank() {
-        return gameRank;
+    public String getStatistics() {
+        return statistics;
     }
 
-    public void setGameRank(String gameRank) {
-        this.gameRank = gameRank;
+    public void setStatistics(String statistics) {
+        this.statistics = statistics;
     }
+
+
+   //  @Column(length = 1000)  THis doesnt update our database I  had to change it manually using a SQL script
+    public String statistics;
 
     public User getUser() {
         return user;
