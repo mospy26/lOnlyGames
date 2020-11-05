@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.lOnlyGames.backend.DAO.AvailabilityDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.model.Availability;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
@@ -38,6 +40,9 @@ public class UserController {
 
     @Autowired
     private GamesAPIService gamesAPIService;
+
+    @Autowired
+    private AvailabilityService availabilityService;
 
     //MATCHING RELATED FUNCTION IN CONTROLLER
 
@@ -142,8 +147,21 @@ public class UserController {
        return new ResponseEntity<FetchGameDataResponse>(new FetchGameDataResponse("Fetched Games Data for " + user.getUsername()),HttpStatus.OK);
     }
 
+    @GetMapping(value = "/availability")
+    public ResponseEntity<?> getUserAvailabilities(@RequestBody User user) {
+        List<Availability> availabilities = availabilityService.allUserAvailabilities(user);
+        return new ResponseEntity<>(new AllAvailabilitiesResponse(availabilities), HttpStatus.OK);
+    }
 
+    @PostMapping(value = "/availability/add")
+    public ResponseEntity<?> availability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.addAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
+    }
 
-
-
+    @PostMapping(value = "/availability/remove")
+    public ResponseEntity<?> removeAvailability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.removeAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
+    }
 }
