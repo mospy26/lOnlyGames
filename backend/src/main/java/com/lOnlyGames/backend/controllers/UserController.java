@@ -147,6 +147,12 @@ public class UserController {
        return new ResponseEntity<FetchGameDataResponse>(new FetchGameDataResponse("Fetched Games Data for " + user.getUsername()),HttpStatus.OK);
     }
 
+    @GetMapping(value = "/availability")
+    public ResponseEntity<?> getUserAvailabilities(@RequestBody User user) {
+        List<Availability> availabilities = availabilityService.allUserAvailabilities(user);
+        return new ResponseEntity<>(new AllAvailabilitiesResponse(availabilities), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/availability/add")
     public ResponseEntity<?> availability(@RequestBody Availability availability) {
         String availabilityMsg = availabilityService.addAvailability(availability);
