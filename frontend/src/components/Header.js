@@ -10,8 +10,6 @@ function Header(){
     const [open, setOpen] = useState(false)
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
-    console.log(user)
-
     function navSlide(e){
         e.preventDefault();
         const nav =  document.querySelector('.navbar__links');

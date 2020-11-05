@@ -1,11 +1,4 @@
-/* body{
-    overflow: hidden;
-} */
 
-/* hr{
-    width: 95%;
-   align-self: center;
-} */
 
 .profile_container{
     display: grid;
@@ -16,46 +9,23 @@
     margin-bottom: 70px;
     
 }
-/* 
-.social__ids{
-    display: flex;
-    padding: 10px;
-    align-content: center;
-    align-items: center;
-    justify-content: space-evenly;
-} */
+
+.save__btn{
+    width: 80px;
+    height:50px;
+    cursor: pointer;
+    background-color: #4BAFEA;
+    color:black;
+    font-size: 20px;
+    font-size: 700 !important;
+    border: none;
+}
 
 .id{
     position: relative;
     float:left;
     margin: 15px 30px;
 }
-
-/* .card__container{
-    width: 100%;
-    align-items: center;
-    margin-left: 25%;
-
-}
-
-.card__info{
-    align-self: center;
-    width: 50%;
-    margin: 10px;
-    padding-right: 40px;
-
-} */
-/* .avatar{
-    width:400px;
-    height:400px;
-    position: center;
-    padding: 20px;
-}
-
-.avatar img{
-    width: 100%;
-    height: 100%;
-} */
 
 .form__group__profile{
     margin: 50px;
@@ -75,4 +45,15 @@
 
 form {
     margin: 5%;
+}
+
+.hide {
+    display: none;
+}
+
+.show{
+    padding: 10px;
+    display: block;
+    font-size: 20px;
+    color: green;
 }
