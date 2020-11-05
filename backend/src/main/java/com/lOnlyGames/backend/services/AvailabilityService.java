@@ -61,6 +61,8 @@ public class AvailabilityService {
             if (newDay == existingDay && newEnd >= existingEndTime && newEnd <= existingEndTime) throw new AvailabilityOverlapException();
             //final case, where the entire existingTime is contained within new time, e.g. if you have on tuesday 6-10 and you try add 5-11.
             if (newDay == existingDay && newStart <= existingStartTime && newEnd >= existingEndTime) throw new AvailabilityOverlapException();
+
+            if (newDay == existingDay && newEnd >= existingStartTime && newEnd <= existingEndTime) throw new AvailabilityOverlapException();
         }
 
 
