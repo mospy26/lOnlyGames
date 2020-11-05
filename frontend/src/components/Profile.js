@@ -35,25 +35,16 @@ const Profile = () => {
             })
             .catch(err => {
                 console.log(err.response)
-                if (err.response.status == 400) {
-                    document.getElementById('incorrect__pwd').style.display = 'block';
-                }
             })
     }
 
     useEffect(() => {
         const url = '/users'
 
-        let config = {
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              "Content-Type": "application/json"
-            }
-          }
-
-        axios.get(url, config=config)
+        axios.get(url)
             .then(res => {
                 if (res.status == 200) {
+                    // localStorage.setItem('user', JSON.stringify(res.data.result))
                     setFname(res.data.result.firstName)
                     setLname(res.data.result.lastName)
                     setDiscord(res.data.result.discordId)
@@ -63,9 +54,6 @@ const Profile = () => {
             })
             .catch(err => {
                 console.log(err)
-                if (err.response.status == 400) {
-                    document.getElementById('incorrect__pwd').style.display = 'block';
-                }
             })
         return () => {
             

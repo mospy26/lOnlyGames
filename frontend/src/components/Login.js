@@ -25,7 +25,16 @@ function Login() {
             .then(res => {
                 if(res.status == 200){
                     localStorage.setItem('token', res.data.result)
-                    history.push('/')
+
+                    // make request to get user info using the token and save in local storage
+
+                    axios.get('/users')
+                      .then(response => {
+                          if (response.status == 200){
+                            localStorage.setItem('user', JSON.stringify(response.data.result))
+                          }
+                      })
+                      .then(history.push('/profile')) 
                 }
             })
             .catch(err => {

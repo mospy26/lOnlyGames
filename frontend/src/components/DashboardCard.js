@@ -66,7 +66,7 @@ const DashboardCard = () => {
             <div className='cardContainer'>
                 {characters.map((character, index) =>
                     <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-                        <div style={{ backgroundImage: 'url('+ character.url + ')' }} className='card'>
+                        <div style={{ backgroundImage: 'url('+ character.url + ')' }} className='card__tinder'>
                         </div>
                         <h3>{character.name}</h3>
                     </TinderCard>

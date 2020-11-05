@@ -17,7 +17,7 @@
   height: 300px;
 }
 
-.card {
+.card__tinder {
   position: relative;
   background-color: green;
   width: 80vw;
@@ -28,7 +28,7 @@
   background-position: center;
 }
 
-.card h3 {
+.card__tinder h3 {
   position: absolute;
   bottom: 0;
   margin: 10px;
