@@ -58,12 +58,20 @@
   border: none;
   color: #fff;
   font-size: 18px;
-  background-color: #9198e5;
+  /* background-color: #9198e5; */
   transition: 200ms;
   margin: 0 10px;
   font-weight: bolder;
   width: 160px;
   box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.10);
+}
+
+.buttons-like {
+  background-color: #4BB543;
+}
+
+.buttons-dislike {
+  background-color: #CC0000;
 }
 
 .buttons button:hover {
@@ -78,4 +86,14 @@
   57%  { transform: scale(1,1) }
   64%  { transform: scale(1,1) }
   100% { transform: scale(1,1) }
+}
+
+.game-avatar {
+  height: 50px;
+  width: 100px;
+}
+
+.dashboard-card-username {
+  color: #fff !important;
+  text-align: center !important;
 }

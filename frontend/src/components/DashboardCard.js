@@ -1,29 +1,31 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import "../styles/DashboardCard.css";
 import TinderCard from 'react-tinder-card'
 import Header from './Header'
 import Footer from './Footer'
+import { Card } from 'reactstrap'
+import axios from 'axios'
 
 const db = [
     {
         name: 'Richard Hendricks',
-        url: './img/richard.jpg'
+        url: 'https://i.imgur.com/kKfFMgv.png'
     },
     {
         name: 'Erlich Bachman',
-        url: './frontend/src/resources/logo.png'
+        url: 'https://i.pinimg.com/originals/dc/cd/99/dccd99e1be1fa3f4f1543aaa9cbfc810.webp'
     },
     {
         name: 'Monica Hall',
-        url: './frontend/src/resources/logo.png'
+        url: 'https://i.imgur.com/SRxUakd.png'
     },
     {
         name: 'Jared Dunn',
-        url: './frontend/src/resources/logo.png'
+        url: 'https://i.imgur.com/NfS3y42.png'
     },
     {
         name: 'Dinesh Chugtai',
-        url: './img/richard.jpg'
+        url: 'https://i.imgur.com/fvl0dqi.png'
     }
 ]
 
@@ -33,6 +35,27 @@ let charactersState = db // This fixes issues with updating characters state for
 const DashboardCard = () => {
     const [characters, setCharacters] = useState(db)
     const [lastDirection, setLastDirection] = useState()
+
+    const [users, setUsers] = useState([])
+
+
+    useEffect(() => {
+
+        const url = '/users/matches'
+
+        axios.get(url)
+            .then(res => {
+                if (res.status == 200) {
+                    setUsers(res.data.result)
+                }
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+        return () => {
+        }
+    }, [])
+
 
     const childRefs = useMemo(() => Array(db.length).fill(0).map(i => React.createRef()), [])
 
@@ -64,18 +87,23 @@ const DashboardCard = () => {
         <div className='toplevel'>
             <h1>Choose your gamer</h1>
             <div className='cardContainer'>
-                {characters.map((character, index) =>
-                    <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-                        <div style={{ backgroundImage: 'url('+ character.url + ')' }} className='card__tinder'>
+                {users.map((gameuser, index) =>
+                    gameuser.map((character, index2) =>
+                    <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.user.username)} onCardLeftScreen={() => outOfFrame(character.user.username)}>
+                        <div style={{ backgroundImage: 'url('+ character.user.url + ')' }} className='card__tinder'>
+                        <h3 className="dashboard-card-username">{character.user.username}</h3>
                         </div>
-                        <h3>{character.name}</h3>
+                        <Card className="swipe">
+                            I play {character.game.name}! <br/>
+                            {/* <img className="game-avatar" src={"https://upload.wikimedia.org/wikipedia/en/0/0b/Dota_2_%28Steam_2019%29.jpg"}/> */}
+                        </Card>
                     </TinderCard>
-                )}
+                ))}
                 
             </div>
             <div className='buttons'>
-                <button onClick={() => swipe('left')}>Dislike</button>
-                <button onClick={() => swipe('right')}>Like</button>
+                <button className="buttons-dislike" onClick={() => swipe('left')}>Dislike</button>
+                <button className="buttons-like" onClick={() => swipe('right')}>Like</button>
             </div>
             {/* {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}     */}
             </div>

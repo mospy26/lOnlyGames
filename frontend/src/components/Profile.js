@@ -39,12 +39,22 @@ const Profile = () => {
     }
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user != null) {
+            setFname(user.firstName)
+            setLname(user.lastName)
+            setDiscord(user.discordId)
+            setSteam(user.steamId)
+            setBio(user.bio)
+            return
+        }
+
         const url = '/users'
 
         axios.get(url)
             .then(res => {
                 if (res.status == 200) {
-                    // localStorage.setItem('user', JSON.stringify(res.data.result))
+                    localStorage.setItem('user', JSON.stringify(res.data.result))
                     setFname(res.data.result.firstName)
                     setLname(res.data.result.lastName)
                     setDiscord(res.data.result.discordId)
