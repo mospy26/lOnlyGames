@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.lOnlyGames.backend.DAO.AvailabilityDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.model.Availability;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
@@ -38,6 +40,9 @@ public class UserController {
 
     @Autowired
     private GamesAPIService gamesAPIService;
+
+    @Autowired
+    private AvailabilityService availabilityService;
 
     //MATCHING RELATED FUNCTION IN CONTROLLER
 
@@ -142,8 +147,13 @@ public class UserController {
        return new ResponseEntity<FetchGameDataResponse>(new FetchGameDataResponse("Fetched Games Data for " + user.getUsername()),HttpStatus.OK);
     }
 
+    @PostMapping(value = "/availability/add")
+    public String availability(@RequestBody Availability availability) {
+        return availabilityService.addAvailability(availability);
+    }
 
-
-
-
+    @PostMapping(value = "/availability/remove")
+    public String removeAvailability(@RequestBody Availability availability) {
+        return availabilityService.removeAvailability(availability);
+    }
 }
