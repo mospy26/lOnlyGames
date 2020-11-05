@@ -16,6 +16,7 @@ const ProfileCard = (props) => {
   const bio = props.bio
   const firstName = props.firstName
   const lastName = props.lastName
+  const avatarURL = props.avatarURL
 
 
   return (
@@ -25,7 +26,7 @@ const ProfileCard = (props) => {
           <div className="image">
             <img
               alt="..."
-              src={"https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM"}
+              src={avatarURL}
             />
           </div>
           <CardBody>
@@ -34,7 +35,7 @@ const ProfileCard = (props) => {
                 <img
                   alt="..."
                   className="avatar border-gray"
-                  src={"https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM"}
+                  src={avatarURL}
                 />
                 <h5 className="title">{firstName} {lastName}</h5>
               </a>

@@ -14,6 +14,7 @@ const Profile = () => {
     const [bio, setBio] = useState()
     const [discordId, setDiscord] = useState()
     const [steamId, setSteam] = useState()
+    const [avatarURL, setAvatarURL] = useState()
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -46,6 +47,7 @@ const Profile = () => {
             setDiscord(user.discordId)
             setSteam(user.steamId)
             setBio(user.bio)
+            setAvatarURL(user.avatarURL)
             return
         }
 
@@ -74,7 +76,7 @@ const Profile = () => {
         <div>
             <Header />
             <div className='profile_container'>
-                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio}/>
+                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL}/>
                 {/* <div className='card__container'>
                     <div className='avatar'>
                         <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
