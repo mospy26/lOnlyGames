@@ -120,15 +120,4 @@ public class UserController {
         UserDetails user = userService.updateUser(payload);
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
-
-
 }
