@@ -60,5 +60,23 @@ public class AvailabilityService {
 
     }
 
+    public String removeAvailability(Availability availability) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+        List<UserAvailability> userAvailabilityList = availabilityDAO.getUserAvailabilityRepository().findByUser(user);
+        UserAvailability userAvailability = new UserAvailability(user, availability);
+        if (!userAvailabilityList.contains(userAvailability)) {
+            throw new InvalidAvailabilityException();
+        }
+        else {
+            availabilityDAO.deleteUserAvailability(new UserAvailability(user, availability));
+            availabilityDAO.deleteAvailability(availability);
+        }
+
+
+        return "Availability successfully removed";
+    }
+
 
 }
