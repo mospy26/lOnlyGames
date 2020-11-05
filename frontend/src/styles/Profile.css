@@ -2,10 +2,10 @@
     overflow: hidden;
 } */
 
-hr{
+/* hr{
     width: 95%;
    align-self: center;
-}
+} */
 
 .profile_container{
     display: grid;
@@ -16,14 +16,14 @@ hr{
     margin-bottom: 70px;
     
 }
-
+/* 
 .social__ids{
     display: flex;
     padding: 10px;
     align-content: center;
     align-items: center;
-    /* justify-content: space-evenly; */
-}
+    justify-content: space-evenly;
+} */
 
 .id{
     position: relative;
@@ -31,7 +31,7 @@ hr{
     margin: 15px 30px;
 }
 
-.card__container{
+/* .card__container{
     width: 100%;
     align-items: center;
     margin-left: 25%;
@@ -44,8 +44,8 @@ hr{
     margin: 10px;
     padding-right: 40px;
 
-}
-.avatar{
+} */
+/* .avatar{
     width:400px;
     height:400px;
     position: center;
@@ -55,11 +55,11 @@ hr{
 .avatar img{
     width: 100%;
     height: 100%;
-}
+} */
 
 .form__group__profile{
-    margin:10px;
-    width:50% !important;
+    margin: 50px;
+    margin-right: 50%;
 }
 
 .form__group__profile input{
@@ -72,11 +72,7 @@ hr{
     line-height: 1.428571429;
     color: #333;
 }
-/* .row{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 
-} */
-.form__container{
-    width: 100%;
+form {
+    margin: 5%;
 }

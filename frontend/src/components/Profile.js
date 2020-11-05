@@ -63,7 +63,7 @@ const Profile = () => {
                             <FormControl
                                 value={bio}
                                 onChange={e => setBio(e.target.value)}
-                                type="text"
+                                as="textarea" rows={5}
                             />
                             </FormGroup>
                         </div>
@@ -88,7 +88,7 @@ const Profile = () => {
                             </FormGroup>
                         </div>
 
-                        <Button block type="submit" className="save-btn">
+                        <Button type="submit" className="save-btn">
                         Save
                         </Button>
                     </form>
