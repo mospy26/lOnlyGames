@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.services;
 import com.lOnlyGames.backend.DAO.UserDAO;
+import com.lOnlyGames.backend.errorhandlers.exceptions.APICallFailedException;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.utilities.APIFetcher;
@@ -35,24 +36,27 @@ public class GamesAPIService {
      * @throws SteamApiException
      */
     public void preload(User user) throws IOException, SteamApiException {
-        if (!"".equals(user.getBattlenet()) && user.getBattlenet() != null) {
-            loader.loadCallOfDuty(user);
-        }
-        if (!"".equals(user.getPubGPlayerName()) && user.getPubGPlayerName() != null) {
-            loader.loadPUBG(user);
-        }
-        if (!"".equals(user.getRunescapeDisplayName()) && user.getRunescapeDisplayName() != null) {
-            loader.loadRunescape(user);
-        }
 
-        if (!"".equals(user.getSteamId()) && user.getSteamId() != null) {
-            if (APIFetcher.resolveCSGO(user.getSteamId())) {
-                loader.loadCSGO(user);
+
+            if (!"".equals(user.getBattlenet()) && user.getBattlenet() != null) {
+                loader.loadCallOfDuty(user);
             }
-            if (APIFetcher.resolveTeamFortressTwo(user.getSteamId())) {
-                loader.loadTeamFortress2(user);
+            if (!"".equals(user.getPubGPlayerName()) && user.getPubGPlayerName() != null) {
+                loader.loadPUBG(user);
             }
-        }
+            if (!"".equals(user.getRunescapeDisplayName()) && user.getRunescapeDisplayName() != null) {
+                loader.loadRunescape(user);
+            }
+
+            if (!"".equals(user.getSteamId()) && user.getSteamId() != null) {
+                if (APIFetcher.resolveCSGO(user.getSteamId())) {
+                    loader.loadCSGO(user);
+                }
+                if (APIFetcher.resolveTeamFortressTwo(user.getSteamId())) {
+                    loader.loadTeamFortress2(user);
+                }
+            }
+
 
     }
 

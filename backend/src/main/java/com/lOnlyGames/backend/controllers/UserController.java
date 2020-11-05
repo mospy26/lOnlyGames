@@ -1,5 +1,6 @@
 package com.lOnlyGames.backend.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,9 @@ import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsExcepti
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
-import com.lOnlyGames.backend.services.BlockedService;
-import com.lOnlyGames.backend.services.LikeService;
-import com.lOnlyGames.backend.services.MatchesService;
-import com.lOnlyGames.backend.services.UserService;
+import com.lOnlyGames.backend.services.*;
 
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +35,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private GamesAPIService gamesAPIService;
 
     //MATCHING RELATED FUNCTION IN CONTROLLER
 
@@ -127,9 +129,12 @@ public class UserController {
 
     }
 
-
-
-
+    @PostMapping(value = "/fetch")
+    public ResponseEntity<?>  fetch() throws IOException, SteamApiException {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        gamesAPIService.poll(user);
+       return new ResponseEntity<FetchGameDataResponse>(new FetchGameDataResponse("Fetched Games Data for " + user.getUsername()),HttpStatus.OK);
+    }
 
 
 
