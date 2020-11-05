@@ -9,11 +9,13 @@ import {
 
 import "../styles/ProfileCard.css"
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
 
-  const [steamID] = useState('stemoo')
-  const [discordID] = useState('discoo')
-  const [bio] = useState("I am Nabeel, I love CSS")
+  const steamId = props.steamId
+  const discordId = props.discordId
+  const bio = props.bio
+  const firstName = props.firstName
+  const lastName = props.lastName
 
 
   return (
@@ -34,7 +36,7 @@ const ProfileCard = () => {
                   className="avatar border-gray"
                   src={"https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM"}
                 />
-                <h5 className="title">Nabeel Khan</h5>
+                <h5 className="title">{firstName} {lastName}</h5>
               </a>
             </div>
             <p className="description text-center">
@@ -46,11 +48,11 @@ const ProfileCard = () => {
             <div className="button-container">
               <Row>
                 <Col className="ml-auto" lg="6" md="6" xs="6">
-                  <h5> {discordID} </h5>
+                  <h5> {discordId} </h5>
                   <img className="avatar-icon" src={require("../resources/discord.png")} />
                 </Col>
                 <Col className="ml-auto mr-auto" lg="6" md="6" xs="6">
-                  <h5>{steamID} </h5>
+                  <h5>{steamId} </h5>
                   <img className="avatar-icon" src={require("../resources/steam.png")} />
                 </Col>
               </Row>

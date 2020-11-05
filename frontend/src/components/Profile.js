@@ -54,8 +54,6 @@ const Profile = () => {
         axios.get(url, config=config)
             .then(res => {
                 if (res.status == 200) {
-                    // localStorage.setItem('token', res.data.result)
-                    // history.push('/')
                     setFname(res.data.result.firstName)
                     setLname(res.data.result.lastName)
                     setDiscord(res.data.result.discordId)
@@ -65,9 +63,9 @@ const Profile = () => {
             })
             .catch(err => {
                 console.log(err)
-                // if (err.response.status == 400) {
-                    // document.getElementById('incorrect__pwd').style.display = 'block';
-                // }
+                if (err.response.status == 400) {
+                    document.getElementById('incorrect__pwd').style.display = 'block';
+                }
             })
         return () => {
             
@@ -78,7 +76,7 @@ const Profile = () => {
         <div>
             <Header />
             <div className='profile_container'>
-                <ProfileCard />
+                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio}/>
                 {/* <div className='card__container'>
                     <div className='avatar'>
                         <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
