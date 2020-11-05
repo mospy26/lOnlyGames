@@ -148,6 +148,10 @@ public class User implements UserDetails {
         return location;
     }
 
+    public String getAvatarURL() {
+        return this.avatarURL;
+    }
+
     public Integer getNumberOfReports() {
         return numberOfReports;
     }
@@ -205,6 +209,10 @@ public class User implements UserDetails {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
     }
 
     public void setNumberOfReports(Integer numberOfReports) {

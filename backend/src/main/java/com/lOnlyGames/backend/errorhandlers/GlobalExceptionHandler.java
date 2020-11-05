@@ -3,8 +3,7 @@ package com.lOnlyGames.backend.errorhandlers;
 import java.time.LocalDateTime;
 
 import com.lOnlyGames.backend.errorhandlers.ErrorCodes.ErrorCode;
-import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
-import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.*;
 
 import org.hibernate.procedure.ParameterMisuseException;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,29 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> params(Exception ex) {
         return new ResponseEntity<ExceptionResponse>(
                 generateExceptionResponse(ErrorCode.PARAMS_MISSING, ex.getMessage()), HttpStatus.BAD_REQUEST);
-    } 
+    }
+
+    @ExceptionHandler({UserAlreadyLikedException.class, UserAlreadyDislikedException.class})
+    public ResponseEntity<ExceptionResponse> alreadyLiked(Exception ex) {
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.ALREADY_LIKE_DISLIKE, ex.getMessage()), HttpStatus.OK);
+    }
+    @ExceptionHandler({UserAlreadyBlockedException.class})
+    public ResponseEntity<ExceptionResponse> alreadyBlocked(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.ALREADY_BLOCKED, ex.getMessage()), HttpStatus.OK);
+    }
+    @ExceptionHandler({UserAlreadyUnblockedException.class})
+    public ResponseEntity<ExceptionResponse> alreadyUnblocked(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.ALREADY_UNBLOCKED, ex.getMessage()), HttpStatus.OK);
+    }
+
+    @ExceptionHandler({CannotReportSelfException.class})
+    public ResponseEntity<ExceptionResponse> reportingSelf(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.REPORT_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
 
     /**
      * FALLBACK *

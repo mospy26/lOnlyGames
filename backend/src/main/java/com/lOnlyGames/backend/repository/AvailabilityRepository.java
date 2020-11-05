@@ -14,9 +14,9 @@ public interface AvailabilityRepository extends CrudRepository<Availability, Int
     public Availability findByTimeEnd(Timestamp start);
 
     // https://stackoverflow.com/a/43828274/9921724
-    @Query("SELECT ua FROM UserAvailability ua WHERE " +
-            "(:startTime >= ua.availability.timeStart AND :startTime < ua.availability.timeEnd) OR " +
+    @Query("SELECT ua FROM UserAvailability ua WHERE :day = ua.availability.day AND " +
+            "(:startTime >= ua.availability.timeStart AND :startTime < ua.availability.timeEnd) OR  " +
             "(:endTime > ua.availability.timeStart AND :endTime <= ua.availability.timeEnd) OR " +
             "(:startTime >= ua.availability.timeStart AND :endTime <= ua.availability.timeEnd)")
-    public List<UserAvailability> findByAvailability(@Param("startTime") Timestamp start, @Param("endTime") Timestamp end);
+    public List<UserAvailability> findByAvailability(@Param("day") int day, @Param("startTime") int start, @Param("endTime") int end);
 }

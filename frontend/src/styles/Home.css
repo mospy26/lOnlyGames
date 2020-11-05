@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+#background-spacing > * + * {
+    margin-bottom: 200px;
+}
+
+.background {
+    /* background-image: url("../resources/background-image.jpg"); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+ }
+
+ .logo-img {
+    width: 5%;
+    transform: scale(10);
+    margin-top: 10%;
+    margin-bottom: 10%;
+ }
+
+ .banner-text {
+     /* background-color: white; */
+     opacity: .8;
+     width: 75%;
+     margin: auto;
+     border-radius: 10px;
+     font-family: 'Play', sans-serif;
+     font-size: xx-large;
+ }
+
+.banner-text p {
+    color: #4BAFEA;
+}
+
+ .banner-text h1 {
+     color: #4BAFEA;
+ }
+
+
+.button-container {
+    
+}
+
+.button-container button {
+    background-color: #4BAFEA;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+    padding: 5px 15px;
+    border-radius: 5px;
+    outline: 0;
+    text-transform: uppercase;
+    margin-left: 10px;
+    margin-top: 10px;
+    transition-duration: 0.4s;
+
+ }
+
+ .button-container button:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+ }

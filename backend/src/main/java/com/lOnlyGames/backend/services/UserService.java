@@ -2,10 +2,12 @@ package com.lOnlyGames.backend.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.UserDAO;
+import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
@@ -15,6 +17,7 @@ import com.lOnlyGames.backend.model.UserGame;
 
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -107,6 +110,37 @@ public class UserService implements UserDetailsService {
         fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
 
         return fetchedUsers;
+    }
+    public UserDetails updateUser(Map<String, String> payload) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
+        if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
+        if (payload.containsKey("email")) user.setEmail(payload.get("email"));
+        if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
+        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+        if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
+        if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
+        if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
+
+        userDAO.addUser(user);
+        return user;
+    }
+
+    public String reportUser(User user) {
+        user = userDAO.getUser(user.getUsername());
+
+        //Throw exception if user reports themselves
+        String currentUsername = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        if (user.getUsername().matches(currentUsername)) throw new CannotReportSelfException();
+
+        //block user as well to prevent multiple reporting exploits
+        blockedService.blockUser(user);
+
+        user.setNumberOfReports(user.getNumberOfReports()+1);
+        userDAO.addUser(user);
+
+        return "User '" + user.getUsername() + "' has been reported.";
     }
 
     @Override
