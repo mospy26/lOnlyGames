@@ -31,7 +31,7 @@ function Header(){
 
     return (
         <div>  
-            <nav className='navbar' >
+            <nav className='navbar__header' >
                 <div className='navbar__logo'>
                     <NavLink to='/' exact><img src={logo} /></NavLink>
                 </div>

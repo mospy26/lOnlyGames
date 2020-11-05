@@ -1,4 +1,4 @@
-.navbar {
+.navbar__header {
     display: flex;
     /* justify-content: space-between; */
     align-items:center;
@@ -46,7 +46,7 @@
   }
   
   .navbar__logo{
-    height: 134px;
+    height: 116px;
     padding: 0px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -122,7 +122,7 @@
     }
   }
   
-  .footer{
+  .footer__strip{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,7 +131,7 @@
     position: fixed;
     left: 0px;
     width: 100%;
-    bottom: 0px;
+    bottom: -5px;
   }
   
   
