@@ -3,7 +3,7 @@ import {NavLink, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import "../styles/Login.css";
-import logo from '../resources/logo.png'
+import logo from '../resources/logo.svg'
 
 
 function Login() {
@@ -74,9 +74,9 @@ function Login() {
                     type="password"
                 />
                 </FormGroup>
-                <Button block disabled={!validateForm()} type="submit" className="login-btn">
+                <button block disabled={!validateForm()} type="submit" className="login__btn">
                 Login
-                </Button>
+                </button>
                 <div className='signup'>Need an account? <a href="/signup"> Register Now</a></div>
             </form>
             </div>

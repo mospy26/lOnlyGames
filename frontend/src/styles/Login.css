@@ -45,18 +45,24 @@
         margin-bottom: 15px;
     }
 
-    .login-btn{
+    .login__btn{
         width: 100%;
         margin-left: 10px;
         margin-top: 10px;
-        height: 50px;
+        height: 70px;
         border: 1px solid #ccc;
         vertical-align: middle;
         font-size: 14px;
-        color: black;
+        color: #fff;
         background-color:#4BAFEA;
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 500;
+    }
+
+    .login__btn:hover{
+        background-color:#0371ff;
+        cursor: pointer;
+
     }
 
     #incorrect__pwd{
@@ -81,8 +87,9 @@
             width:60%;
             height:50px;
         }
-        .login-btn{
+        .login__btn{
             width: 60%;
+            margin-left: 100px;
         }
 
         .Login{
@@ -96,9 +103,6 @@
             margin-bottom: 0px;
         }
 
-        .login-btn{
-            margin-left: 100px;
-        }
         .signup{
             margin-left: 100px;
         }
