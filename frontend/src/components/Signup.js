@@ -46,8 +46,19 @@ function Login() {
             if (res){
                 console.log(res.data.result)
                 localStorage.setItem("token", res.data.result);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
                 uservalidate(true)
-                history.push('/profile')
+
+                axios.get('/users')
+                      .then(response => {
+                          if (response.status == 200){
+                            localStorage.setItem('user', JSON.stringify(response.data.result))
+                          }
+                          console.log("Local storage has been updated")
+                      })
+                      .then(() => { 
+                        history.push('/profile');
+                    })
             }
         })
         .catch(err => {

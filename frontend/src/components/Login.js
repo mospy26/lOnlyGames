@@ -25,6 +25,7 @@ function Login() {
             .then(res => {
                 if(res.status == 200){
                     localStorage.setItem('token', res.data.result)
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 
                     // make request to get user info using the token and save in local storage
 
