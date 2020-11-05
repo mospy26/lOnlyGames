@@ -1,15 +1,17 @@
 package com.lOnlyGames.backend.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Game {
     @Id
     private String name;
+
+
     private String iconURL;
     private String apiURL;
 

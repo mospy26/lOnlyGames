@@ -4,6 +4,7 @@ import java.util.Collection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -30,11 +31,47 @@ public class User implements UserDetails {
     private String location;
     private String avatarURL;
     private Integer numberOfReports;
+    private String pubGPlayerName;
+    private String runescapeDisplayName;
+    private String battlenet;
+
+    public String getBattlenet() {
+        return battlenet;
+    }
+
+    public void setBattlenet(String battlenet) {
+        this.battlenet = battlenet;
+    }
+
+    public String getPubGPlayerName() {
+        return pubGPlayerName;
+    }
+
+    public void setPubGPlayerName(String pubGPlayerName) {
+        this.pubGPlayerName = pubGPlayerName;
+    }
+
+    public String getRunescapeDisplayName() {
+        return runescapeDisplayName;
+    }
+
+    public void setRunescapeDisplayName(String runescapeDisplayName) {
+        this.runescapeDisplayName = runescapeDisplayName;
+    }
+
+
+
+
+
+
+    public void setGames(Set<UserGame> games) {
+        this.games = games;
+    }
 
     // Games
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Set<UserGame> games;
+    private Set<UserGame> games  = new HashSet<>();
 
     // Availabilities
     @JsonIgnore
@@ -76,6 +113,7 @@ public class User implements UserDetails {
     public User(String username) {
         this.username = username;
         this.numberOfReports = 0;
+
     }
 
     public String getUsername() {

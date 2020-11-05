@@ -1,17 +1,18 @@
 package com.lOnlyGames.backend.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.lOnlyGames.backend.DAO.AvailabilityDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
+import com.lOnlyGames.backend.model.Availability;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
-import com.lOnlyGames.backend.services.BlockedService;
-import com.lOnlyGames.backend.services.LikeService;
-import com.lOnlyGames.backend.services.MatchesService;
-import com.lOnlyGames.backend.services.UserService;
-
+import com.lOnlyGames.backend.services.*;
+import com.lukaspradel.steamapi.core.exception.SteamApiException;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,12 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private GamesAPIService gamesAPIService;
+
+    @Autowired
+    private AvailabilityService availabilityService;
 
     //MATCHING RELATED FUNCTION IN CONTROLLER
 
@@ -113,11 +120,49 @@ public class UserController {
         return new ResponseEntity<AllLikesResponse>(new AllLikesResponse(likedUsers), HttpStatus.OK);
     }
 
-
+    //get a user's profile
+    @GetMapping(value="/profile")
+    public ResponseEntity<?> getProfile(@RequestParam String username){
+        User user = userService.getProfile(username);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
+    }
+    //update a user's profile
     @PutMapping(value = "/update")
     public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
     {
-        UserDetails user = userService.updateUser(payload);
+        User user = userService.updateUser(payload);
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/report")
+    public ResponseEntity<?> report(@RequestBody User toReport) {
+        String reportMsg = userService.reportUser(toReport);
+        return new ResponseEntity<ReportResponse>(new ReportResponse(reportMsg), HttpStatus.OK);
+
+    }
+
+    @PostMapping(value = "/fetch")
+    public ResponseEntity<?>  fetch() throws IOException, SteamApiException {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        gamesAPIService.poll(user);
+       return new ResponseEntity<FetchGameDataResponse>(new FetchGameDataResponse("Fetched Games Data for " + user.getUsername()),HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/availability")
+    public ResponseEntity<?> getUserAvailabilities(@RequestBody User user) {
+        List<Availability> availabilities = availabilityService.allUserAvailabilities(user);
+        return new ResponseEntity<>(new AllAvailabilitiesResponse(availabilities), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/availability/add")
+    public ResponseEntity<?> availability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.addAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/availability/remove")
+    public ResponseEntity<?> removeAvailability(@RequestBody Availability availability) {
+        String availabilityMsg = availabilityService.removeAvailability(availability);
+        return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
     }
 }
