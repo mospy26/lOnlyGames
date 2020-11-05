@@ -33,8 +33,11 @@ function Login() {
                           if (response.status == 200){
                             localStorage.setItem('user', JSON.stringify(response.data.result))
                           }
+                          console.log("Local storage has been updated")
                       })
-                      .then(history.push('/profile')) 
+                      .then(() => { 
+                        history.push('/profile');
+                    }) 
                 }
             })
             .catch(err => {
