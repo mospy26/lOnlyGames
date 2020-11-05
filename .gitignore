@@ -34,3 +34,5 @@ build/
 
 ### jenv stuff ###
 **/*.java-version
+
+**/node_modules
