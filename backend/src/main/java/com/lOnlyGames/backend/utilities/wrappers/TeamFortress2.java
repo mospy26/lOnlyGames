@@ -3,10 +3,6 @@ package com.lOnlyGames.backend.utilities.wrappers;
 import com.lOnlyGames.backend.utilities.APIFetcher;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import com.lukaspradel.steamapi.data.json.playerstats.Stat;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TeamFortress2 {

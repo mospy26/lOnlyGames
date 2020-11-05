@@ -71,12 +71,12 @@ public class UserService implements UserDetailsService {
         return userDAO.getUser(username);
     }
 
-    public User authenticate(String username, String password) throws InvalidCredentialsException {
+    public User authenticate(String username, String password) throws InvalidCredentialsException, IOException, SteamApiException {
         Optional<User> user = userDAO.authenticate(username, password);
 
         if (!user.isPresent()) throw new InvalidCredentialsException();
         if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
-
+        gamesAPIService.poll(user.get());
         return user.get();
     }
 

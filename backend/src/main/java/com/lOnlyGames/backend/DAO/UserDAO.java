@@ -77,4 +77,9 @@ public class UserDAO {
     public List<User> findUsersStartWith(String username) {
         return userRepository.findByUsernameStartsWith(username);
     }
+
+    public void deleteUserGame(UserGame userGame)
+    {
+        userGameRepository.delete(userGame);
+    }
 }

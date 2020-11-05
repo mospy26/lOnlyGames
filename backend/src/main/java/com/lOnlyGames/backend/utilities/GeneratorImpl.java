@@ -3,8 +3,6 @@ package com.lOnlyGames.backend.utilities;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.utilities.wrappers.*;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 

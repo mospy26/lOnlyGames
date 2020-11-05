@@ -1,9 +1,7 @@
 package com.lOnlyGames.backend.utilities.wrappers;
-
 import com.lOnlyGames.backend.utilities.APIFetcher;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import com.lukaspradel.steamapi.data.json.playerstats.Stat;
-
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;

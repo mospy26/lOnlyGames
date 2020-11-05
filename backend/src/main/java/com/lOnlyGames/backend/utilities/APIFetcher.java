@@ -30,7 +30,7 @@ import java.util.List;
 
 
 public class APIFetcher {
-    private final static String API_KEY = "BD01DFF46072331CAF754AE917231860";
+    private final static String API_KEY = Util.fetchProperties().getProperty("steam_api_secret");
 
 
 
@@ -58,6 +58,31 @@ public class APIFetcher {
         List<JsonNode> id = node.findValues("id");
         return id.get(0).toString();
 
+    }
+
+
+    public static boolean resolveCSGO(String steamID) throws IOException {
+        List<JsonNode> games = getGamesPlayed(steamID);
+        for(int i = 0; i<games.size(); ++i)
+        {
+            if(games.get(i).asInt() == 730)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean resolveTeamFortressTwo(String steamID) throws IOException {
+        List<JsonNode> games = getGamesPlayed(steamID);
+        for(int i = 0; i<games.size(); ++i)
+        {
+            if(games.get(i).asInt() == 440)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 

@@ -21,6 +21,17 @@ public class UserGame {
     @Id
     private Game game;
 
+
+    private String userGameID;
+
+    public String getUserGameID() {
+        return userGameID;
+    }
+
+    public void setUserGameID(String userGameID) {
+        this.userGameID = userGameID;
+    }
+
     public UserGame() { }
     public UserGame(User user, Game game) {
         this.user = user;

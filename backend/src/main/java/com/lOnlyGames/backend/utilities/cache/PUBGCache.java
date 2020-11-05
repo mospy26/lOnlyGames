@@ -3,6 +3,7 @@ package com.lOnlyGames.backend.utilities.cache;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lOnlyGames.backend.interfaces.GameDataCache;
+import com.lOnlyGames.backend.utilities.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class PUBGCache implements GameDataCache {
 
-    private final String BEARER_TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiOGIwY2FiMC1mYmI0LTAxMzgtMmQ4ZC0wMDVkYjk1NTg2OTIiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjAzOTM1MjMwLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImxvbmVseWdhbWVzIn0.TeGbwaCvbBcSReblPNbaxgI-TZLi85kMMi_eqnxlyeo";
+    private final String BEARER_TOKEN = Util.fetchProperties().getProperty("pubg_api_secret");
 
 
     @Override

@@ -30,7 +30,7 @@ public class AuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
     
     @PostMapping(value="/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> payload) throws InvalidCredentialsException {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> payload) throws InvalidCredentialsException, IOException, SteamApiException {
         if (!payload.containsKey("username") || !payload.containsKey("password")) throw new InvalidCredentialsException("Username or password is missing");
 
         String username = payload.get("username");
