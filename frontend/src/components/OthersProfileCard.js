@@ -61,7 +61,7 @@ const OthersProfileCard = (props) => {
   return (
     <>
     <Header/>
-      <div className="content">
+      <div className="profile_container_others">
         <Card className="card-user">
           <div className="image">
             <img
@@ -77,8 +77,7 @@ const OthersProfileCard = (props) => {
                   className="avatar border-gray"
                   src={avatarURL}
                 />
-                <p className="username-card">{username}</p>
-                <h5 className="title">{firstName} {lastName}</h5>
+                <h5 className="card-title">{firstName} {lastName}<br/> ({username})</h5>
               </a>
             </div>
             <p className="description text-center">
@@ -89,7 +88,6 @@ const OthersProfileCard = (props) => {
           </CardBody>
           <CardBody>
             <div className="author">
-              <h6 className="title">Games</h6>
             </div>
               {gamesList.map((item) => {
                 return (

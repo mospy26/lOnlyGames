@@ -130,7 +130,7 @@ const Profile = () => {
         <div>
             <Header />
             <div className='profile_container'>
-                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL} gamesList = {gamesList}/>
+                <ProfileCard username={username} firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL} gamesList = {gamesList}/>
                 <div className='form_container'>
                     <form onSubmit={handleSubmit} oninput={clearAlert()}>
                         <div className='row inner'>

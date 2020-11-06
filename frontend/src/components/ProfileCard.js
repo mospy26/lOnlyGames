@@ -11,6 +11,7 @@ import "../styles/ProfileCard.css"
 
 const ProfileCard = (props) => {
 
+  const username = props.username
   const steamId = props.steamId
   const discordId = props.discordId
   const bio = props.bio
@@ -38,7 +39,7 @@ const ProfileCard = (props) => {
                   className="avatar border-gray"
                   src={avatarURL}
                 />
-                <h5 className="title">{firstName} {lastName}</h5>
+                <h5 className="title">{firstName} {lastName}<br/> ({username})</h5>
               </a>
             </div>
             <p className="description text-center">
@@ -49,7 +50,6 @@ const ProfileCard = (props) => {
           </CardBody>
           <CardBody>
             <div className="author">
-              <h6 className="title">Games</h6>
             </div>
               {gamesList.map((item) => {
                 return (
