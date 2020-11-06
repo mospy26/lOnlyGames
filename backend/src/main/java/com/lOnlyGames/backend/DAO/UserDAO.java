@@ -29,7 +29,9 @@ public class UserDAO {
         "https://i.imgur.com/fvl0dqi.png",
         "https://i.imgur.com/kKfFMgv.png",
         "https://i.pinimg.com/originals/76/aa/34/76aa3494374e18931fdac18061884ce2.webp",
-        "https://i.pinimg.com/originals/dc/cd/99/dccd99e1be1fa3f4f1543aaa9cbfc810.webp"
+        "https://i.pinimg.com/originals/dc/cd/99/dccd99e1be1fa3f4f1543aaa9cbfc810.webp",
+        "https://i.pinimg.com/originals/62/71/df/6271df0313418f138a64b8e2634812ad.png",
+        "https://i.pinimg.com/474x/ab/b1/16/abb11623b8ff29604b1eceaa1e3894e0.jpg"
     };
 
     @Autowired
