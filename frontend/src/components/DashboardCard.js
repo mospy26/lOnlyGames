@@ -63,6 +63,35 @@ const DashboardCard = () => {
         console.log('removing: ' + nameToDelete)
         setLastDirection(direction)
         alredyRemoved.push(nameToDelete)
+        if (direction === "left") {
+            axios.post("/users/block", { username: nameToDelete })
+            .then(res => {
+                if (res.status == 200) {
+                    console.log(res.data)
+                    clearAlert()
+                    const blockedAlert = document.querySelector('#blocked-alert')
+                    blockedAlert.setAttribute("color", "red")
+                    blockedAlert.classList.replace('hide', 'show')
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            }) 
+        }
+        if (direction === "right") {
+            axios.post("/users/like", { username: nameToDelete })
+            .then(res => {
+                if (res.status == 200) {
+                    console.log(res.data)
+                    clearAlert()
+                    const likedAlert = document.querySelector('#liked-alert')
+                    likedAlert.classList.replace('hide', 'show')
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     }
 
     const outOfFrame = (name) => {
@@ -72,6 +101,7 @@ const DashboardCard = () => {
     }
 
     const swipe = (dir) => {
+        clearAlert()
         const cardsLeft = characters.filter(person => !alredyRemoved.includes(person.name))
         if (cardsLeft.length) {
             const toBeRemoved = cardsLeft[cardsLeft.length - 1].name // Find the card object to be removed
@@ -82,6 +112,16 @@ const DashboardCard = () => {
                 childRefs[index].current.swipe(dir) // Swipe the card!
             }
         }
+    }
+
+    function clearAlert(){
+
+        const show = document.querySelector('.show')
+
+        if(show){
+            show.classList.replace('show', 'hide')
+        }
+
     }
 
     return (
@@ -109,6 +149,12 @@ const DashboardCard = () => {
                 <button className="buttons-like" onClick={() => swipe('right')}>Like</button>
             </div>
             {/* {lastDirection ? <h2 key={lastDirection} className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText'>Swipe a card or press a button to get started!</h2>}     */}
+            </div>
+            <div className='hide red' id='blocked-alert'>
+                Blocked user!
+            </div>
+            <div className='hide green' color='green' id='liked-alert'>
+                Liked user!
             </div>
         <Footer/>
         </div>
