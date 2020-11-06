@@ -40,4 +40,19 @@ public class UserAvailability {
         return availability;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass()!= this.getClass()) return false;
+
+        UserAvailability other = (UserAvailability) obj;
+
+        if (this.getUser().getUsername().equals(other.getUser().getUsername()) &&
+                this.getAvailability().getId().equals(other.getAvailability().getId())) {
+            return true;
+        }
+
+        return false;
+
+    }
 }

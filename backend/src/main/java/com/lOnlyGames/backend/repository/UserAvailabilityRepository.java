@@ -6,7 +6,9 @@ import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserAvailability;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface UserAvailabilityRepository extends CrudRepository<UserAvailability, UserAvailabilityCK> {
-    public UserAvailability findByUser(User user);
+    public List<UserAvailability> findByUser(User user);
     public UserAvailability findByAvailability(Availability availability);
 }

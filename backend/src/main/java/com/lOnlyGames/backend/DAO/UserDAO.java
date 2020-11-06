@@ -2,6 +2,7 @@ package com.lOnlyGames.backend.DAO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
@@ -21,6 +22,15 @@ insert/select, all other logic should occur
 in the service layer*/
 @Component
 public class UserDAO {
+
+    private static String AVATARS[] = {
+        "https://i.imgur.com/SRxUakd.png",
+        "https://i.imgur.com/NfS3y42.png",
+        "https://i.imgur.com/fvl0dqi.png",
+        "https://i.imgur.com/kKfFMgv.png",
+        "https://i.pinimg.com/originals/76/aa/34/76aa3494374e18931fdac18061884ce2.webp",
+        "https://i.pinimg.com/originals/dc/cd/99/dccd99e1be1fa3f4f1543aaa9cbfc810.webp"
+    };
 
     @Autowired
     private UserRepository userRepository;
@@ -46,6 +56,10 @@ public class UserDAO {
     }
 
     public void addUser(User user){
+        System.out.println(user.getAvatarURL() + " avatarrrrrrr");
+        if (user.getAvatarURL() == null) {
+            user.setAvatarURL(AVATARS[new Random().nextInt(AVATARS.length)]);
+        }
         userRepository.save(user);
     }
 
@@ -70,7 +84,7 @@ public class UserDAO {
         return user;
 	}
 	public void register(User user) {
-
+        user.setAvatarURL(AVATARS[new Random().nextInt(AVATARS.length)]);
         userRepository.save(user);
     }
     

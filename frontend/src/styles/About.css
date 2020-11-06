@@ -18,8 +18,14 @@
   -webkit-box-shadow: 0px 0px 269px -5px rgba(75,175,234,0.29);
   -moz-box-shadow: 0px 0px 269px -5px rgba(75,175,234,0.29);
   box-shadow: 0px 0px 269px -5px rgba(75,175,234,0.29);
+  border-radius: 75px 75px;
 }
 
 .title{
-  padding: 5%;
+  padding: 5%;  
+}
+
+p{
+  text-align: justify;
+  text-justify: inter-word;
 }

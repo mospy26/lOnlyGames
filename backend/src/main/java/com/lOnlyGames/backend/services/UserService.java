@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.LikeDAO;
+import com.lOnlyGames.backend.DAO.MatchesDAO;
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
@@ -19,6 +20,7 @@ import com.lOnlyGames.backend.model.UserGame;
 
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,6 +51,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private LikeDAO likeDAO;
+
+    @Autowired
+    private MatchesDAO matchesDAO;
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -84,7 +89,7 @@ public class UserService implements UserDetailsService {
 
         if (!user.isPresent()) throw new InvalidCredentialsException();
         if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
-        gamesAPIService.poll(user.get());
+        // gamesAPIService.poll(user.get());
         return user.get();
     }
 
@@ -103,6 +108,16 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public List<UserGame> getGames() {
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (me == null) {
+            throw new AccessDeniedException("Not logged in");
+        }
+        List<UserGame> userGames = matchesDAO.getUserGameRepository().findByUser(me);
+        return userGames;
+        // return userGames.stream().map(b -> b.getGame()).collect(Collectors.toList());
+    }
+
     public List<User> getUsersWithNameLike(String partialUsername) {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<User> fetchedUsers = userDAO.findUsersStartWith(partialUsername);
@@ -116,19 +131,26 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-    public User updateUser(Map<String, String> payload) {
+    public User updateUser(Map<String, String> payload) throws IOException, SteamApiException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        boolean toPoll = false;
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
         if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
-        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+        if (payload.containsKey("steamId")) {
+            user.setSteamId(payload.get("steamId"));
+            toPoll = true;
+        }
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
 
         userDAO.addUser(user);
+
+        // if (toPoll) gamesAPIService.poll(user);
+
         return user;
     }
 

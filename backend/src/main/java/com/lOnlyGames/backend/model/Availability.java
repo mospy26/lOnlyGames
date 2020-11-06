@@ -1,5 +1,7 @@
 package com.lOnlyGames.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ public class Availability {
     private int timeEnd; // Time representing minutes
 
 	@OneToMany(mappedBy = "availability", cascade = CascadeType.REMOVE)
+    @JsonIgnore
 	private Set<UserAvailability> users;
 
 	public Availability() {}

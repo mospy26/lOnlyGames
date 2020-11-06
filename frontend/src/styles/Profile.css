@@ -1,0 +1,66 @@
+
+
+.profile_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 20px; */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 70px;
+    
+}
+
+.save__btn{
+    width: 80px;
+    height:50px;
+    cursor: pointer;
+    background-color: #4BAFEA;
+    color:black;
+    font-size: 20px;
+    font-size: 700 !important;
+    border: none;
+}
+
+.id{
+    position: relative;
+    float:left;
+    margin: 15px 30px;
+}
+
+.form__group__profile{
+    margin: 50px;
+    margin-right: 50%;
+}
+
+.form__group__profile input{
+    padding: 10px;
+    width: 50%;
+    height: 70px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    font-size: 22px;
+    line-height: 1.428571429;
+    color: #333;
+}
+
+form {
+    margin: 5%;
+}
+
+.hide {
+    display: none;
+}
+
+.show{
+    padding: 10px;
+    display: block;
+    font-size: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
