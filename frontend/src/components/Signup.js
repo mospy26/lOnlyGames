@@ -11,11 +11,13 @@ function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [password2, setPassword2] = useState("")
+    const [steamId, setSteamId] = useState("")
     const history = useHistory()
 
     function validateForm() {
         return username.length > 0 && password.length > 0 && password2.length > 0 && password===password2;
     }
+
     function validatePassword() {
         if (password.length>0 && password2.length>0 && password!==password2){
             return <p>Passwords do not match</p>
@@ -41,7 +43,7 @@ function Login() {
         body: JSON.stringify({ username, password })
     };
 
-    axios.post(url, { username, password })
+    axios.post(url, { username, password, steamId })
         .then(res =>{
             if (res){
                 console.log(res.data.result)
@@ -114,6 +116,14 @@ function Login() {
                     value={password2}
                     onChange={e => setPassword2(e.target.value.trim())}
                     type="password"
+                />
+                </FormGroup>
+                <label>Steam Id</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={steamId}
+                    onChange={e => setSteamId(e.target.value.trim())}
+                    type="text"
                 />
                 </FormGroup>
                 <div className="passwordmatch">{validatePassword()}</div>
