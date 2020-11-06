@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.LikeDAO;
+import com.lOnlyGames.backend.DAO.MatchesDAO;
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
@@ -19,6 +20,7 @@ import com.lOnlyGames.backend.model.UserGame;
 
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,6 +51,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private LikeDAO likeDAO;
+
+    @Autowired
+    private MatchesDAO matchesDAO;
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -101,6 +106,15 @@ public class UserService implements UserDetailsService {
 
 
 
+    }
+
+    public List<Game> getGames() {
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (me == null) {
+            throw new AccessDeniedException("Not logged in");
+        }
+        List<UserGame> userGames = matchesDAO.getUserGameRepository().findByUser(me);
+        return userGames.stream().map(b -> b.getGame()).collect(Collectors.toList());
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {

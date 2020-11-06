@@ -7,6 +7,7 @@ import java.util.Map;
 import com.lOnlyGames.backend.DAO.AvailabilityDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.model.Availability;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
@@ -164,5 +165,11 @@ public class UserController {
     public ResponseEntity<?> removeAvailability(@RequestBody Availability availability) {
         String availabilityMsg = availabilityService.removeAvailability(availability);
         return new ResponseEntity<AvailabilityResponse>(new AvailabilityResponse(availabilityMsg), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/games")
+    public ResponseEntity<?> getMyGames() {
+        List<Game> games = userService.getGames();
+        return new ResponseEntity<>(new GamesResponse(games), HttpStatus.OK);
     }
 }
