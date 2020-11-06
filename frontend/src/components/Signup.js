@@ -90,7 +90,7 @@ function Login() {
                 <h1>Welcome!</h1>
             </div>
             <div className='message'>
-                <p>Please fill out the form in order to sign up</p>
+                <p className="App">Please fill out the form in order to sign up</p>
             </div>
             <div className="Login">
             <form onSubmit={handleSubmit}>
