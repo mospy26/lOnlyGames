@@ -116,19 +116,26 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-    public User updateUser(Map<String, String> payload) {
+    public User updateUser(Map<String, String> payload) throws IOException, SteamApiException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        boolean toPoll = false;
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
         if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
-        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+        if (payload.containsKey("steamId")) {
+            user.setSteamId(payload.get("steamId"));
+            toPoll = true;
+        }
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
 
         userDAO.addUser(user);
+
+        if (toPoll) gamesAPIService.poll(user);
+
         return user;
     }
 
