@@ -18,6 +18,7 @@ import com.lOnlyGames.backend.model.Liked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
+import com.lOnlyGames.backend.utilities.Poller;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -139,17 +140,26 @@ public class UserService implements UserDetailsService {
         if (payload.containsKey("lastName")) user.setLastName(payload.get("lastName"));
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
-        if (payload.containsKey("steamId")) {
-            user.setSteamId(payload.get("steamId"));
-            toPoll = true;
-        }
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
+        if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
+        if (payload.containsKey(("runescapeDisplayName"))) user.setRunescapeDisplayName((payload.get("runescapeDisplayName")));
+        if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
+        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+
+
+
+        if(new Poller().resolveisPreloadable(user))
+        {
+            gamesAPIService.preload(user);
+        }
+        else
+        gamesAPIService.poll(user);
+
 
         userDAO.addUser(user);
 
-        // if (toPoll) gamesAPIService.poll(user);
 
         return user;
     }
