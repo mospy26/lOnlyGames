@@ -7060,6 +7060,7 @@ a:focus {
     width: 25%;
 }
 
-.right p {
-    float: right;
+.v1 {
+    border-left: 1px;
+    height: 500px;
 }

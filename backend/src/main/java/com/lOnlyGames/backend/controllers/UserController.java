@@ -169,7 +169,7 @@ public class UserController {
 
     @GetMapping(value = "/games")
     public ResponseEntity<?> getMyGames() {
-        List<Game> games = userService.getGames();
+        List<UserGame> games = userService.getGames();
         return new ResponseEntity<>(new GamesResponse(games), HttpStatus.OK);
     }
 }

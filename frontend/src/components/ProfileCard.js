@@ -49,18 +49,16 @@ const ProfileCard = (props) => {
           </CardBody>
           <CardBody>
             <div className="author">
-              <h5 className="title">Games</h5>
+              <h6 className="title">Games</h6>
             </div>
-            <p className="description text-center">
               {gamesList.map((item) => {
                 return (
-                  <>
-                <img className="game-icon" src={item.iconURL}/>
-                <p className="right description text-center"> {"Rank 1"} </p>
+                <>
+                <img className="game-icon" src={item.game.iconURL}/>
+                <p className="description text-center"> {item.statistics} </p>
                 </>
                 );
               })}
-            </p>
           </CardBody>
           <CardFooter>
             <hr />
