@@ -54,7 +54,7 @@ public class    BlockedService {
         }
 
         //for when a user tries to block themselves
-        if(blocker.getUsername().matches(blockee.getUsername())){
+        if(blocker.getUsername().equals(blockee.getUsername())){
             throw new IllegalArgumentException();
         }
         //check to see if user has been blocked already
@@ -85,7 +85,7 @@ public class    BlockedService {
         }
         User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
 
-        if(blocker.getUsername().matches(blockee.getUsername())){
+        if(blocker.getUsername().equals(blockee.getUsername())){
             throw new IllegalArgumentException();
         }
         //check to see if user has been blocked already

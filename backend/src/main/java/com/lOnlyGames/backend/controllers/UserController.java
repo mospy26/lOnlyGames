@@ -9,8 +9,8 @@ import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 import com.lOnlyGames.backend.response.*;
 import com.lOnlyGames.backend.services.*;
-
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,10 +114,17 @@ public class UserController {
         return new ResponseEntity<AllLikesResponse>(new AllLikesResponse(likedUsers), HttpStatus.OK);
     }
 
-
+    //get a user's profile
+    @GetMapping(value="/profile")
+    public ResponseEntity<?> getProfile(@RequestParam String username){
+        User user = userService.getProfile(username);
+        return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
+    }
+    //update a user's profile
     @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody Map<String, String> payload) throws IOException, SteamApiException {
-        UserDetails user = userService.updateUser(payload);
+    public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
+    {
+        User user = userService.updateUser(payload);
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
 

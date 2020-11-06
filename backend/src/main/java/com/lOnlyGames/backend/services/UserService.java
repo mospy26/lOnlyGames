@@ -6,16 +6,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.lOnlyGames.backend.DAO.LikeDAO;
 import com.lOnlyGames.backend.DAO.UserDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.CannotReportSelfException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidUsernameException;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.Game;
+import com.lOnlyGames.backend.model.Liked;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
-import com.lOnlyGames.backend.utilities.Poller;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +46,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LikeDAO likeDAO;
 
     public Iterable<User> getAllUsers(){
         return userDAO.getAllUsers();
@@ -112,7 +116,7 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-    public UserDetails updateUser(Map<String, String> payload) throws IOException, SteamApiException {
+    public User updateUser(Map<String, String> payload) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
@@ -120,25 +124,51 @@ public class UserService implements UserDetailsService {
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
         if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
-        if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
-        if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
-        if (payload.containsKey("runescapeDisplayName")) user.setRunescapeDisplayName(payload.get("runescapeDisplayName"));
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
 
-
-        if(new Poller().resolveisPreloadable(user))
-        {
-            //Basically if the user has empty strings in their steam,battle and games id, then we need to create UG objects
-            gamesAPIService.preload(user);
-            System.out.print("REACHED HERE");
-        }
-        else
-            System.out.print("POLLING");
-            gamesAPIService.poll(user); //Just update the stuff they already have.
         userDAO.addUser(user);
         return user;
+    }
+
+    public User getProfile(String username) throws UsernameNotFoundException{
+        User current_user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        /*check if we are looking at the profile for the
+        user who is currently logged in.
+         */
+        if(current_user.getUsername().equals(username)){
+            return current_user;
+        }
+        /*must be the profile of another user so we must
+        check if we have they have liked us or not
+        before revealing their steamID etc.
+         */
+        else{
+            try{
+                User targetUser = getUser(username);
+                User userObj = new User(username);
+                userObj.setBio(targetUser.getBio());
+                userObj.setFirstName(targetUser.getFirstName());
+                userObj.setLastName(targetUser.getLastName());
+                userObj.setAvatarURL(targetUser.getAvatarURL());
+                userObj.setNumberOfReports(targetUser.getNumberOfReports());
+                userObj.setLocation(targetUser.getLocation());
+
+                //checking if user has liked us
+                /*adding in the extra personal details if that
+                user has already liked us when we visit their profile.
+                 */
+                if(likeDAO.getLikedRepository().findByLikerAndLikes(targetUser, current_user) != null) {
+                    userObj.setEmail(targetUser.getEmail());
+                    userObj.setDiscordId(targetUser.getDiscordId());
+                    userObj.setSteamId(targetUser.getSteamId());
+                }
+                return userObj;
+            } catch(Exception e){
+                throw new UsernameNotFoundException("Username \"" + username + "\" is invalid");
+            }
+        }
     }
 
     public String reportUser(User user) {
