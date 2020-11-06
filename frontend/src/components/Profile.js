@@ -21,6 +21,7 @@ const Profile = () => {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
         if (user != null) {
+            setUsername(user.username)
             setFname(user.firstName)
             setLname(user.lastName)
             setDiscord(user.discordId)
@@ -65,7 +66,7 @@ const Profile = () => {
         axios.put(url, { username, firstName, lastName, discordId, steamId, bio }, config=config)
             .then(res => {
                 if (res.status == 200) {
-                    console.log(res)
+                    localStorage.setItem('user', JSON.stringify(res.data.result))
                 }
             })
             .then(() =>{
@@ -94,20 +95,6 @@ const Profile = () => {
             <Header />
             <div className='profile_container'>
                 <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL}/>
-                {/* <div className='card__container'>
-                    <div className='avatar'>
-                        <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
-                    </div>
-                    <div className='username card__info'>{username}</div>
-                    <div className='bio card__info'>
-                        {bio}
-                    </div>
-                    <hr />
-                    <div className='social__ids'>
-                        <div className='id'>{discord}</div>
-                        <div className='id'>{steam}</div>
-                    </div>
-                </div> */}
                 <div className='form_container'>
                     <form onSubmit={handleSubmit} oninput={clearAlert()}>
                         <div className='row inner'>
