@@ -63,6 +63,7 @@ function Header(){
                             <li><NavLink to='/matches' activeClassName='active'>Matches</NavLink></li>
                             <li><NavLink to='/availability' activeClassName='active'>Available</NavLink></li>
                             <li><NavLink to='/about' activeClassName='active'>About Us</NavLink></li> 
+                            <li><NavLink to='/blocked' activeClassName='active'>Blocked Users</NavLink></li> 
                             <li><NavLink to='/profile' activeClassName='active'>My Profile</NavLink></li> 
                     </div>
                     
