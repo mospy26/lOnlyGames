@@ -63,3 +63,12 @@
     background-color: #4CAF50; /* Green */
     color: white;
  }
+
+ .background-lonlygames {
+    background-image: url("../resources/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow:auto;
+ }

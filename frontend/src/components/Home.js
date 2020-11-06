@@ -1,5 +1,6 @@
 import React, { useEffect} from 'react';
 import logo from '../resources/logo-photo-with-text.png'
+import background from '../resources/background.png'
 import {NavLink} from 'react-router-dom'
 import YoutubeBackground from 'react-youtube-background'
 
@@ -40,8 +41,8 @@ const Home = () => {
 
     return(
         <React.Fragment>
-            <YoutubeBackground videoId={"lRTtMcx6rSM"}>
-                <div className="background" id="background-spacing">
+            {/* <YoutubeBackground videoId={"lRTtMcx6rSM"}> */}
+                <div className="background background-lonlygames" id="background-spacing">
                     {/* <Header /> */}
                     <img src={logo} alt="logo" className="logo-img"/>
 
@@ -60,7 +61,7 @@ const Home = () => {
 
                     {/* <Footer /> */}
                 </div>
-            </YoutubeBackground>
+            {/* </YoutubeBackground> */}
 
         </React.Fragment>
         
