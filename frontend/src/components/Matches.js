@@ -42,19 +42,22 @@ function Likes() {
 
   return (
     <div className="Blocked">
-        <Header />
-          <ul>
-            {list.map((user) => {
-              return (
-                <React.Fragment>
-                  <div >
-                    <h1>Username: {user.username}</h1>
-                    <Button onClick={() => dislike(user.username)}>Dislike</Button>           
-                  </div>
-                </React.Fragment>
-              )
-            })}
-          </ul>
+        <Header/>
+          <h1 className="header">Liked Users:</h1>
+          <table class="styled-table">
+            <tbody>
+              {list.map((user) => {
+                return (
+                  <React.Fragment>
+                    <tr>
+                      <td className="username">{user.username}</td>
+                      <td><Button onClick={() => dislike(user.username)}>Unlike</Button></td>           
+                    </tr>
+                  </React.Fragment>
+                )
+              })}
+            </tbody>
+          </table>
         <Footer/>
     </div>
   );
