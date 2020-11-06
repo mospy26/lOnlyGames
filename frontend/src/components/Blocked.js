@@ -46,22 +46,25 @@ function Blocked() {
 
   return (
     <div className="Blocked">
-        <Header />
-          <ul>
-            {list.map((user) => {
-              return (
-                <React.Fragment>
-                  <div >
-                    <h1>Username: {user.username}</h1>
-                    <Button onClick={() => unblock(user.username)}>Unblock</Button>           
-                  </div>
-                </React.Fragment>
-              )
-            })}
-          </ul>
+        <Header/>
+          <h1 className="header">Blocked Users:</h1>
+          <table class="styled-table">
+            <tbody>
+              {list.map((user) => {
+                return (
+                  <React.Fragment>
+                    <tr>
+                      <td className="username">{user.username}</td>
+                      <td><Button onClick={() => unblock(user.username)}>Unblock</Button></td>           
+                    </tr>
+                  </React.Fragment>
+                )
+              })}
+            </tbody>
+          </table>
         <Footer/>
     </div>
   );
-};
+}
 
 export default Blocked;
