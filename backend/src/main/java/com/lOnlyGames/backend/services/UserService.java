@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
 
         if (!user.isPresent()) throw new InvalidCredentialsException();
         if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
-        // gamesAPIService.poll(user.get());
+        gamesAPIService.poll(user.get());
         return user.get();
     }
 
@@ -149,7 +149,7 @@ public class UserService implements UserDetailsService {
 
         userDAO.addUser(user);
 
-        // if (toPoll) gamesAPIService.poll(user);
+        if (toPoll) gamesAPIService.poll(user);
 
         return user;
     }
