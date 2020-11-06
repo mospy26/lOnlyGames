@@ -17,6 +17,7 @@ const ProfileCard = (props) => {
   const firstName = props.firstName
   const lastName = props.lastName
   const avatarURL = props.avatarURL
+  const gamesList = props.gamesList
 
 
   return (
@@ -42,6 +43,23 @@ const ProfileCard = (props) => {
             </div>
             <p className="description text-center">
               {bio}
+            </p>
+            <hr/>
+            <br/>
+          </CardBody>
+          <CardBody>
+            <div className="author">
+              <h5 className="title">Games</h5>
+            </div>
+            <p className="description text-center">
+              {gamesList.map((item) => {
+                return (
+                  <>
+                <img className="game-icon" src={item.iconURL}/>
+                <p className="right description text-center"> {"Rank 1"} </p>
+                </>
+                );
+              })}
             </p>
           </CardBody>
           <CardFooter>
