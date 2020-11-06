@@ -55,5 +55,12 @@ form {
     padding: 10px;
     display: block;
     font-size: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.green {
     color: green;
 }
