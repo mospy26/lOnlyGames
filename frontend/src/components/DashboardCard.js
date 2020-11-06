@@ -93,7 +93,7 @@ const DashboardCard = () => {
                 {users.map((gameuser, index) =>
                     gameuser.map((character, index2) =>
                     <TinderCard ref={childRefs[index]} className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.user.username)} onCardLeftScreen={() => outOfFrame(character.user.username)}>
-                        <div style={{ backgroundImage: 'url('+ character.user.url + ')' }} className='card__tinder'>
+                        <div style={{ backgroundImage: 'url('+ character.user.avatarURL + ')' }} className='card__tinder'>
                         <h3 className="dashboard-card-username">{character.user.username}</h3>
                         </div>
                         <Card className="swipe">
