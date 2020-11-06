@@ -42,6 +42,7 @@ const Profile = () => {
                     setDiscord(res.data.result.discordId)
                     setSteam(res.data.result.steamId)
                     setBio(res.data.result.bio)
+                    setAvatarURL(user.avatarURL)
                 }
             })
             .catch(err => {
