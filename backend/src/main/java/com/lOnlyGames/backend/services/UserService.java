@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
 
         return fetchedUsers;
     }
-    public UserDetails updateUser(Map<String, String> payload) {
+    public UserDetails updateUser(Map<String, String> payload) throws IOException, SteamApiException {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (payload.containsKey("firstName")) user.setFirstName(payload.get("firstName"));
@@ -119,6 +119,7 @@ public class UserService implements UserDetailsService {
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
         if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+        gamesAPIService.preload(user);
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));

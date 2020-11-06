@@ -116,8 +116,7 @@ public class UserController {
 
 
     @PutMapping(value = "/update")
-    public ResponseEntity<?> update(@RequestBody Map<String, String> payload)
-    {
+    public ResponseEntity<?> update(@RequestBody Map<String, String> payload) throws IOException, SteamApiException {
         UserDetails user = userService.updateUser(payload);
         return new ResponseEntity<UserResponse>(new UserResponse(user), HttpStatus.OK);
     }
