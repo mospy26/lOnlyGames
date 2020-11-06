@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
 
         if (!user.isPresent()) throw new InvalidCredentialsException();
         if (!passwordEncoder.matches(password, user.get().getPassword())) throw new InvalidCredentialsException();
-        gamesAPIService.poll(user.get());
+        // gamesAPIService.poll(user.get());
         return user.get();
     }
 
@@ -108,13 +108,14 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Game> getGames() {
+    public List<UserGame> getGames() {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (me == null) {
             throw new AccessDeniedException("Not logged in");
         }
         List<UserGame> userGames = matchesDAO.getUserGameRepository().findByUser(me);
-        return userGames.stream().map(b -> b.getGame()).collect(Collectors.toList());
+        return userGames;
+        // return userGames.stream().map(b -> b.getGame()).collect(Collectors.toList());
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {
@@ -148,7 +149,7 @@ public class UserService implements UserDetailsService {
 
         userDAO.addUser(user);
 
-        if (toPoll) gamesAPIService.poll(user);
+        // if (toPoll) gamesAPIService.poll(user);
 
         return user;
     }
