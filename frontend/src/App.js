@@ -12,6 +12,7 @@ import Signup from './components/Signup'
 import DashboardCard from './components/DashboardCard';
 import Blocked from './components/Blocked'
 import OthersProfileCard from './components/OthersProfileCard'
+import PrivateRoute from './components/PrivateRoute';
 
 
 
@@ -26,15 +27,15 @@ function App() {
       />
       <div className="App">
         <Switch>
-          <Route exact path="/availability" component={Availability} />
-          <Route exact path="/blocked" component={Blocked} />
-          <Route exact path="/matches" component={Matches} />
+          <PrivateRoute exact path="/availability" component={Availability} />
+          <PrivateRoute exact path="/blocked" component={Blocked} />
+          <PrivateRoute exact path="/matches" component={Matches} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/card" component={DashboardCard} />
-          <Route exact path="/others/:id" component={OthersProfileCard} />
+          <PrivateRoute exact path="/card" component={DashboardCard} />
+          <PrivateRoute exact path="/others/:id" component={OthersProfileCard} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
