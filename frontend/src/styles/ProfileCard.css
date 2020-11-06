@@ -6,7 +6,7 @@ Copyright (c) 2015 Daniel Eden
 */
 
 .button-container{
-    display: block;
+    display: relative;
 
 }
 .animated {
@@ -7046,6 +7046,7 @@ a:focus {
 
 .content {
     height: max-content;
+    overflow: auto;
 }
 
 /* my css */
@@ -7053,7 +7054,7 @@ a:focus {
     width: 80px;
     height: 70px;
     display: flexbox;
-    float: left;
+    /* float: left; */ /* fixes the other card page apparently so ...*/
 }
 
 .partial-hr {
@@ -7067,5 +7068,6 @@ a:focus {
 
 /* for others profile card */
 .username-card {
-    font-weight: 500
+    font-weight: 500;
+    text-align: center;
 }

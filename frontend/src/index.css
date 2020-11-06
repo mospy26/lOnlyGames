@@ -150,7 +150,7 @@ code {
   align-items: center;
   background-color:#4BAFEA;
   min-height: 6vh;
-  position: fixed;
+  position: relative;
   left: 0px;
   width: 100%;
   bottom: 0px;
