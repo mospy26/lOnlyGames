@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { Button, FormGroup, FormControl } from "react-bootstrap";
+import axios from 'axios'
+
 import Header from './Header'
 import Footer from './Footer'
-import "../styles/Profile.css"
-import { Button, FormGroup, FormControl } from "react-bootstrap";
 import ProfileCard from "./ProfileCard"
-import axios from 'axios'
+
+import "../styles/Profile.css"
 
 const Profile = () => {
 
@@ -16,32 +18,10 @@ const Profile = () => {
     const [steamId, setSteam] = useState()
     const [avatarURL, setAvatarURL] = useState()
 
-    function handleSubmit(event) {
-        event.preventDefault();
-
-        const url = '/users/update'
-
-        let config = {
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              "Content-Type": "application/json"
-            }
-          }
-
-        axios.put(url, { username, firstName, lastName, discordId, steamId, bio }, config=config)
-            .then(res => {
-                if (res.status == 200) {
-                    console.log(res)
-                }
-            })
-            .catch(err => {
-                console.log(err.response)
-            })
-    }
-
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
         if (user != null) {
+            setUsername(user.username)
             setFname(user.firstName)
             setLname(user.lastName)
             setDiscord(user.discordId)
@@ -67,32 +47,56 @@ const Profile = () => {
             .catch(err => {
                 console.log(err)
             })
-        return () => {
-            
-        }
+
     }, [])
+
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const url = '/users/update'
+
+        let config = {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              "Content-Type": "application/json"
+            }
+          }
+
+        axios.put(url, { username, firstName, lastName, discordId, steamId, bio }, config=config)
+            .then(res => {
+                if (res.status == 200) {
+                    localStorage.setItem('user', JSON.stringify(res.data.result))
+                }
+            })
+            .then(() =>{
+                const alert = document.querySelector('#alert')
+                alert.classList.replace('hide', 'show')
+                console.log(alert.classList)
+            })
+                
+            .catch(err => {
+                console.log(err.response)
+            })
+    }
+
+    function clearAlert(){
+
+        const show = document.querySelector('.show')
+
+        if(show){
+            show.classList.replace('show', 'hide')
+        }
+
+    }
 
     return (
         <div>
             <Header />
             <div className='profile_container'>
                 <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL}/>
-                {/* <div className='card__container'>
-                    <div className='avatar'>
-                        <img src='https://i.picsum.photos/id/612/200/200.jpg?hmac=HbIkwJ0QBqhSlGTi3bnF4JFTp9BntF-teQZUQhpqWyM' alt='image'></img>
-                    </div>
-                    <div className='username card__info'>{username}</div>
-                    <div className='bio card__info'>
-                        {bio}
-                    </div>
-                    <hr />
-                    <div className='social__ids'>
-                        <div className='id'>{discord}</div>
-                        <div className='id'>{steam}</div>
-                    </div>
-                </div> */}
                 <div className='form_container'>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} oninput={clearAlert()}>
                         <div className='row inner'>
                             <label>First Name</label>
                             <FormGroup className='form__group__profile' controlId="fName">
@@ -145,9 +149,17 @@ const Profile = () => {
                             </FormGroup>
                         </div>
 
-                        <Button type="submit" className="save-btn">
+                        <button type="submit" className='save__btn' >
                             Save
-                        </Button>
+                        </button>
+                        <div className='hide' color='green' id='alert'>
+                            Your profile has been updated!
+                        </div>
+
+
+                        {/* <Button type="submit" className="save-btn">
+                            Save
+                        </Button> */}
                     </form>
                 </div>
             </div>

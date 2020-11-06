@@ -77,7 +77,10 @@ const DashboardCard = () => {
             const toBeRemoved = cardsLeft[cardsLeft.length - 1].name // Find the card object to be removed
             const index = db.map(person => person.name).indexOf(toBeRemoved) // Find the index of which to make the reference to
             alredyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
-            childRefs[index].current.swipe(dir) // Swipe the card!
+
+            if (childRefs[index].current){
+                childRefs[index].current.swipe(dir) // Swipe the card!
+            }
         }
     }
 
