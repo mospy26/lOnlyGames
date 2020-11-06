@@ -22,7 +22,7 @@
   background-color: green;
   width: 80vw;
   max-width: 260px;
-  height: 300px;
+  height: 350px;
   border-radius: 20px;
   background-size: cover;
   background-position: center;
@@ -46,8 +46,8 @@
 }
 
 .buttons {
-  margin: 20px;
-  padding: 20px;
+  margin: 40px;
+  padding: 100px;
   display: flex;
 }
 
