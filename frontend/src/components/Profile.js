@@ -51,15 +51,8 @@ const Profile = () => {
                 console.log(err)
             })
     }, [])
-    
-    useEffect(() => {
-        const games = JSON.parse(localStorage.getItem('games'))
 
-        if (games != null) {
-            setGamesList(games)
-            console.log(games)
-            return
-        }
+    const fetchGames = (displayBanner) => {
 
         const urlGames = '/users/games'
 
@@ -69,12 +62,28 @@ const Profile = () => {
                     localStorage.setItem('games', JSON.stringify(res.data.result))
                     setGamesList(res.data.result)
                     console.log(gamesList)
+                    if (displayBanner) {
+                        const alert = document.querySelector('#alert')
+                        alert.classList.replace('hide', 'show')
+                    }
+
                 }
             })
             .catch(err => {
                 console.log(gamesList)
                 console.log(err.response)
             })
+    }
+    
+    useEffect(() => {
+        const games = JSON.parse(localStorage.getItem('games'))
+        if (games != null) {
+            setGamesList(games)
+            console.log(games)
+            return
+        }
+
+        fetchGames(false)
     }, [])
 
 
@@ -94,11 +103,11 @@ const Profile = () => {
             .then(res => {
                 if (res.status == 200) {
                     localStorage.setItem('user', JSON.stringify(res.data.result))
+                    fetchGames(true)
+                    console.log(gamesList)
                 }
             })
             .then(() =>{
-                const alert = document.querySelector('#alert')
-                alert.classList.replace('hide', 'show')
                 console.log(alert.classList)
             })
                 
@@ -179,7 +188,7 @@ const Profile = () => {
                         <button type="submit" className='save__btn' >
                             Save
                         </button>
-                        <div className='hide' color='green' id='alert'>
+                        <div className='hide green' color='green' id='alert'>
                             Your profile has been updated!
                         </div>
 
