@@ -17,9 +17,11 @@ const Profile = () => {
     const [discordId, setDiscord] = useState()
     const [steamId, setSteam] = useState()
     const [avatarURL, setAvatarURL] = useState()
+    const [gamesList, setGamesList] = useState([])
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
+        
         if (user != null) {
             setUsername(user.username)
             setFname(user.firstName)
@@ -48,7 +50,31 @@ const Profile = () => {
             .catch(err => {
                 console.log(err)
             })
+    }, [])
+    
+    useEffect(() => {
+        const games = JSON.parse(localStorage.getItem('games'))
 
+        if (games != null) {
+            setGamesList(games)
+            console.log(games)
+            return
+        }
+
+        const urlGames = '/users/games'
+
+        axios.get(urlGames)
+            .then(res => {
+                if (res.status == 200) {
+                    localStorage.setItem('games', JSON.stringify(res.data.result))
+                    setGamesList(res.data.result)
+                    console.log(gamesList)
+                }
+            })
+            .catch(err => {
+                console.log(gamesList)
+                console.log(err.response)
+            })
     }, [])
 
 
@@ -95,7 +121,7 @@ const Profile = () => {
         <div>
             <Header />
             <div className='profile_container'>
-                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL}/>
+                <ProfileCard firstName = {firstName} lastName = {lastName} discordId = {discordId} steamId = {steamId} bio = {bio} avatarURL = {avatarURL} gamesList = {gamesList}/>
                 <div className='form_container'>
                     <form onSubmit={handleSubmit} oninput={clearAlert()}>
                         <div className='row inner'>

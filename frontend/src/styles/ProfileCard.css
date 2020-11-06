@@ -7047,3 +7047,19 @@ a:focus {
 .content {
     height: max-content;
 }
+
+/* my css */
+.game-icon {
+    width: 80px;
+    height: 70px;
+    display: flexbox;
+    float: left;
+}
+
+.partial-hr {
+    width: 25%;
+}
+
+.right p {
+    float: right;
+}
