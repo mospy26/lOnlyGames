@@ -70,7 +70,7 @@ public class User implements UserDetails {
 
     // Games
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private Set<UserGame> games  = new HashSet<>();
 
     // Availabilities

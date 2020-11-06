@@ -60,5 +60,15 @@ public class Poller {
         }
     }
 
+    public boolean resolveisPreloadable(User user)
+    {
+        // This function is called in the update endpoint if the user has decided to not input steam,battlenet, or other Game IDs during registration
+        if(user.getBattlenet() == null |user.getRunescapeDisplayName() == null  | user.getPubGPlayerName() == null | user.getSteamId() == null )
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 }

@@ -15,6 +15,7 @@ import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
 import com.lOnlyGames.backend.model.UserGame;
 
+import com.lOnlyGames.backend.utilities.Poller;
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -119,11 +120,23 @@ public class UserService implements UserDetailsService {
         if (payload.containsKey("email")) user.setEmail(payload.get("email"));
         if (payload.containsKey("discordId")) user.setDiscordId(payload.get("discordId"));
         if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
-        gamesAPIService.preload(user);
+        if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
+        if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
+        if (payload.containsKey("runescapeDisplayName")) user.setRunescapeDisplayName(payload.get("runescapeDisplayName"));
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
 
+
+        if(new Poller().resolveisPreloadable(user))
+        {
+            //Basically if the user has empty strings in their steam,battle and games id, then we need to create UG objects
+            gamesAPIService.preload(user);
+            System.out.print("REACHED HERE");
+        }
+        else
+            System.out.print("POLLING");
+            gamesAPIService.poll(user); //Just update the stuff they already have.
         userDAO.addUser(user);
         return user;
     }
