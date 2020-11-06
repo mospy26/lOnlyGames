@@ -43,7 +43,9 @@ function Login() {
         body: JSON.stringify({ username, password })
     };
 
-    axios.post(url, { username, password, steamId })
+    const data = steamId ? { username, password, steamId } : { username, password }
+
+    axios.post(url, data)
         .then(res =>{
             if (res){
                 console.log(res.data.result)
