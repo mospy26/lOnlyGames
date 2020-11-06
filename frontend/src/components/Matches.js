@@ -6,11 +6,15 @@ import '../styles/Matches.css';
 import axios from 'axios';
 import {useState, useEffect} from 'react'
 import { Button } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 
 var users = [
 ];
 
 function Likes() { 
+  const history = useHistory();
+  const handleClick = (username) => history.push('/others/' + username);
+
   const [list, setList] = React.useState(users);
 
   function dislike(username) {
@@ -50,8 +54,11 @@ function Likes() {
                 return (
                   <React.Fragment>
                     <tr>
-                      <td className="username">{user.username}</td>
+                      <td className="username">
+                        {user.username}
+                      </td>
                       <td><Button onClick={() => dislike(user.username)}>Unlike</Button></td>           
+                      <td><Button onClick={() => handleClick(user.username)}>View Profile</Button></td>
                     </tr>
                   </React.Fragment>
                 )

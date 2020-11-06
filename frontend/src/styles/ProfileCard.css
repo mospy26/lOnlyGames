@@ -7064,3 +7064,8 @@ a:focus {
     border-left: 1px;
     height: 500px;
 }
+
+/* for others profile card */
+.username-card {
+    font-weight: 500
+}

@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import DashboardCard from './components/DashboardCard';
 import Blocked from './components/Blocked'
+import OthersProfileCard from './components/OthersProfileCard'
 
 
 
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/card" component={DashboardCard} />
+          <Route exact path="/others/:id" component={OthersProfileCard} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
