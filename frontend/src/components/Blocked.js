@@ -17,7 +17,7 @@ function Blocked() {
 
   function unblock(username) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
-    axios.post("/users/unblock", {username: username})
+    axios.post("/users/unblock", {username: username} )
     .then(res => {
         if(res.status == 200){         
           console.log("Unblocked User " + username)
@@ -48,7 +48,7 @@ function Blocked() {
     <div className="Blocked">
         <Header/>
           <h1 className="header">Blocked Users:</h1>
-          <table class="styled-table">
+          <table className="styled-table">
             <tbody>
               {list.map((user) => {
                 return (

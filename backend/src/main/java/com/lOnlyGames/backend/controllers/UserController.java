@@ -150,7 +150,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/availability")
-    public ResponseEntity<?> getUserAvailabilities(@RequestBody User user) {
+    public ResponseEntity<?> getUserAvailabilities(@RequestParam User user) {
         List<Availability> availabilities = availabilityService.allUserAvailabilities(user);
         return new ResponseEntity<>(new AllAvailabilitiesResponse(availabilities), HttpStatus.OK);
     }
