@@ -1,56 +1,50 @@
-import React, {FormGroup, FormControl} from 'react';
-import Header from './Header'
-import Footer from './Footer'
-import logo from '../resources/logo.svg';
-import '../styles/Blocked.css';
-import "../styles/Availability.css";
+import React from 'react';
+import Header from '../Header'
+import Footer from '../Footer'
+import logo from '../../resources/logo.svg';
+import '../../styles/Blocked.css';
+import "../../styles/Availability.css";
 import axios from 'axios';
 import {useState, useEffect} from 'react'
 import { Button } from "react-bootstrap";
-
-// https://localhost:8080/api/v1/users/users-blocked
-
+import Form from './AvailabilityForm';
 
 function Availability() { 
   const [list, setList] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [dayInput, setDayInput] = useState()
-  const [hourInput, setHourInput] = useState()
-  const [minInput, setMinInput] = useState()
+  const [dayInput, setDayInput] = useState("")
 
   function parseDay(day) {
-    switch (day) {
-        case 0:
-            return "Monday"
-        case 1:
-            return "Tuesday"
-        case 2:
-            return "Wednesday"
-        case 3:
-            return "Thursday"
-        case 4:
-            return "Friday"
-        case 5:
-            return "Saturday"
-        case 6:
-            return "Sunday"
-    }
-    return "ERROR"
-}
+      switch (day) {
+          case 0:
+              return "Monday"
+          case 1:
+              return "Tuesday"
+          case 2:
+              return "Wednesday"
+          case 3:
+              return "Thursday"
+          case 4:
+              return "Friday"
+          case 5:
+              return "Saturday"
+          case 6:
+              return "Sunday"
+      }
+      return "ERROR"
+  }
 
-function parseTime(time) {
-    let currMinutes = time % 60;
-    let currHour = Math.floor(time/60)
+  function parseTime(time) {
+      let currMinutes = time % 60;
+      let currHour = Math.floor(time/60)
 
-    currMinutes = (currMinutes < 10) ? "0" + currMinutes : currMinutes
+      currMinutes = (currMinutes < 10) ? "0" + currMinutes : currMinutes
+      currHour = (currHour < 10) ? "0" + currHour : currHour
 
-    return currHour + ":" + currMinutes
-}
+      return currHour + ":" + currMinutes
+  }
 
 function removeTime(id) {
-    console.log("REMOVING " + id);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     axios.post("users/availability/remove", {id: id} )
     .then(res => {
@@ -67,7 +61,6 @@ function removeTime(id) {
   useEffect(() => {
 
     // let user = localStorage.getItem('user')
-    console.log(user.username)
 
     axios.get("/users/availability?user=" + user.username)
     .then(res => {
@@ -80,6 +73,11 @@ function removeTime(id) {
         console.log(err.response)
     })
   }, [])
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    alert(`Submitting Name ${dayInput}`)
+}
 
   return (
     <div className="Blocked">
@@ -120,6 +118,7 @@ function removeTime(id) {
               })}
             </tbody>
           </table>
+          <Form/>
         <Footer/>
     </div>
   );
