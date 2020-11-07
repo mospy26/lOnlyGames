@@ -55,7 +55,7 @@ function Header(){
         <div>  
             <nav className='navbar__header' >
                 <div className='navbar__logo'>
-                    <NavLink to='/' exact><img src={logo} /></NavLink>
+                    <NavLink to='/card' exact><img src={logo} /></NavLink>
                 </div>
                 <div className='navbar__content'>
                     <div className="navbar__links">
