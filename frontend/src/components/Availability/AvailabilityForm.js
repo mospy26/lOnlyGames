@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, {useState, useRef, useEffect} from 'react'
 import { Button } from 'react-bootstrap';
 import axios from 'axios'
+import "../../styles/Availability.css"
 
 const Form = () => {
 
@@ -10,6 +11,7 @@ const Form = () => {
     const [minStart, setMinStart] = useState(0);
     const [hourEnd, setHourEnd] = useState(0);
     const [minEnd, setMinEnd] = useState(0);
+    const [error, setError] = useState("");
     const hourDisplay = [];
     const minDisplay = [];
 
@@ -27,6 +29,20 @@ const Form = () => {
         let timeStart = parseInt(hourStart * 60) + parseInt(minStart);
         let timeEnd = parseInt(hourEnd * 60) + parseInt(minEnd);
         
+        if (timeEnd < timeStart) {
+            document.getElementById('availability__oob').style.display = 'None';
+            document.getElementById('equal__err').style.display = 'None';
+            document.getElementById('overlapping__err').style.display = 'block';
+            document.getElementById('generic__err').style.display = 'None';
+            return;
+        } else if (timeEnd == timeStart) {
+            document.getElementById('availability__oob').style.display = 'None';
+            document.getElementById('equal__err').style.display = 'block';
+            document.getElementById('overlapping__err').style.display = 'None';
+            document.getElementById('generic__err').style.display = 'None';
+            return;
+        }
+
         let json = {
             "day": parseInt(day),
             "timeStart": parseInt(timeStart),
@@ -41,7 +57,18 @@ const Form = () => {
             }
         })
         .catch(err => {
-            console.log(err)
+           const { response } = err;
+           if (response.data.code === "AVAILABILITY_OVERLAP") {
+                document.getElementById('availability__oob').style.display = 'None';
+                document.getElementById('equal__err').style.display = 'None';
+                document.getElementById('overlapping__err').style.display = 'Block';
+                document.getElementById('generic__err').style.display = 'None';
+           } else {
+                document.getElementById('availability__oob').style.display = 'None';
+                document.getElementById('equal__err').style.display = 'None';
+                document.getElementById('overlapping__err').style.display = 'None';
+                document.getElementById('generic__err').style.display = 'Block';
+           }
         })
     }
 
@@ -88,6 +115,10 @@ const Form = () => {
                     })}
                 </select>
             </form>
+            <div id="availability__oob">Time start cannot be more than time end ????</div>
+            <div id="overlapping__err">Your time is overlapping...</div>
+            <div id="equal__err">You cant have same start time as end time</div>
+            <div id="generic__err">Something went wrong try again later</div>
             <Button onClick={() => sendForm()}>Submit</Button>
         </React.Fragment>
     );

@@ -74,11 +74,6 @@ function removeTime(id) {
     })
   }, [])
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    alert(`Submitting Name ${dayInput}`)
-}
-
   return (
     <div className="Blocked">
         <Header/>
