@@ -1,0 +1,28 @@
+#availability__oob{
+    display: none;
+    color: red;
+    font-weight: 700;
+}
+
+#overlapping__err{
+    display: none;
+    color: red;
+    font-weight: 700;
+}
+
+#equal__err{
+    display: none;
+    color: red;
+    font-weight: 700;
+}
+
+#generic__err{
+    display: none;
+    color: red;
+    font-weight: 700;
+}
+
+form {
+    padding-right: 2px;
+    display: inline-block;
+}
