@@ -21,3 +21,8 @@
     color: red;
     font-weight: 700;
 }
+
+form {
+    padding-right: 2px;
+    display: inline-block;
+}

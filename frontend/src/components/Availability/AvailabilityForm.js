@@ -115,6 +115,7 @@ const Form = () => {
                     })}
                 </select>
             </form>
+
             <div id="availability__oob">Time start cannot be more than time end ????</div>
             <div id="overlapping__err">Your time is overlapping...</div>
             <div id="equal__err">You cant have same start time as end time</div>
