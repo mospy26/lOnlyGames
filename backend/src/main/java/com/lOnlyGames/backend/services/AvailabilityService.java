@@ -30,7 +30,7 @@ public class AvailabilityService {
 
         // Check if that user likes me
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(likeDAO.getLikedRepository().findByLikerAndLikes(user, me) == null) {
+        if(likeDAO.getLikedRepository().findByLikerAndLikes(user, me) == null && !user.getUsername().equals(me.getUsername())) {
             return availabilities;
         }
 
