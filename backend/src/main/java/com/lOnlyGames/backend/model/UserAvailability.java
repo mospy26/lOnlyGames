@@ -46,6 +46,7 @@ public class UserAvailability {
         if (obj.getClass()!= this.getClass()) return false;
 
         UserAvailability other = (UserAvailability) obj;
+        if (this.getAvailability().getId()==null) return false;
 
         if (this.getUser().getUsername().equals(other.getUser().getUsername()) &&
                 this.getAvailability().getId().equals(other.getAvailability().getId())) {
