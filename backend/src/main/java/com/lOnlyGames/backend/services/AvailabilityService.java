@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.services;
 
 import com.lOnlyGames.backend.DAO.AvailabilityDAO;
+import com.lOnlyGames.backend.DAO.LikeDAO;
 import com.lOnlyGames.backend.errorhandlers.exceptions.AvailabilityOverlapException;
 import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidAvailabilityException;
 import com.lOnlyGames.backend.model.Availability;
@@ -20,10 +21,20 @@ public class AvailabilityService {
     @Autowired
     private AvailabilityDAO availabilityDAO;
 
+    @Autowired
+    private LikeDAO likeDAO;
+
     public List<Availability> allUserAvailabilities(User user) {
-        List<UserAvailability> userAvailabilities = availabilityDAO.getUserAvailabilityRepository().findByUser(user);
+
         List<Availability> availabilities = new ArrayList<>();
 
+        // Check if that user likes me
+        User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(likeDAO.getLikedRepository().findByLikerAndLikes(user, me) == null) {
+            return availabilities;
+        }
+
+        List<UserAvailability> userAvailabilities = availabilityDAO.getUserAvailabilityRepository().findByUser(user);
         for (UserAvailability availability: userAvailabilities) {
             availabilities.add(availability.getAvailability());
         }
