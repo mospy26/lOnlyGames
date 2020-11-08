@@ -10,8 +10,8 @@ import About from './components/About'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import DashboardCard from './components/DashboardCard';
-import Blocked from './components/Blocked'
-import OthersProfileCard from './components/OthersProfileCard'
+import Blocked from './components/Blocked';
+import OthersProfileCard from './components/OthersProfileCard/OthersProfileCard';
 import PrivateRoute from './components/PrivateRoute';
 
 

@@ -6,11 +6,12 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import Header from "./Header"
-import Footer from "./Footer"
+import Header from "../Header"
+import Footer from "../Footer"
+import Availabilities from "./AvailabilityProfileDetails"
 import axios from 'axios'
 
-import "../styles/ProfileCard.css"
+import "../../styles/ProfileCard.css"
 
 const OthersProfileCard = (props) => {
 
@@ -25,11 +26,9 @@ const OthersProfileCard = (props) => {
 
   useEffect(() => {
       const url = '/users/profile?username=' + props.match.params.id
-      console.log(url)
       axios.get(url)
           .then(res => {
               if (res.status == 200) {
-                console.log(res.data.result)
                   setFname(res.data.result.firstName)
                   setLname(res.data.result.lastName)
                   setDiscord(res.data.result.discordId === null ? "NaN" : res.data.result.discordId)
@@ -85,6 +84,10 @@ const OthersProfileCard = (props) => {
             </p>
             <hr/>
             <br/>
+            <h3>Availabilities</h3>
+            <Availabilities username={props.match.params.id}/>
+            <hr/>
+            <br/>
           </CardBody>
           <CardBody>
             <div className="author">
@@ -101,14 +104,15 @@ const OthersProfileCard = (props) => {
           <CardFooter>
             <hr />
             <div className="button-container">
+              <h3>Gaming Social Media Details</h3>
               <Row>
                 <Col className="ml-auto" lg="6" md="6" xs="6">
                   <h5> {discordId} </h5>
-                  <img className="avatar-icon" src={require("../resources/discord.png")} />
+                  <img className="avatar-icon" src={require("../../resources/discord.png")} />
                 </Col>
                 <Col className="ml-auto mr-auto" lg="6" md="6" xs="6">
                   <h5>{steamId} </h5>
-                  <img className="avatar-icon" src={require("../resources/steam.png")} />
+                  <img className="avatar-icon" src={require("../../resources/steam.png")} />
                 </Col>
               </Row>
             </div>
