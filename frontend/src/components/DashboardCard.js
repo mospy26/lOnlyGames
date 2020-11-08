@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import {useHistory} from 'react-router-dom'
 import "../styles/DashboardCard.css";
 import TinderCard from 'react-tinder-card'
 import Header from './Header'
 import Footer from './Footer'
-import { Card } from 'reactstrap'
+import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Card, Form } from 'reactstrap'
 import axios from 'axios'
+// import { Form } from 'react-bootstrap';
 
 const db = [
     {
@@ -33,10 +36,13 @@ const alredyRemoved = []
 let charactersState = db // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
 
 const DashboardCard = () => {
+    const history = useHistory()
     const [characters, setCharacters] = useState(db)
     const [lastDirection, setLastDirection] = useState()
 
     const [users, setUsers] = useState([])
+    const [searchValue, setSearchValue] = useState([])
+    const [searchedUsers, setSearchUsers] = useState([])
 
 
     useEffect(() => {
@@ -124,9 +130,42 @@ const DashboardCard = () => {
 
     }
 
+    const searchUsers = (event) => {
+        event.preventDefault();
+        axios.get("/users/search?username=" + searchValue)
+        .then(res => {
+            if (res.status == 200) {
+                console.log(res.data.result)
+                setSearchUsers(res.data.result)
+                history.push({
+                    pathname: "/searchresult",
+                    state: { searchUsers: res.data.result }
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     return (
         <div>
         <Header/>
+        {/* <Form onSubmit={() => {searchUsers()}}> */}
+        <div className="Login">
+        <form onSubmit={searchUsers}>
+      <FormGroup>
+      <FormControl
+                    placeholder="Search for other users ... "
+                    autoFocus
+                    type="text"
+                    value={searchValue}
+                    onChange={e => {setSearchValue(e.target.value.trim())}}
+                />
+      </FormGroup>
+      </form>
+      </div>
+      {/* </Form> */}
         <div className='toplevel'>
             <h1>Choose your gamer</h1>
             <div className='cardContainer'>

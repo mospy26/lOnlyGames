@@ -12,6 +12,7 @@ import Signup from './components/Signup'
 import DashboardCard from './components/DashboardCard';
 import Blocked from './components/Blocked';
 import OthersProfileCard from './components/OthersProfileCard/OthersProfileCard';
+import SearchResult from './components/SearchResult.js';
 import PrivateRoute from './components/PrivateRoute';
 
 
@@ -36,6 +37,7 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/card" component={DashboardCard} />
           <PrivateRoute exact path="/others/:id" component={OthersProfileCard} />
+          <PrivateRoute exact path="/searchresult" component={SearchResult} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
