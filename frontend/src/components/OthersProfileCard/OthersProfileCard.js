@@ -76,7 +76,7 @@ const OthersProfileCard = (props) => {
                   className="avatar border-gray"
                   src={avatarURL}
                 />
-                <h5 className="card-title">{firstName} {lastName}<br/> ({username})</h5>
+                <h5 className="title-name">{firstName} {lastName}<br/> ({username})</h5>
               </a>
             </div>
             <p className="description text-center">

@@ -2369,6 +2369,13 @@ p.description {
     font-weight: 700;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap');
+/* fancy font for name in profile card */
+.title-name {
+    font-weight: 700;
+    font-family: 'Play', sans-serif;
+}
+
 .title.title-up {
     text-transform: uppercase;
 }

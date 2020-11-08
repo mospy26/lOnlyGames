@@ -58,7 +58,6 @@ public class UserDAO {
     }
 
     public void addUser(User user){
-        System.out.println(user.getAvatarURL() + " avatarrrrrrr");
         if (user.getAvatarURL() == null) {
             user.setAvatarURL(AVATARS[new Random().nextInt(AVATARS.length)]);
         }

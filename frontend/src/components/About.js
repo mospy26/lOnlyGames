@@ -14,7 +14,7 @@ function About(){
               <img src={logo} className="container__image" alt="logo" />
             </div>
               <div class="container__content">
-                <div class="title">
+                <div class="title-about-us">
                 <h1>About Us</h1>
                 </div>
                 <p>lOnlyGames is a social gaming collaboration platform, aimed at connecting users with similar gaming interests.
