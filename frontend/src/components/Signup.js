@@ -12,6 +12,9 @@ function Login() {
     const [password, setPassword] = useState("")
     const [password2, setPassword2] = useState("")
     const [steamId, setSteamId] = useState("")
+    const [pubGPlayerName, setPubGPlayerName] = useState("")
+    const [runescapeDisplayName, setRunescapeDisplayName] = useState("")
+    const [battlenet, setBattlenet] = useState("")
     const history = useHistory()
 
     function validateForm() {
@@ -43,7 +46,12 @@ function Login() {
         body: JSON.stringify({ username, password })
     };
 
-    const data = steamId ? { username, password, steamId } : { username, password }
+    var data = { username, password }
+
+    if (steamId) data['steamId'] = steamId;
+    if (pubGPlayerName) data['pubGPlayerName'] = pubGPlayerName;
+    if (battlenet) data['battlenet'] = battlenet;
+    if (runescapeDisplayName) data['runescapeDisplayName'] = runescapeDisplayName;
 
     axios.post(url, data)
         .then(res =>{
@@ -120,11 +128,35 @@ function Login() {
                     type="password"
                 />
                 </FormGroup>
-                <label>Steam Id</label>
+                <label>Steam Id (optional)</label>
                 <FormGroup controlId="password">
                 <FormControl
                     value={steamId}
                     onChange={e => setSteamId(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
+                <label>PUBG username (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={pubGPlayerName}
+                    onChange={e => setPubGPlayerName(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
+                <label>Runescape player name (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={runescapeDisplayName}
+                    onChange={e => setRunescapeDisplayName(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
+                <label>Call of Duty: Modern Warfare username (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={battlenet}
+                    onChange={e => setBattlenet(e.target.value.trim())}
                     type="text"
                 />
                 </FormGroup>

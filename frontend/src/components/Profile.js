@@ -76,12 +76,12 @@ const Profile = () => {
     }
     
     useEffect(() => {
-        const games = JSON.parse(localStorage.getItem('games'))
-        if (games != null) {
-            setGamesList(games)
-            console.log(games)
-            return
-        }
+        // const games = JSON.parse(localStorage.getItem('games'))
+        // if (games != null) {
+        //     setGamesList(games)
+        //     console.log(games)
+        //     return
+        // }
 
         fetchGames(false)
     }, [])
