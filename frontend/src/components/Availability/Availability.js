@@ -8,41 +8,12 @@ import axios from 'axios';
 import {useState, useEffect} from 'react'
 import { Button } from "react-bootstrap";
 import Form from './AvailabilityForm';
+import {parseTime, parseDay} from '../../utils/AvailabilitiesParseTool'
 
 function Availability() { 
   const [list, setList] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [dayInput, setDayInput] = useState("")
-
-  function parseDay(day) {
-      switch (day) {
-          case 0:
-              return "Monday"
-          case 1:
-              return "Tuesday"
-          case 2:
-              return "Wednesday"
-          case 3:
-              return "Thursday"
-          case 4:
-              return "Friday"
-          case 5:
-              return "Saturday"
-          case 6:
-              return "Sunday"
-      }
-      return "ERROR"
-  }
-
-  function parseTime(time) {
-      let currMinutes = time % 60;
-      let currHour = Math.floor(time/60)
-
-      currMinutes = (currMinutes < 10) ? "0" + currMinutes : currMinutes
-      currHour = (currHour < 10) ? "0" + currHour : currHour
-
-      return currHour + ":" + currMinutes
-  }
 
 function removeTime(id) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
