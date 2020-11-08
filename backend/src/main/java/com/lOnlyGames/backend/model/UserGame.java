@@ -47,7 +47,7 @@ public class UserGame {
     }
 
 
-   //  @Column(length = 1000)  THis doesnt update our database I  had to change it manually using a SQL script
+    @Column(length = 1000)  // This doesnt update our database I  had to change it manually using a SQL script
     public String statistics;
 
     public User getUser() {

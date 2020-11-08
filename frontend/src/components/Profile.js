@@ -18,6 +18,9 @@ const Profile = () => {
     const [steamId, setSteam] = useState()
     const [avatarURL, setAvatarURL] = useState()
     const [gamesList, setGamesList] = useState([])
+    const [pubGPlayerName, setPubGPlayerName] = useState()
+    const [runescapeDisplayName, setRunescapeDisplayName] = useState()
+    const [battlenet, setBattlenet] = useState()
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -99,7 +102,7 @@ const Profile = () => {
             }
           }
 
-        axios.put(url, { username, firstName, lastName, discordId, steamId, bio }, config=config)
+        axios.put(url, { username, firstName, lastName, discordId, steamId, bio, pubGPlayerName, battlenet, runescapeDisplayName }, config=config)
             .then(res => {
                 if (res.status == 200) {
                     localStorage.setItem('user', JSON.stringify(res.data.result))
@@ -183,6 +186,30 @@ const Profile = () => {
                                     type="text"
                                 />
                             </FormGroup>
+                            <label>PUBG username (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={pubGPlayerName}
+                    onChange={e => setPubGPlayerName(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
+                <label>Runescape player name (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={runescapeDisplayName}
+                    onChange={e => setRunescapeDisplayName(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
+                <label>Call of Duty: Modern Warfare username (optional)</label>
+                <FormGroup controlId="password">
+                <FormControl
+                    value={battlenet}
+                    onChange={e => setBattlenet(e.target.value.trim())}
+                    type="text"
+                />
+                </FormGroup>
                         </div>
 
                         <button type="submit" className='save__btn' >
