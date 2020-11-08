@@ -132,15 +132,19 @@ public class UserService implements UserDetailsService {
         List<User> fetchedUsers = userDAO.findUsersStartWith(partialUsername);
         List<User> blocked = blockedService.allBlockedByUser();
         List<User> liked = likeService.getAllLikes();
+        List<User> gotBlocked = blockedService.allBlockedMe();
 
         List<String> blockedUsers = blocked.stream().map(b -> b.getUsername())
                 .collect(Collectors.toList());
         List<String> likedUsers = liked.stream().map(b -> b.getUsername())
                 .collect(Collectors.toList());
+        List<String> gotBlockedUsers = gotBlocked.stream().map(b -> b.getUsername())
+                .collect(Collectors.toList());
 
         // Only fetch those users who aren't blocked
         fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
         fetchedUsers.removeIf(x -> likedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
+        fetchedUsers.removeIf(x -> gotBlockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
 
         return fetchedUsers;
     }
