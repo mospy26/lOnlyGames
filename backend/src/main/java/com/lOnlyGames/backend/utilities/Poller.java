@@ -62,8 +62,14 @@ public class Poller {
 
     public boolean resolveisPreloadable(User user)
     {
+
+        System.out.println(user.getBattlenet());
+        System.out.println(user.getPubGPlayerName());
+        System.out.println(user.getRunescapeDisplayName());
+        System.out.println(user.getSteamId());
+
         // This function is called in the update endpoint if the user has decided to not input steam,battlenet, or other Game IDs during registration
-        if(user.getBattlenet() == null |user.getRunescapeDisplayName() == null  | user.getPubGPlayerName() == null | user.getSteamId() == null )
+        if(user.getBattlenet() == null || user.getRunescapeDisplayName() == null || user.getPubGPlayerName() == null || user.getSteamId() == null)
         {
             return true;
         }

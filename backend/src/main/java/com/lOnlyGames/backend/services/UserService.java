@@ -159,19 +159,22 @@ public class UserService implements UserDetailsService {
         if (payload.containsKey("bio")) user.setBio(payload.get("bio"));
         if (payload.containsKey(("location"))) user.setLocation((payload.get("location")));
         if (payload.containsKey("avatarURL")) user.setAvatarURL(payload.get("avatarURL"));
-        if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
-        if (payload.containsKey(("runescapeDisplayName"))) user.setRunescapeDisplayName((payload.get("runescapeDisplayName")));
-        if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
-        if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
-
-
 
         if(new Poller().resolveisPreloadable(user))
         {
+            if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
+            if (payload.containsKey(("runescapeDisplayName"))) user.setRunescapeDisplayName((payload.get("runescapeDisplayName")));
+            if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
+            if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
             gamesAPIService.preload(user);
         }
-        else
-        gamesAPIService.poll(user);
+        else {
+            if (payload.containsKey("battlenet")) user.setBattlenet(payload.get("battlenet"));
+            if (payload.containsKey(("runescapeDisplayName"))) user.setRunescapeDisplayName((payload.get("runescapeDisplayName")));
+            if (payload.containsKey("pubGPlayerName")) user.setPubGPlayerName(payload.get("pubGPlayerName"));
+            if (payload.containsKey("steamId")) user.setSteamId(payload.get("steamId"));
+            gamesAPIService.poll(user);
+        }
 
 
         userDAO.addUser(user);
