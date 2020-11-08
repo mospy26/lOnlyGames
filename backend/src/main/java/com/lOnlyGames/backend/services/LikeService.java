@@ -24,6 +24,8 @@ public class LikeService {
     private LikeDAO likeDAO;
     @Autowired
     private BlockedDAO blockedDAO;
+    @Autowired
+    private BlockedService blockedService;
 
     public String likeUser(User toLike) throws UsernameNotFoundException, UserAlreadyLikedException{
         //User doing the liking
@@ -95,6 +97,15 @@ public class LikeService {
         try{
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<Liked> liked = likeDAO.getLikedRepository().findByLiker(user);
+
+            List<User> usersBlockedMe = blockedService.allBlockedMe();
+            for(Liked like: liked){
+                for(User users: usersBlockedMe){
+                    if(like.getLikes().equals(users)){
+                        liked.remove(like);
+                    }
+                }
+            }
             return liked.stream().map(l -> l.getLikes()).collect(Collectors.toList());
         } catch(Exception e){
             //not sure here what kind of error to return
