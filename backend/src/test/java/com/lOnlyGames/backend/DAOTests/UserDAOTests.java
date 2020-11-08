@@ -1,11 +1,9 @@
 package com.lOnlyGames.backend.DAOTests;
 
-import com.lOnlyGames.backend.DAO.AvailabilityDAO;
-import com.lOnlyGames.backend.model.Availability;
-import com.lOnlyGames.backend.model.CompositeKeys.UserAvailabilityCK;
+import com.lOnlyGames.backend.DAO.UserDAO;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
-import com.lOnlyGames.backend.model.UserAvailability;
-import com.lOnlyGames.backend.repository.AvailabilityRepository;
+import com.lOnlyGames.backend.repository.GameRepository;
 import com.lOnlyGames.backend.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,23 +23,42 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserDAOTests {
 
     @Autowired
-    private AvailabilityDAO availabilityDAO;
-
-    @Autowired
-    private AvailabilityRepository availabilityRepository;
+    private UserDAO userDAO;
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private GameRepository gameRepository;
+
     @Test
     @Transactional
     @Rollback
-    public void testAddAvailability() {
-        Availability availability = new Availability(5, 10, 20);
-        availabilityDAO.addAvailability(availability);
-
-        assertEquals(availability.getDay(), availabilityDAO.getAvailabilityRepository().findById(availability.getId()).get().getDay());
+    public void testAddUser(){
+        User user = new User("User");
+        userDAO.addUser(user);
+        assertEquals(user.getUsername(), userRepository.findById("User").get().getUsername());
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testAddGame(){
+        Game game = new Game("Game");
+        userDAO.addGame(game);
+        assertEquals(game.getName(), gameRepository.findById("Game").get().getName());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testGetUser(){
+        User user = new User("User");
+        userDAO.addUser(user);
+        User getUser = userDAO.getUser("User");
+        assertEquals(user.getUsername(), getUser.getUsername());
+    }
+
 
 }
 
