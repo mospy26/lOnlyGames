@@ -110,7 +110,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<Game> getGames() {
+    public List<UserGame> getGames() {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (me == null) {
             throw new AccessDeniedException("Not logged in");
@@ -121,7 +121,7 @@ public class UserService implements UserDetailsService {
             Game game = userGame.getGame();
             games.add(game);
         }
-        return games;
+        return userGames;
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {
