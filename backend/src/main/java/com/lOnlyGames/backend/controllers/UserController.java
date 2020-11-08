@@ -56,6 +56,14 @@ public class UserController {
         return new ResponseEntity<MatchesResponse>(new MatchesResponse(matches), HttpStatus.OK);
     }
 
+    //finds other users who like the same games as our current user
+    //who is searching for matches
+    @GetMapping(value = "/liked")
+    public ResponseEntity<?> getLikeed() {
+        List<User> likeed = likeService.getAllLikeed();
+        return new ResponseEntity<AllLikesResponse>(new AllLikesResponse(likeed), HttpStatus.OK);
+    }
+
 
     //BLOCKING RELATED FUNCTIONS IN CONTROLLER
 

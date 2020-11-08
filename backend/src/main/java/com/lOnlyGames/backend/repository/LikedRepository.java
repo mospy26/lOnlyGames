@@ -9,7 +9,7 @@ import java.util.List;
 public interface LikedRepository extends CrudRepository<Liked, Integer> {
 
     public List<Liked> findByLiker(User user);
-    public Liked findByLikes(User user);
+    public List<Liked> findByLikes(User user);
     public Liked findByLikerAndLikes(User liker, User likes);
 
 }

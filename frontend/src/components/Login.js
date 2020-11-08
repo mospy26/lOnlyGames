@@ -37,7 +37,7 @@ function Login() {
                           console.log("Local storage has been updated")
                       })
                       .then(() => { 
-                        history.push('/profile');
+                        history.push('/home');
                     }) 
                 }
             })

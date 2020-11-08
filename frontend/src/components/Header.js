@@ -59,8 +59,9 @@ function Header(){
                 </div>
                 <div className='navbar__content'>
                     <div className="navbar__links">
-                            <li><NavLink to='/card' exact activeClassName='active'>Home</NavLink></li>
-                            <li><NavLink to='/matches' activeClassName='active'>Liked</NavLink></li>
+                            <li><NavLink to='/home' exact activeClassName='active'>Home</NavLink></li>
+                            <li><NavLink to='/matches' activeClassName='active'>Likes</NavLink></li>
+                            <li><NavLink to='/liked' activeClassName='active'>Liked</NavLink></li>
                             <li><NavLink to='/availability' activeClassName='active'>Available</NavLink></li>
                             <li><NavLink to='/about' activeClassName='active'>About Us</NavLink></li> 
                             <li><NavLink to='/blocked' activeClassName='active'>Blocked Users</NavLink></li> 

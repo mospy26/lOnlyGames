@@ -112,4 +112,24 @@ public class LikeService {
             throw new InvalidCredentialsException();
         }
     }
+
+    public List<User> getAllLikeed(){
+        try{
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Liked> likeed = likeDAO.getLikedRepository().findByLikes(user);
+
+            List<User> usersBlockedMe = blockedService.allBlockedMe();
+            for(Liked like: likeed) {
+                for(User users: usersBlockedMe){
+                    if(like.getLikes().equals(users)){
+                        likeed.remove(like);
+                    }
+                }
+            }
+            return likeed.stream().map(l -> l.getLiker()).collect(Collectors.toList());
+        } catch(Exception e){
+            //not sure here what kind of error to return
+            throw new InvalidCredentialsException();
+        }
+    }
 }
