@@ -1,62 +1,9 @@
 # lOnlyGames
+lOnlyGames is a social gaming collaboration platform, aimed at connecting users with similar gaming interests.
+It is a platform that allows a user to find other players based on characteristics such as games played, type of gamer, skills in a particular game, location and availability.
+Once a particular player is selected the user will then be matched with that player and can choose to connect allowing them to share their in-game contact details such as Steam, Discord ID, in-game username.
+In conjunction secondary features include an achievements system, through Restful practices, OnlyGames will connect with external APIs, allowing the platform to display the in-game statistics of users.
+These statistics will be included for most popular games. The system will also compromise an encrypted chatting feature, allowing users to communicate with matched players.
+A user can only match with other players, if the action is also reciprocated.
 
-## Front end
-Make sure you're in the directory of front end and run: `npm start`
-
-
-## Back end 
-
-### 1. Using Docker:
-
-You can dockerize every service. For ease of development, we have provided a script called `run.sh`. This option lets you dockerize every service and includes `nginx`, a load balancer. If you only want to dockerize the mysql db, then follow instructions on 2. instead.
-
-1. Make sure you install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) in your computer
-(If docker compose does not work, install it using pip3 i.e. `pip3 install docker-compose`)
-2. Download the repository, and `cd backend`
-3. Run `./run.sh run` and wait until the program finishes.
-4. Wait for a few minutes (this will only be needed in the first run).
-5. Visit `localhost` at port `80` and your spring application should be running there.
-
-###### What if there are changes to the application, does it reflect?
-Yes, every time you make a change it will automatically reload in the docker container.
-
-###### Database management
-You can visit `localhost:8081` that will open adminer, which allows db management of the mysql data.
-
-###### Stopping the application
-
-If you want to stop the application, run `./run.sh stop`.
-
-### 2. Docker for mysql but no docker for spring
-
-You can still run the application on your computer while having docker run the database.To do this, do the following:
-
-1. Install java 11 in your machine.
-2. Run `mvn clean install`
-3. Then finally run:
-
-```bash
-./run.sh db-only
-mvn spring-boot:run
-```
-###### Database management
-You can visit `localhost:8081` that will open adminer, which allows db management of the mysql data.
-
-###### What if there are changes to the application, does it reflect?
-Yes, every time you make a change, the spring application should automatically reload.
-
-###### Stopping the application
-
-You can kill the mvn process through hitting `ctrl+c` in the terminal. And, you can stop the db container using: `./run.sh stop`
-
-### 3. Without Docker at all
-
-1. Ensure you're using IntelliJ
-2. Ensure that you have MySQL Installed
-3. Ensure that the MySQL Server is running
-4. Make sure that you have a database up and running with the following properties: 
-
-> - Database is running under `localhost:3306/db_lonlygames`
-> - There is a user called `lonlygames`
-> - The password should be `password`
-> - The server port should `8080`
+To get started on running the application, refer to the [Getting Started Page](https://github.com/mospy26/lOnlyGames/wiki/Getting-Started) on how to run the application and the [Endpoint Documentation](https://github.com/mospy26/lOnlyGames/wiki/Endpoints) page on understanding how the RESTFul API Works.
