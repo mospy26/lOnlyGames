@@ -213,7 +213,7 @@ public class UserService implements UserDetailsService {
 
         //Throw exception if user reports themselves
         String currentUsername = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        if (user.getUsername().matches(currentUsername)) throw new CannotReportSelfException();
+        if (user.getUsername().equals(currentUsername)) throw new CannotReportSelfException();
 
         //block user as well to prevent multiple reporting exploits
         blockedService.blockUser(user);
