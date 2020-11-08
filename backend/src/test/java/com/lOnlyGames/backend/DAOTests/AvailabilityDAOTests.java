@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend;
+package com.lOnlyGames.backend.DAOTests;
 
 import com.lOnlyGames.backend.DAO.AvailabilityDAO;
 import com.lOnlyGames.backend.model.Availability;
