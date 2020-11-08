@@ -29,6 +29,9 @@ public class Runescape {
         optional = hiscores.playerInformation(userName, HiscoreTable.DEFAULT);
         String s = "";
 
+        if (!optional.isPresent()) {
+            return null;
+        }
 
     for (Map.Entry<String, Skill> entry : optional.get().getSkills().entrySet()) {
         s += entry.getKey() + ": " + entry.getValue().getLevel() + "\n";

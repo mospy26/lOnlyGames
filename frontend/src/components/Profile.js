@@ -33,6 +33,9 @@ const Profile = () => {
             setSteam(user.steamId)
             setBio(user.bio)
             setAvatarURL(user.avatarURL)
+            setPubGPlayerName(user.pubGPlayerName)
+            setBattlenet(user.battlenet)
+            setRunescapeDisplayName(user.runescapeDisplayName)
             return
         }
 
@@ -47,7 +50,10 @@ const Profile = () => {
                     setDiscord(res.data.result.discordId)
                     setSteam(res.data.result.steamId)
                     setBio(res.data.result.bio)
-                    setAvatarURL(user.avatarURL)
+                    setAvatarURL(res.data.result.avatarURL)
+                    setPubGPlayerName(res.data.result.pubGPlayerName)
+                    setBattlenet(res.data.result.battlenet)
+                    setRunescapeDisplayName(res.data.result.runescapeDisplayName)
                 }
             })
             .catch(err => {
@@ -178,7 +184,7 @@ const Profile = () => {
                                 />
                             </FormGroup>
 
-                            <label>Steam ID</label>
+                            <label>Steam ID (optional)</label>
                             <FormGroup className='form__group__profile' controlId="steam">
                                 <FormControl
                                     value={steamId}
