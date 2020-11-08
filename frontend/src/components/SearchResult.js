@@ -20,7 +20,7 @@ function SearchResult(props) {
     axios.post("/users/block", {username: username} )
     .then(res => {
         if(res.status == 200){         
-          setList(list.filter(item => item.username !== username));
+          setList(list.filter(item => item !== username));
         }
     })
     .catch(err => {
@@ -33,7 +33,7 @@ function SearchResult(props) {
     axios.post("/users/like", {username: username} )
     .then(res => {
         if(res.status == 200){         
-          setList(list.filter(item => item.username !== username));
+          setList(list.filter(item => item !== username));
         }
     })
     .catch(err => {
