@@ -2,13 +2,12 @@ package com.lOnlyGames.backend.ControllerTests;
 
 import com.lOnlyGames.backend.controllers.UserController;
 import com.lOnlyGames.backend.errorhandlers.exceptions.*;
+import com.lOnlyGames.backend.model.Availability;
+import com.lOnlyGames.backend.model.Game;
 import com.lOnlyGames.backend.model.User;
-import com.lOnlyGames.backend.response.AllBlockedResponse;
-import com.lOnlyGames.backend.response.AllLikesResponse;
-import com.lOnlyGames.backend.response.BlockUnblockResponse;
-import com.lOnlyGames.backend.response.LikeDislikeResponse;
-import com.lOnlyGames.backend.services.BlockedService;
-import com.lOnlyGames.backend.services.LikeService;
+import com.lOnlyGames.backend.model.UserGame;
+import com.lOnlyGames.backend.response.*;
+import com.lOnlyGames.backend.services.*;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -24,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
@@ -42,6 +42,14 @@ public class UserControllerTests {
     @Mock
     LikeService likeService;
 
+    @Mock
+    MatchesService matchesService;
+
+    @Mock
+    UserService userService;
+
+    @Mock
+    AvailabilityService availabilityService;
 
     //user is blocked
     @Test
@@ -289,4 +297,201 @@ public class UserControllerTests {
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getBody().getResult()).isEqualTo(likedUsers);
     }
+
+    @Test
+    public void testGetMatches(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        List<List<UserGame>> listListUG = new ArrayList<>();
+
+        List<UserGame> listUG1 = new ArrayList<>();
+        List<UserGame> listUG2 = new ArrayList<>();
+
+        UserGame ug1 = new UserGame(new User("User1"), new Game("Game1"));
+        UserGame ug2 = new UserGame(new User("User2"), new Game("Game2"));
+
+        listUG1.add(ug1);
+        listUG2.add(ug2);
+
+        listListUG.add(listUG1);
+        listListUG.add(listUG2);
+        when(matchesService.getMatches()).thenReturn(listListUG);
+        ResponseEntity<MatchesResponse> responseEntity = (ResponseEntity<MatchesResponse>) userController.getMatches();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo(listListUG);
+    }
+
+    @Test
+    public void testSearchUser(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        List<User> listUsers = new ArrayList<>();
+        User user = new User("User");
+        listUsers.add(user);
+
+        List<String> listUsernames = new ArrayList<>();
+        listUsernames.add(user.getUsername());
+
+        String str = "Use";
+
+        when(userService.getUsersWithNameLike(str)).thenReturn(listUsers);
+        ResponseEntity<UsersListResponse> responseEntity = (ResponseEntity<UsersListResponse>) userController.dynamicSearch(str);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo(listUsernames);
+    }
+
+    @Test
+    public void testGetProfile(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        String profile = "User";
+        User user = new User("User");
+
+        when(userService.getProfile(profile)).thenReturn(user);
+        ResponseEntity<UserResponse> responseEntity = (ResponseEntity<UserResponse>) userController.getProfile(profile);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo(user);
+    }
+
+    @Test
+    public void testInvalidGetProfile(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        String profile = "Invalid";
+        doThrow(new UsernameNotFoundException("Username \"" + profile + "\" is invalid")).when(userService).getProfile(profile);
+        Assertions.assertThrows(UsernameNotFoundException.class, () -> {
+            userController.getProfile(profile);
+        });
+    }
+
+//    @Test
+//    public void testUpdateProfile(){
+//        MockHttpServletRequest request = new MockHttpServletRequest();
+//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+//        Map<String, String> payload = new Map<String, String>();
+//    }
+    @Test
+    public void testValidReport(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        User report = new User("Reported");
+        when(userService.reportUser(report)).thenReturn("User '" + report.getUsername() + "' has been reported.");
+
+        ResponseEntity<ReportResponse> responseEntity = (ResponseEntity<ReportResponse>) userController.report(report);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo("User 'Reported' has been reported.");
+    }
+
+    @Test
+    public void testInvalidReport(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        User report = new User("Invalid");
+        doThrow(new CannotReportSelfException()).when(userService).reportUser(report);
+        Assertions.assertThrows(CannotReportSelfException.class, () -> {
+            userController.report(report);
+        });
+    }
+
+    @Test
+    public void testAllAvailabilities(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        List<Availability> listAvailabilities = new ArrayList<>();
+        Availability available = new Availability(1, 1000, 1200);
+        listAvailabilities.add(available);
+
+        User user = new User("Availabilities");
+
+        when(availabilityService.allUserAvailabilities(user)).thenReturn(listAvailabilities);
+        ResponseEntity<AllAvailabilitiesResponse> responseEntity = (ResponseEntity<AllAvailabilitiesResponse>) userController.getUserAvailabilities(user);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo(listAvailabilities);
+    }
+
+    @Test
+    public void testAvailabilityAdd(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        Availability available = new Availability(1, 1000, 1200);
+        when(availabilityService.addAvailability(available)).thenReturn("Availability has been successfully added.");
+        ResponseEntity<AvailabilityResponse> responseEntity = (ResponseEntity<AvailabilityResponse>) userController.availability(available);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo("Availability has been successfully added.");
+
+    }
+
+    @Test
+    public void testInvalidAvailabilityAdd(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        Availability available = new Availability(-1, -3, -5);
+        doThrow(new InvalidAvailabilityException()).when(availabilityService).addAvailability(available);
+        Assertions.assertThrows(InvalidAvailabilityException.class, () -> {
+            userController.availability(available);
+        });
+    }
+
+    @Test
+    public void testOverlapAvailability(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        Availability available = new Availability(0, 0, 0);
+        doThrow(new AvailabilityOverlapException()).when(availabilityService).addAvailability(available);
+        Assertions.assertThrows(AvailabilityOverlapException.class, () -> {
+            userController.availability(available);
+        });
+    }
+
+    @Test
+    public void testRemoveAvailability(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        Availability available = new Availability(0, 0, 0);
+        when(availabilityService.removeAvailability(available)).thenReturn("Availability successfully removed");
+        ResponseEntity<AvailabilityResponse> responseEntity = (ResponseEntity<AvailabilityResponse>) userController.removeAvailability(available);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo("Availability successfully removed");
+    }
+
+    @Test
+    public void testInvalidAvailabilityRemove(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        Availability available = new Availability(0, 0, 0);
+
+        doThrow(new InvalidAvailabilityException()).when(availabilityService).removeAvailability(available);
+        Assertions.assertThrows(InvalidAvailabilityException.class, () -> {
+            userController.removeAvailability(available);
+        });
+    }
+
+    @Test
+    public void testGetGames(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        List<Game> list = new ArrayList<>();
+        Game game = new Game("Game");
+
+        list.add(game);
+
+        when(userService.getGames()).thenReturn(list);
+        ResponseEntity<GamesResponse> responseEntity = (ResponseEntity<GamesResponse>) userController.getMyGames();
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody().getResult()).isEqualTo(list);
+    }
+
 }
