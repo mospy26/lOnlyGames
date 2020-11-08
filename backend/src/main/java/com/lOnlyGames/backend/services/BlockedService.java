@@ -33,6 +33,17 @@ public class    BlockedService {
         }
     }
 
+    public List<User> allBlockedMe(){
+        try{
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Blocked> blockedMe = blockedDAO.getBlockedRepository().findByBlockee(user);
+            return blockedMe.stream().map(b -> b.getBlocker()).collect(Collectors.toList());
+        } catch(Exception e){
+            //not sure here what kind of error to return
+            throw new InvalidCredentialsException();
+        }
+    }
+
     public String blockUser(User user) throws UsernameNotFoundException, UserAlreadyBlockedException{
         //User doing the blocking
         User blocker = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
