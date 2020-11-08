@@ -37,7 +37,7 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/card" component={DashboardCard} />
           <PrivateRoute exact path="/others/:id" component={OthersProfileCard} />
-          <PrivateRoute exact path="/searchresult" component={SearchResult} />
+          <PrivateRoute exact path="/searchresults/:id" component={SearchResult} />
           <Route path="/" component={Home} />
         </Switch>
       </div>

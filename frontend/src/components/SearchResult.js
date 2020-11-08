@@ -42,7 +42,17 @@ function SearchResult(props) {
   }
 
   useEffect(() => {
-      setList(props.history.location.state?.searchUsers)
+
+    axios.get("/users/search?username=" + props.match.params.id)
+        .then(res => {
+            if (res.status == 200) {
+                console.log(res.data.result)
+                setList(res.data.result)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
   }, [])
 
   const gotoProfile = (username) => history.push('/others/' + username);

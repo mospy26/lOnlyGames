@@ -483,10 +483,11 @@ public class UserControllerTests {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
-        List<Game> list = new ArrayList<>();
+        List<UserGame> list = new ArrayList<>();
         Game game = new Game("Game");
+        UserGame userGame = new UserGame();
 
-        list.add(game);
+        list.add(userGame);
 
         when(userService.getGames()).thenReturn(list);
         ResponseEntity<GamesResponse> responseEntity = (ResponseEntity<GamesResponse>) userController.getMyGames();

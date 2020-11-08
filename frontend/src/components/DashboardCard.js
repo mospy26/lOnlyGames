@@ -42,7 +42,6 @@ const DashboardCard = () => {
 
     const [users, setUsers] = useState([])
     const [searchValue, setSearchValue] = useState([])
-    const [searchedUsers, setSearchUsers] = useState([])
 
 
     useEffect(() => {
@@ -132,20 +131,7 @@ const DashboardCard = () => {
 
     const searchUsers = (event) => {
         event.preventDefault();
-        axios.get("/users/search?username=" + searchValue)
-        .then(res => {
-            if (res.status == 200) {
-                console.log(res.data.result)
-                setSearchUsers(res.data.result)
-                history.push({
-                    pathname: "/searchresult",
-                    state: { searchUsers: res.data.result }
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        history.push("/searchresults/" + searchValue)
     }
 
     return (

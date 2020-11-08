@@ -49,6 +49,9 @@ public class UserService implements UserDetailsService {
     private BlockedService blockedService;
 
     @Autowired
+    private LikeService likeService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -128,12 +131,16 @@ public class UserService implements UserDetailsService {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<User> fetchedUsers = userDAO.findUsersStartWith(partialUsername);
         List<User> blocked = blockedService.allBlockedByUser();
+        List<User> liked = likeService.getAllLikes();
 
         List<String> blockedUsers = blocked.stream().map(b -> b.getUsername())
+                .collect(Collectors.toList());
+        List<String> likedUsers = liked.stream().map(b -> b.getUsername())
                 .collect(Collectors.toList());
 
         // Only fetch those users who aren't blocked
         fetchedUsers.removeIf(x -> blockedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
+        fetchedUsers.removeIf(x -> likedUsers.contains(x.getUsername()) || x.getUsername().equals(me.getUsername()));
 
         return fetchedUsers;
     }
