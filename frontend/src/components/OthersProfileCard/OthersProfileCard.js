@@ -26,11 +26,9 @@ const OthersProfileCard = (props) => {
 
   useEffect(() => {
       const url = '/users/profile?username=' + props.match.params.id
-      console.log(url)
       axios.get(url)
           .then(res => {
               if (res.status == 200) {
-                console.log(res.data.result)
                   setFname(res.data.result.firstName)
                   setLname(res.data.result.lastName)
                   setDiscord(res.data.result.discordId === null ? "NaN" : res.data.result.discordId)
@@ -86,8 +84,8 @@ const OthersProfileCard = (props) => {
             </p>
             <hr/>
             <br/>
-            <h3>This users availabilities</h3>
-            <Availabilities/>
+            <h3>Availabilities</h3>
+            <Availabilities username={props.match.params.id}/>
             <hr/>
             <br/>
           </CardBody>
