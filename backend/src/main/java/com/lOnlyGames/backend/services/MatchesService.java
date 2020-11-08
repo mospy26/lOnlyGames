@@ -43,6 +43,13 @@ public class MatchesService {
         for(List<UserGame> listUG: listUserGames){
             listUG.removeIf(ug -> blockedUsers.contains(ug.getUser()));
         }
+
+        //all user objects that have blocked me
+        List<User> usersBlockedMe = blockedService.allBlockedMe();
+        for(List<UserGame> listUG: listUserGames){
+            listUG.removeIf(ug -> usersBlockedMe.contains(ug.getUser()));
+        }
+
         //don't want any matches to users that I have liked
 
         //all user objects liked by the user
