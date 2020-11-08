@@ -7,7 +7,7 @@ import com.lOnlyGames.backend.model.UserGame;
 
 public class GamesResponse extends ParentResponse
 {
-    public GamesResponse(List<UserGame> result) {
+    public GamesResponse(List<Game> result) {
         super(result);
     }
 }

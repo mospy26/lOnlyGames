@@ -1,6 +1,7 @@
 package com.lOnlyGames.backend.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -109,14 +110,18 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public List<UserGame> getGames() {
+    public List<Game> getGames() {
         User me = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (me == null) {
             throw new AccessDeniedException("Not logged in");
         }
         List<UserGame> userGames = matchesDAO.getUserGameRepository().findByUser(me);
-        return userGames;
-        // return userGames.stream().map(b -> b.getGame()).collect(Collectors.toList());
+        List<Game> games = new ArrayList<>();
+        for(UserGame userGame:userGames){
+            Game game = userGame.getGame();
+            games.add(game);
+        }
+        return games;
     }
 
     public List<User> getUsersWithNameLike(String partialUsername) {
