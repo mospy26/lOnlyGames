@@ -23,6 +23,8 @@ const OthersProfileCard = (props) => {
   const [steamId, setSteam] = useState()
   const [avatarURL, setAvatarURL] = useState()
   const [gamesList, setGamesList] = useState([])
+  const [availability, setAvailability] = useState([])
+  const [availabilityHTML, setAvailabilityHTML] = useState()
 
   useEffect(() => {
       const url = '/users/profile?username=' + props.match.params.id
@@ -37,6 +39,25 @@ const OthersProfileCard = (props) => {
                   setUsername(res.data.result.username)
                   setAvatarURL(res.data.result.avatarURL)
               }
+          })
+          .then(() => {
+            axios.get("/users/availability?user=" + props.match.params.id)
+            .then(res => {
+                if(res.status == 200){ 
+                  setAvailability(res.data.result)
+                  console.log(res.data.result)
+                  if (res.data.result.length > 0) {
+                  setAvailabilityHTML(<><br/>
+                    <h3>Availabilities</h3>
+                    <Availabilities username={props.match.params.id}/>
+                    <hr/>
+                    <br/></>)
+                  }
+                }
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
           })
           .catch(err => {
               console.log(err)
@@ -56,6 +77,14 @@ const OthersProfileCard = (props) => {
               console.log(err)
           })
   }, [])
+
+  const showAvailability = () => {
+    setAvailabilityHTML(<><br/>
+    <h3>Availabilities</h3>
+    <Availabilities username={props.match.params.id}/>
+    <hr/>
+    <br/></>)
+  }
 
   return (
     <>
@@ -83,11 +112,12 @@ const OthersProfileCard = (props) => {
               {bio}
             </p>
             <hr/>
-            <br/>
+            {/* <br/>
             <h3>Availabilities</h3>
             <Availabilities username={props.match.params.id}/>
             <hr/>
-            <br/>
+            <br/> */}
+            {availabilityHTML}
           </CardBody>
           <CardBody>
             <div className="author">
