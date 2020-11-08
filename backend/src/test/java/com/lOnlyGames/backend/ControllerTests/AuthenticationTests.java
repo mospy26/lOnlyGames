@@ -1,4 +1,4 @@
-package com.lOnlyGames.backend;
+package com.lOnlyGames.backend.ControllerTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;

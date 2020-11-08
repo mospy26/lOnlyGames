@@ -54,6 +54,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<ExceptionResponse>(
                 generateExceptionResponse(ErrorCode.ALREADY_LIKE_DISLIKE, ex.getMessage()), HttpStatus.OK);
     }
+
+    @ExceptionHandler({CannotLikeSelfException.class})
+    public ResponseEntity<ExceptionResponse> likingSelf(Exception ex) {
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.LIKED_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({CannotUnlikeSelfException.class})
+    public ResponseEntity<ExceptionResponse> unlikingSelf(Exception ex) {
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.UNLIKED_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler({UserAlreadyBlockedException.class})
     public ResponseEntity<ExceptionResponse> alreadyBlocked(Exception ex){
         return new ResponseEntity<ExceptionResponse>(
@@ -63,6 +76,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionResponse> alreadyUnblocked(Exception ex){
         return new ResponseEntity<ExceptionResponse>(
                 generateExceptionResponse(ErrorCode.ALREADY_UNBLOCKED, ex.getMessage()), HttpStatus.OK);
+    }
+    @ExceptionHandler({CannotBlockSelfException.class})
+    public ResponseEntity<ExceptionResponse> blockingSelf(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.BLOCKED_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler({CannotUnblockSelfException.class})
+    public ResponseEntity<ExceptionResponse> unblockingSelf(Exception ex){
+        return new ResponseEntity<ExceptionResponse>(
+                generateExceptionResponse(ErrorCode.UNBLOCKED_SELF, ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({CannotReportSelfException.class})

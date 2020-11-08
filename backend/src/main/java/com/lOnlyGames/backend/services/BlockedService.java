@@ -5,10 +5,7 @@ import java.util.stream.Collectors;
 
 import com.lOnlyGames.backend.DAO.BlockedDAO;
 import com.lOnlyGames.backend.DAO.LikeDAO;
-import com.lOnlyGames.backend.errorhandlers.exceptions.InvalidCredentialsException;
-import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyBlockedException;
-import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyLikedException;
-import com.lOnlyGames.backend.errorhandlers.exceptions.UserAlreadyUnblockedException;
+import com.lOnlyGames.backend.errorhandlers.exceptions.*;
 import com.lOnlyGames.backend.model.Blocked;
 import com.lOnlyGames.backend.model.User;
 
@@ -52,10 +49,14 @@ public class    BlockedService {
         if(likeDAO.getLikedRepository().findByLikerAndLikes(blocker, blockee) != null){
             likeDAO.removeLike(likeDAO.getLikedRepository().findByLikerAndLikes(blocker, blockee));
         }
+        //remove the like on a user if they like us and we want to block them
+        if(likeDAO.getLikedRepository().findByLikerAndLikes(blockee, blocker) != null){
+            likeDAO.removeLike(likeDAO.getLikedRepository().findByLikerAndLikes(blockee, blocker));
+        }
 
         //for when a user tries to block themselves
         if(blocker.getUsername().equals(blockee.getUsername())){
-            throw new IllegalArgumentException();
+            throw new CannotBlockSelfException();
         }
         //check to see if user has been blocked already
         if(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker,blockee) != null){
@@ -86,7 +87,7 @@ public class    BlockedService {
         User blockee = blockedDAO.getUserRepository().findById(user.getUsername()).get();
 
         if(blocker.getUsername().equals(blockee.getUsername())){
-            throw new IllegalArgumentException();
+            throw new CannotUnblockSelfException();
         }
         //check to see if user has been blocked already
         if(blockedDAO.getBlockedRepository().findByBlockerAndBlockee(blocker,blockee) != null){
